@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Relative Bubble Map</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+:root{--bg:#171c24;--panel:#222936;--panel2:#2d3544;--line:#3b4658;--text:#e8edf5;--muted:#9da9ba;--accent:#4aa8ff}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto Sans JP",system-ui,sans-serif}
+.header{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);background:#1f2631}
+.title{font-weight:700;letter-spacing:.02em}.status{font-size:12px;color:var(--muted)}
+.shell{display:grid;grid-template-columns:245px 1fr;min-height:calc(100vh - 52px)}
+.sidebar{padding:16px;border-right:1px solid var(--line);background:#202733}
+.group{margin-bottom:16px}.label{font-size:11px;color:var(--muted);margin:0 0 6px}.control{width:100%;background:#343d4d;color:var(--text);border:1px solid #4a566a;border-radius:4px;padding:10px;font-weight:600}
+.check{display:flex;gap:8px;align-items:center;margin:10px 0;font-size:13px}.hint{font-size:11px;color:var(--muted);line-height:1.55;margin-top:18px}
+.main{position:relative;min-width:0}.chart{width:100%;height:calc(100vh - 88px)}
+.footer{height:36px;padding:8px 18px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
+.badge{display:inline-block;padding:2px 7px;border:1px solid var(--line);border-radius:999px;margin-left:7px}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.group{margin:0}.chart{height:70vh}}
+</style>
+</head>
+<body>
+<div class="header"><div class="title">Relative Bubble Map</div><div id="status" class="status">読み込み中...</div></div>
+<div class="shell">
+<aside class="sidebar">
+  <div class="group"><div class="label">Y軸</div><select id="metric" class="control"><option value="ret">変動率</option><option value="excess">ベンチマーク超過リターン</option></select></div>
+  <div class="group"><div class="label">期間</div><select id="period" class="control"><option>1D</option><option>5D</option><option selected>20D</option><option>60D</option><option>3M</option><option>6M</option><option>12M</option><option>YTD</option></select></div>
+  <div class="group"><div class="label">バブルサイズ</div><select id="size" class="control"><option value="market_cap">時価総額</option><option value="equal">均一</option></select></div>
+  <div class="group"><div class="label">バブルカラー</div><select id="color" class="control"><option value="sector">セクター</option><option value="performance">パフォーマンス</option></select></div>
+  <div class="group"><label class="check"><input id="labels" type="checkbox" checked> ティッカー表示</label><label class="check"><input id="bench" type="checkbox"> 比較ETFをラベルに表示</label></div>
+  <div class="hint">バブルをクリックするとTradingViewを開きます。<br>セクターは横方向、Y軸は選択した期間の値です。超過リターンは各銘柄に設定された比較ETFとの差です。</div>
+</aside>
+<main class="main"><div id="chart" class="chart"></div><div class="footer">データが更新できなかった場合も前回の正常データを維持します。</div></main>
+</div>
+<script>
+const sectorOrder=['情報技術','通信サービス','一般消費財','生活必需品','金融','ヘルスケア','資本財','エネルギー','素材','公益','不動産'];
+const sectorColors={'情報技術':'#8b6ce6','通信サービス':'#25b3a7','一般消費財':'#e09a2b','生活必需品':'#ca8bf2','金融':'#9dbb28','ヘルスケア':'#e15b87','資本財':'#2aa4b3','エネルギー':'#18a55b','素材':'#d9ac3a','公益':'#6da17d','不動産':'#b679d0'};
+let SNAP=null;
+function pct(v){return v==null?'—':(v*100).toFixed(2)+'%'}
+function money(v){if(v==null||!isFinite(v))return '—'; if(v>=1e12)return '$'+(v/1e12).toFixed(2)+'T'; if(v>=1e9)return '$'+(v/1e9).toFixed(1)+'B'; return '$'+Math.round(v/1e6)+'M'}
+function jitter(i,n){if(n<=1)return 0; return ((i/(n-1))-0.5)*0.72}
+function render(){
+ const metric=document.getElementById('metric').value, period=document.getElementById('period').value, sizeMode=document.getElementById('size').value, colorMode=document.getElementById('color').value;
+ const showLabels=document.getElementById('labels').checked, showBench=document.getElementById('bench').checked;
+ const key=(metric==='ret'?'ret_':'excess_')+period;
+ const bySec={}; sectorOrder.forEach(s=>bySec[s]=[]); SNAP.records.forEach(r=>{if(bySec[r.sector])bySec[r.sector].push(r)});
+ const x=[],y=[],text=[],hover=[],sizes=[],colors=[],custom=[];
+ sectorOrder.forEach((s,si)=>{const arr=bySec[s]||[];arr.forEach((r,i)=>{const v=r[key];if(v==null)return;x.push(si+jitter(i,arr.length));y.push(v*100);text.push(showLabels?r.ticker:'');
+   const bench=showBench?`<br>比較ETF: ${r.benchmark}`:'';
+   hover.push(`<b>${r.ticker}</b> ${r.company}<br>${r.sector} / ${r.theme}${bench}<br>終値: $${r.last_close.toFixed(2)}<br>${metric==='ret'?'変動率':'超過リターン'} (${period}): ${pct(v)}<br>時価総額: ${money(r.market_cap)}<br>市場日: ${r.last_date}`);
+   sizes.push(sizeMode==='equal'?22:Math.max(12,Math.sqrt((r.market_cap||5e9)/1e9)*4.2));
+   colors.push(colorMode==='sector'?sectorColors[s]:(v>=0?`rgba(71,188,137,${Math.min(.95,.45+Math.abs(v)*4)})`:`rgba(234,87,105,${Math.min(.95,.45+Math.abs(v)*4)})`)); custom.push(r.provider_ticker||r.ticker);
+ })});
+ const trace={type:'scatter',mode:showLabels?'markers+text':'markers',x,y,text,textposition:'bottom center',textfont:{color:'#aeb8c8',size:11},hovertext:hover,hoverinfo:'text',customdata:custom,marker:{size:sizes,sizemode:'diameter',color:colors,line:{width:1,color:'rgba(255,255,255,.35)'},opacity:.92}};
+ const layout={paper_bgcolor:'#171c24',plot_bgcolor:'#171c24',margin:{l:70,r:25,t:22,b:70},xaxis:{range:[-.6,sectorOrder.length-.4],tickmode:'array',tickvals:sectorOrder.map((_,i)=>i),ticktext:sectorOrder,gridcolor:'#2b3442',zeroline:false,color:'#aeb8c8',fixedrange:false},yaxis:{title:(metric==='ret'?'変動率 ':'超過リターン ')+period+' (%)',gridcolor:'#2b3442',zeroline:true,zerolinecolor:'#7f8a9b',color:'#aeb8c8',ticksuffix:'%'},showlegend:false,hoverlabel:{bgcolor:'#2d3544',bordercolor:'#566277',font:{color:'#fff'}},dragmode:'pan'};
+ Plotly.react('chart',[trace],layout,{responsive:true,displaylogo:false,scrollZoom:true});
+ const el=document.getElementById('chart'); el.removeAllListeners && el.removeAllListeners('plotly_click'); el.on('plotly_click',d=>{if(d.points&&d.points[0])window.open('https://www.tradingview.com/chart/?symbol='+encodeURIComponent(d.points[0].customdata),'_blank')});
+}
+async function init(){try{const r=await fetch('snapshot.json?ts='+Date.now());SNAP=await r.json();document.getElementById('status').innerHTML=`市場日: <b>${SNAP.latest_market_date||'—'}</b><span class="badge">${SNAP.records.length}銘柄</span>`;render()}catch(e){document.getElementById('status').textContent='snapshot.json を読み込めません';console.error(e)}}
+['metric','period','size','color','labels','bench'].forEach(id=>document.getElementById(id).addEventListener('change',render));
+init();
+</script>
+</body></html>

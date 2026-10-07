@@ -1,0 +1,8 @@
+{
+  "provider": "auto",
+  "history_years": 3,
+  "meta_refresh_days": 7,
+  "max_requests_per_run": 180,
+  "github_pages_dir": "docs",
+  "timezone": "Asia/Tokyo"
+}

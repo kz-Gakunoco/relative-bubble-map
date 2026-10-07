@@ -1,0 +1,55 @@
+﻿ticker,company,sector,theme,benchmark,provider_ticker
+MSFT,Microsoft Corporation,情報技術,ソフトウェア・クラウド,XLK,MSFT
+AAPL,Apple Inc.,情報技術,ハードウェア・サービス,XLK,AAPL
+NVDA,NVIDIA Corporation,情報技術,AI半導体・GPU,SOXX,NVDA
+AVGO,Broadcom Inc.,情報技術,半導体・ネットワーク,SOXX,AVGO
+CRM,"Salesforce, Inc.",情報技術,SaaS・CRM,XLK,CRM
+CSCO,"Cisco Systems, Inc.",情報技術,ネットワーク機器,XLK,CSCO
+TXN,Texas Instruments Incorporated,情報技術,アナログ半導体,SOXX,TXN
+AMAT,"Applied Materials, Inc.",情報技術,半導体製造装置,SOXX,AMAT
+INTC,Intel Corporation,情報技術,CPU・半導体製造,SOXX,INTC
+BRK.B,Berkshire Hathaway Inc.,金融,複合金融・保険,XLF,BRK-B
+JPM,JPMorgan Chase & Co.,金融,銀行,XLF,JPM
+BAC,Bank of America Corporation,金融,銀行,XLF,BAC
+GS,"The Goldman Sachs Group, Inc.",金融,投資銀行,XLF,GS
+BLK,"BlackRock, Inc.",金融,資産運用,XLF,BLK
+V,Visa Inc.,金融,決済ネットワーク,XLF,V
+GOOGL,Alphabet Inc.,通信サービス,検索・広告・クラウド,XLC,GOOGL
+META,"Meta Platforms, Inc.",通信サービス,SNS・広告・AI,XLC,META
+NFLX,"Netflix, Inc.",通信サービス,動画配信,XLC,NFLX
+TMUS,"T-Mobile US, Inc.",通信サービス,通信,XLC,TMUS
+JNJ,Johnson & Johnson,ヘルスケア,医薬品・医療機器,XLV,JNJ
+LLY,Eli Lilly and Company,ヘルスケア,医薬品,XLV,LLY
+ABBV,AbbVie Inc.,ヘルスケア,医薬品,XLV,ABBV
+UNH,UnitedHealth Group Incorporated,ヘルスケア,医療保険,XLV,UNH
+TMO,Thermo Fisher Scientific Inc.,ヘルスケア,ライフサイエンス機器,XLV,TMO
+ABT,Abbott Laboratories,ヘルスケア,医療機器・診断,XLV,ABT
+AMZN,"Amazon.com, Inc.",一般消費財,EC・クラウド,XLY,AMZN
+TSLA,"Tesla, Inc.",一般消費財,EV・エネルギー,XLY,TSLA
+HD,"The Home Depot, Inc.",一般消費財,住宅関連小売,XLY,HD
+MCD,McDonald's Corporation,一般消費財,外食,XLY,MCD
+BKNG,Booking Holdings Inc.,一般消費財,オンライン旅行,XLY,BKNG
+TJX,"The TJX Companies, Inc.",一般消費財,オフプライス小売,XLY,TJX
+CAT,Caterpillar Inc.,資本財,建設機械,XLI,CAT
+GE,GE Aerospace,資本財,航空宇宙,XLI,GE
+RTX,RTX Corporation,資本財,航空宇宙・防衛,XLI,RTX
+GEV,GE Vernova Inc.,資本財,電力設備・エネルギー,XLI,GEV
+UNP,Union Pacific Corporation,資本財,鉄道,XLI,UNP
+ETN,Eaton Corporation plc,資本財,電力管理・電化,XLI,ETN
+WMT,Walmart Inc.,生活必需品,総合小売,XLP,WMT
+COST,Costco Wholesale Corporation,生活必需品,会員制小売,XLP,COST
+PG,The Procter & Gamble Company,生活必需品,日用品,XLP,PG
+KO,The Coca-Cola Company,生活必需品,飲料,XLP,KO
+PEP,"PepsiCo, Inc.",生活必需品,飲料・食品,XLP,PEP
+XOM,Exxon Mobil Corporation,エネルギー,総合エネルギー,XLE,XOM
+CVX,Chevron Corporation,エネルギー,総合エネルギー,XLE,CVX
+SLB,SLB,エネルギー,油田サービス,XLE,SLB
+LIN,Linde plc,素材,産業ガス,XLB,LIN
+SHW,The Sherwin-Williams Company,素材,塗料,XLB,SHW
+FCX,Freeport-McMoRan Inc.,素材,銅・鉱業,XLB,FCX
+NEE,"NextEra Energy, Inc.",公益,電力・再生可能エネルギー,XLU,NEE
+SO,The Southern Company,公益,電力,XLU,SO
+DUK,Duke Energy Corporation,公益,電力,XLU,DUK
+PLD,"Prologis, Inc.",不動産,物流REIT,XLRE,PLD
+EQIX,"Equinix, Inc.",不動産,データセンターREIT,XLRE,EQIX
+WELL,Welltower Inc.,不動産,ヘルスケアREIT,XLRE,WELL
