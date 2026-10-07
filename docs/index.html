@@ -34,8 +34,8 @@
 <main class="main"><div id="chart" class="chart"></div><div class="footer">データが更新できなかった場合も前回の正常データを維持します。</div></main>
 </div>
 <script>
-const sectorOrder=['情報技術','通信サービス','一般消費財','生活必需品','金融','ヘルスケア','資本財','エネルギー','素材','公益','不動産'];
-const sectorColors={'情報技術':'#8b6ce6','通信サービス':'#25b3a7','一般消費財':'#e09a2b','生活必需品':'#ca8bf2','金融':'#9dbb28','ヘルスケア':'#e15b87','資本財':'#2aa4b3','エネルギー':'#18a55b','素材':'#d9ac3a','公益':'#6da17d','不動産':'#b679d0'};
+const sectorOrder=['情報技術','コミュニケーション・サービス','一般消費財','生活必需品','金融','ヘルスケア','資本財・産業','エネルギー','素材','公益','不動産'];
+const sectorColors={'情報技術':'#8b6ce6','コミュニケーション・サービス':'#25b3a7','一般消費財':'#e09a2b','生活必需品':'#ca8bf2','金融':'#9dbb28','ヘルスケア':'#e15b87','資本財・産業':'#2aa4b3','エネルギー':'#18a55b','素材':'#d9ac3a','公益':'#6da17d','不動産':'#b679d0'};
 let SNAP=null;
 function pct(v){return v==null?'—':(v*100).toFixed(2)+'%'}
 function money(v){if(v==null||!isFinite(v))return '—'; if(v>=1e12)return '$'+(v/1e12).toFixed(2)+'T'; if(v>=1e9)return '$'+(v/1e9).toFixed(1)+'B'; return '$'+Math.round(v/1e6)+'M'}
