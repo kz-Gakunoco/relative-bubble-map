@@ -1,55 +1,55 @@
 ﻿ticker,company,sector,theme,benchmark,provider_ticker
-MSFT,Microsoft Corporation,情報技術,ソフトウェア・クラウド,XLK,MSFT
-AAPL,Apple Inc.,情報技術,ハードウェア・サービス,XLK,AAPL
-NVDA,NVIDIA Corporation,情報技術,AI半導体・GPU,SOXX,NVDA
-AVGO,Broadcom Inc.,情報技術,半導体・ネットワーク,SOXX,AVGO
-CRM,"Salesforce, Inc.",情報技術,SaaS・CRM,XLK,CRM
-CSCO,"Cisco Systems, Inc.",情報技術,ネットワーク機器,XLK,CSCO
-TXN,Texas Instruments Incorporated,情報技術,アナログ半導体,SOXX,TXN
-AMAT,"Applied Materials, Inc.",情報技術,半導体製造装置,SOXX,AMAT
-INTC,Intel Corporation,情報技術,CPU・半導体製造,SOXX,INTC
-BRK.B,Berkshire Hathaway Inc.,金融,複合金融・保険,XLF,BRK-B
-JPM,JPMorgan Chase & Co.,金融,銀行,XLF,JPM
-BAC,Bank of America Corporation,金融,銀行,XLF,BAC
-GS,"The Goldman Sachs Group, Inc.",金融,投資銀行,XLF,GS
-BLK,"BlackRock, Inc.",金融,資産運用,XLF,BLK
-V,Visa Inc.,金融,決済ネットワーク,XLF,V
-GOOGL,Alphabet Inc.,通信サービス,検索・広告・クラウド,XLC,GOOGL
-META,"Meta Platforms, Inc.",通信サービス,SNS・広告・AI,XLC,META
-NFLX,"Netflix, Inc.",通信サービス,動画配信,XLC,NFLX
-TMUS,"T-Mobile US, Inc.",通信サービス,通信,XLC,TMUS
+MSFT,Microsoft Corporation,情報技術,クラウド・AI・企業向けソフトウェア,XLK,MSFT
+AAPL,Apple Inc.,情報技術,スマートフォン・端末・半導体サプライチェーン,XLK,AAPL
+NVDA,NVIDIA Corporation,情報技術,AI半導体・GPU・データセンター,SOXX,NVDA
+AVGO,Broadcom Inc.,情報技術,半導体・カスタムASIC・ネットワーク,SOXX,AVGO
+CRM,"Salesforce, Inc.",情報技術,企業向けSaaS・CRM,XLK,CRM
+CSCO,"Cisco Systems, Inc.",情報技術,ネットワーク・通信機器・セキュリティ,XLK,CSCO
+INTC,Intel Corporation,情報技術,CPU・データセンター・半導体製造・ファウンドリー,SOXX,INTC
+AMAT,"Applied Materials, Inc.",情報技術,半導体製造装置・成膜・エッチング・先端パッケージ,SOXX,AMAT
+TXN,Texas Instruments Incorporated,情報技術,アナログ半導体・産業機器・自動車,SOXX,TXN
+BRK.B,Berkshire Hathaway Inc. Class B,金融,保険・複合企業・資本配分,XLF,BRK-B
+JPM,JPMorgan Chase & Co.,金融,銀行・融資・投資銀行,XLF,JPM
+BAC,Bank of America Corporation,金融,銀行・融資・預金,XLF,BAC
+GS,"The Goldman Sachs Group, Inc.",金融,投資銀行・資本市場・トレーディング,XLF,GS
+BLK,"BlackRock, Inc.",金融,資産運用・ETF・資金フロー,XLF,BLK
+V,Visa Inc.,金融,決済・カードネットワーク,XLF,V
+GOOGL,Alphabet Inc. Class A,コミュニケーション・サービス,検索広告・AI・クラウド,XLC,GOOGL
+META,"Meta Platforms, Inc.",コミュニケーション・サービス,SNS・デジタル広告・AI,XLC,META
+NFLX,"Netflix, Inc.",コミュニケーション・サービス,動画配信・コンテンツ・広告,XLC,NFLX
+TMUS,"T-Mobile US, Inc.",コミュニケーション・サービス,通信・無線ネットワーク,XLC,TMUS
 JNJ,Johnson & Johnson,ヘルスケア,医薬品・医療機器,XLV,JNJ
-LLY,Eli Lilly and Company,ヘルスケア,医薬品,XLV,LLY
-ABBV,AbbVie Inc.,ヘルスケア,医薬品,XLV,ABBV
-UNH,UnitedHealth Group Incorporated,ヘルスケア,医療保険,XLV,UNH
-TMO,Thermo Fisher Scientific Inc.,ヘルスケア,ライフサイエンス機器,XLV,TMO
+LLY,Eli Lilly and Company,ヘルスケア,医薬品・肥満症治療薬,XLV,LLY
+ABBV,AbbVie Inc.,ヘルスケア,医薬品・バイオ医薬,XLV,ABBV
+UNH,UnitedHealth Group Incorporated,ヘルスケア,医療保険・医療サービス,XLV,UNH
+TMO,Thermo Fisher Scientific Inc.,ヘルスケア,ライフサイエンス・分析機器,XLV,TMO
 ABT,Abbott Laboratories,ヘルスケア,医療機器・診断,XLV,ABT
-AMZN,"Amazon.com, Inc.",一般消費財,EC・クラウド,XLY,AMZN
-TSLA,"Tesla, Inc.",一般消費財,EV・エネルギー,XLY,TSLA
-HD,"The Home Depot, Inc.",一般消費財,住宅関連小売,XLY,HD
-MCD,McDonald's Corporation,一般消費財,外食,XLY,MCD
-BKNG,Booking Holdings Inc.,一般消費財,オンライン旅行,XLY,BKNG
-TJX,"The TJX Companies, Inc.",一般消費財,オフプライス小売,XLY,TJX
-CAT,Caterpillar Inc.,資本財,建設機械,XLI,CAT
-GE,GE Aerospace,資本財,航空宇宙,XLI,GE
-RTX,RTX Corporation,資本財,航空宇宙・防衛,XLI,RTX
-GEV,GE Vernova Inc.,資本財,電力設備・エネルギー,XLI,GEV
-UNP,Union Pacific Corporation,資本財,鉄道,XLI,UNP
-ETN,Eaton Corporation plc,資本財,電力管理・電化,XLI,ETN
-WMT,Walmart Inc.,生活必需品,総合小売,XLP,WMT
-COST,Costco Wholesale Corporation,生活必需品,会員制小売,XLP,COST
-PG,The Procter & Gamble Company,生活必需品,日用品,XLP,PG
-KO,The Coca-Cola Company,生活必需品,飲料,XLP,KO
-PEP,"PepsiCo, Inc.",生活必需品,飲料・食品,XLP,PEP
-XOM,Exxon Mobil Corporation,エネルギー,総合エネルギー,XLE,XOM
-CVX,Chevron Corporation,エネルギー,総合エネルギー,XLE,CVX
-SLB,SLB,エネルギー,油田サービス,XLE,SLB
-LIN,Linde plc,素材,産業ガス,XLB,LIN
-SHW,The Sherwin-Williams Company,素材,塗料,XLB,SHW
-FCX,Freeport-McMoRan Inc.,素材,銅・鉱業,XLB,FCX
+AMZN,"Amazon.com, Inc.",一般消費財,EC・クラウド・物流,XLY,AMZN
+TSLA,"Tesla, Inc.",一般消費財,EV・蓄電池・自動運転,XLY,TSLA
+HD,"The Home Depot, Inc.",一般消費財,住宅・ホームセンター・リフォーム,XLY,HD
+MCD,McDonald's Corporation,一般消費財,外食・消費・フランチャイズ,XLY,MCD
+BKNG,Booking Holdings Inc.,一般消費財,旅行・オンライン予約,XLY,BKNG
+TJX,"The TJX Companies, Inc.",一般消費財,小売・衣料・ディスカウント,XLY,TJX
+CAT,Caterpillar Inc.,資本財・産業,建設機械・鉱山・インフラ,XLI,CAT
+GE,GE Aerospace,資本財・産業,航空機エンジン・航空宇宙,XLI,GE
+RTX,RTX Corporation,資本財・産業,防衛・航空宇宙,XLI,RTX
+GEV,GE Vernova Inc.,資本財・産業,発電設備・送配電・電力インフラ,XLI,GEV
+UNP,Union Pacific Corporation,資本財・産業,鉄道・物流・貨物輸送,XLI,UNP
+ETN,Eaton Corporation plc,資本財・産業,電力設備・配電・データセンター,XLI,ETN
+WMT,Walmart Inc.,生活必需品,ディフェンシブ・小売・食品,XLP,WMT
+COST,Costco Wholesale Corporation,生活必需品,ディフェンシブ・会員制小売,XLP,COST
+PG,The Procter & Gamble Company,生活必需品,ディフェンシブ・日用品,XLP,PG
+KO,The Coca-Cola Company,生活必需品,ディフェンシブ・飲料,XLP,KO
+PEP,"PepsiCo, Inc.",生活必需品,ディフェンシブ・食品・飲料,XLP,PEP
+XOM,Exxon Mobil Corporation,エネルギー,石油・天然ガス・統合エネルギー,XLE,XOM
+CVX,Chevron Corporation,エネルギー,石油・天然ガス・統合エネルギー,XLE,CVX
+SLB,SLB,エネルギー,油田サービス・掘削・エネルギー設備,XLE,SLB
 NEE,"NextEra Energy, Inc.",公益,電力・再生可能エネルギー,XLU,NEE
-SO,The Southern Company,公益,電力,XLU,SO
-DUK,Duke Energy Corporation,公益,電力,XLU,DUK
-PLD,"Prologis, Inc.",不動産,物流REIT,XLRE,PLD
-EQIX,"Equinix, Inc.",不動産,データセンターREIT,XLRE,EQIX
-WELL,Welltower Inc.,不動産,ヘルスケアREIT,XLRE,WELL
+CEG,Constellation Energy Corporation,公益,原子力・発電・データセンター電力需要,XLU,CEG
+SO,The Southern Company,公益,電力・規制公益,XLU,SO
+LIN,Linde plc,素材,産業ガス・製造業・半導体,XLB,LIN
+SHW,The Sherwin-Williams Company,素材,塗料・住宅・建設,XLB,SHW
+FCX,Freeport-McMoRan Inc.,素材,銅・鉱山・電力網・電化,XLB,FCX
+PLD,"Prologis, Inc.",不動産,物流施設・倉庫・EC,XLRE,PLD
+EQIX,"Equinix, Inc.",不動産,データセンター・デジタルインフラ,XLRE,EQIX
+WELL,Welltower Inc.,不動産,ヘルスケア不動産・高齢者住宅,XLRE,WELL
