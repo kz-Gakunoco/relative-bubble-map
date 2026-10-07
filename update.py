@@ -242,24 +242,55 @@ def main():
     # ETF provider tickers equal their display tickers.
     for b in universe.benchmark.unique(): provider_lookup[b] = b
 
+    today = datetime.now(timezone.utc).date()
+    full_start_dt = today - timedelta(days=365*int(settings.get("history_years",3))+10)
+    end_dt = today + timedelta(days=1)
+
+    # Existing symbols only need a short overlap refresh. Newly added / insufficient-history
+    # symbols must receive a full backfill; otherwise a newly added ticker can disappear from
+    # 20D/3M/etc. views because it only has ~10 days of data.
     if old.empty:
-        start_dt = datetime.now(timezone.utc).date() - timedelta(days=365*int(settings.get("history_years",3))+10)
+        recent_start_dt = full_start_dt
+        backfill_tickers = set(all_symbols.ticker)
     else:
-        # Re-fetch a short overlap window so late corrections do not create gaps.
-        start_dt = pd.Timestamp(old.date.max()).date() - timedelta(days=10)
-    end_dt = datetime.now(timezone.utc).date() + timedelta(days=1)
+        recent_start_dt = pd.Timestamp(old.date.max()).date() - timedelta(days=10)
+        counts = old.groupby("ticker")["date"].nunique().to_dict()
+        # 252 trading days are needed for 12M; use a small buffer.
+        backfill_tickers = {t for t in all_symbols.ticker if counts.get(t, 0) < 260}
 
     provider_setting = settings.get("provider","auto").lower()
     api_key = os.getenv("FMP_API_KEY", "").strip()
     provider = "fmp" if (provider_setting == "fmp" or (provider_setting == "auto" and api_key)) else "yfinance"
 
     symbols = {t:provider_lookup[t] for t in all_symbols.ticker}
+    backfill_symbols = {t:provider_lookup[t] for t in all_symbols.ticker if t in backfill_tickers}
+    regular_symbols = {t:provider_lookup[t] for t in all_symbols.ticker if t not in backfill_tickers}
+
     try:
-        if provider == "fmp":
-            fresh = fmp_prices(symbols, str(start_dt), str(end_dt), api_key)
-        else:
-            fresh = yfinance_prices(symbols, str(start_dt), str(end_dt))
-        if not fresh.empty:
+        fresh_parts = []
+
+        # Normal daily overlap refresh.
+        if regular_symbols:
+            if provider == "fmp":
+                x = fmp_prices(regular_symbols, str(recent_start_dt), str(end_dt), api_key)
+            else:
+                x = yfinance_prices(regular_symbols, str(recent_start_dt), str(end_dt))
+            if not x.empty:
+                fresh_parts.append(x)
+
+        # Full history backfill for a ticker added later (e.g. CEG) or any ticker that
+        # still lacks enough history for the longest supported return window.
+        if backfill_symbols:
+            print("BACKFILL:", ", ".join(sorted(backfill_symbols)))
+            if provider == "fmp":
+                x = fmp_prices(backfill_symbols, str(full_start_dt), str(end_dt), api_key)
+            else:
+                x = yfinance_prices(backfill_symbols, str(full_start_dt), str(end_dt))
+            if not x.empty:
+                fresh_parts.append(x)
+
+        if fresh_parts:
+            fresh = pd.concat(fresh_parts, ignore_index=True)
             old = pd.concat([old, fresh], ignore_index=True)
             save_prices(old)
     except Exception as e:
@@ -290,6 +321,9 @@ def main():
         "latest_market_date": snapshot["latest_market_date"],
         "request_budget_used": budget.used,
         "record_count": len(snapshot["records"]),
+        "missing_universe_tickers": sorted(
+            set(universe.ticker) - {r["ticker"] for r in snapshot["records"]}
+        ),
     }
     STATUS_FILE.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(status, ensure_ascii=False, indent=2))
