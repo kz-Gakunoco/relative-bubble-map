@@ -26,6 +26,7 @@ universe = pd.read_csv(CFG / "universe.csv", encoding="utf-8-sig")
 PRICE_FILE = DATA / "prices.parquet"
 META_FILE = DATA / "meta.csv"
 STATUS_FILE = DATA / "status.json"
+HISTORY_FILE = DATA / "signal_history.csv"
 SNAPSHOT_FILE = DOCS / "snapshot.json"
 
 ES_DISPLAY = "ES"
@@ -391,6 +392,20 @@ def build_snapshot(prices: pd.DataFrame, meta: pd.DataFrame) -> dict:
     es_metrics = build_benchmark_metrics(es)
     spx_metrics = build_benchmark_metrics(spx)
 
+    # For this US-equity dashboard, SPX is the canonical market date.
+    # This avoids a futures session (ES) accidentally advancing the displayed
+    # market date ahead of the cash equity close.
+    canonical_market_date = spx_metrics.get("last_date")
+    if not canonical_market_date:
+        equity_dates = [
+            series[t].date.iloc[-1]
+            for t in universe.ticker
+            if t in series and not series[t].empty
+        ]
+        canonical_market_date = (
+            max(equity_dates).strftime("%Y-%m-%d") if equity_dates else None
+        )
+
     metrics = {}
     for _, u in universe.iterrows():
         g = series.get(u.ticker)
@@ -411,6 +426,7 @@ def build_snapshot(prices: pd.DataFrame, meta: pd.DataFrame) -> dict:
             er = es_metrics.get(f"ret_{label}")
             sr = spx_metrics.get(f"ret_{label}")
             item[f"ret_{label}"] = None if pd.isna(r) else r
+            item[f"industry_ret_{label}"] = None if pd.isna(br) else br
             item[f"excess_{label}"] = (
                 None if pd.isna(r) or pd.isna(br) else r - br
             )
@@ -464,6 +480,7 @@ def build_snapshot(prices: pd.DataFrame, meta: pd.DataFrame) -> dict:
         es_ytd = es_metrics.get("ret_YTD")
         spx_ytd = spx_metrics.get("ret_YTD")
         item["ret_YTD"] = None if pd.isna(ytd) else ytd
+        item["industry_ret_YTD"] = None if pd.isna(bytd) else bytd
         item["excess_YTD"] = None if pd.isna(ytd) or pd.isna(bytd) else ytd - bytd
         item["es_excess_YTD"] = (
             None if pd.isna(ytd) or es_ytd is None else ytd - float(es_ytd)
@@ -506,11 +523,7 @@ def build_snapshot(prices: pd.DataFrame, meta: pd.DataFrame) -> dict:
 
     return {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "latest_market_date": (
-            None
-            if pd.isna(latest_date)
-            else pd.Timestamp(latest_date).strftime("%Y-%m-%d")
-        ),
+        "latest_market_date": canonical_market_date,
         "request_budget_used": budget.used,
         "z_lookbacks": Z_LOOKBACKS,
         "es": es_metrics,
@@ -518,6 +531,265 @@ def build_snapshot(prices: pd.DataFrame, meta: pd.DataFrame) -> dict:
         "records": records,
     }
 
+
+
+def load_published_snapshot() -> dict:
+    if not SNAPSHOT_FILE.exists():
+        return {}
+    try:
+        return json.loads(SNAPSHOT_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def validate_snapshot(snapshot: dict, prices: pd.DataFrame, meta: pd.DataFrame) -> dict:
+    """
+    Hard errors prevent publishing a new dashboard snapshot/history row.
+    Warnings are recorded but do not stop publication.
+    """
+    errors = []
+    warnings = []
+
+    expected_tickers = set(universe.ticker.astype(str))
+    records = snapshot.get("records", [])
+    actual_tickers = [str(r.get("ticker", "")) for r in records]
+    actual_set = set(actual_tickers)
+
+    if len(records) != len(universe):
+        errors.append(
+            f"record_count={len(records)} expected={len(universe)}"
+        )
+
+    missing = sorted(expected_tickers - actual_set)
+    if missing:
+        errors.append("missing_universe_tickers=" + ",".join(missing))
+
+    duplicates = sorted(
+        t for t in actual_set if actual_tickers.count(t) > 1
+    )
+    if duplicates:
+        errors.append("duplicate_universe_tickers=" + ",".join(duplicates))
+
+    market_date = snapshot.get("latest_market_date")
+    if not market_date:
+        errors.append("latest_market_date is missing")
+
+    # SPX/ES are core comparison series.
+    for name in ("spx", "es"):
+        m = snapshot.get(name) or {}
+        if not m.get("last_date"):
+            errors.append(f"{name}.last_date is missing")
+        if m.get("ret_20D") is None:
+            errors.append(f"{name}.ret_20D is missing")
+
+    # Every assigned industry ETF must exist in the stored price history.
+    price_tickers = set(prices["ticker"].astype(str)) if not prices.empty else set()
+    missing_industry_etfs = sorted(
+        set(universe.benchmark.astype(str)) - price_tickers
+    )
+    if missing_industry_etfs:
+        errors.append(
+            "missing_industry_etfs=" + ",".join(missing_industry_etfs)
+        )
+
+    # A 20D return is the minimum expected working state for all 54 stocks.
+    missing_ret20 = sorted(
+        str(r.get("ticker"))
+        for r in records
+        if r.get("ret_20D") is None
+    )
+    if missing_ret20:
+        errors.append("missing_ret_20D=" + ",".join(missing_ret20))
+
+    # Z-score gaps are warnings rather than hard errors so a newly-added or
+    # young listing does not block the entire dashboard.
+    for field in ("industry_z_20D", "spx_z_20D", "es_z_20D"):
+        missing_z = sorted(
+            str(r.get("ticker"))
+            for r in records
+            if r.get(field) is None
+        )
+        if missing_z:
+            warnings.append(f"{field}_missing=" + ",".join(missing_z))
+
+    missing_caps = sorted(
+        str(r.get("ticker"))
+        for r in records
+        if r.get("market_cap") is None
+    )
+    if missing_caps:
+        warnings.append("market_cap_missing=" + ",".join(missing_caps))
+
+    # Stale individual names are surfaced but do not freeze the whole map.
+    if market_date:
+        stale = sorted(
+            f"{r.get('ticker')}:{r.get('last_date')}"
+            for r in records
+            if r.get("last_date") and r.get("last_date") != market_date
+        )
+        if stale:
+            warnings.append("stale_ticker_dates=" + ",".join(stale))
+
+    # Never allow the published market date to move backwards.
+    previous = load_published_snapshot()
+    previous_date = previous.get("latest_market_date")
+    if previous_date and market_date and market_date < previous_date:
+        errors.append(
+            f"market_date_regression={market_date} previous={previous_date}"
+        )
+
+    return {
+        "ok": len(errors) == 0,
+        "errors": errors,
+        "warnings": warnings,
+        "expected_record_count": int(len(universe)),
+        "actual_record_count": int(len(records)),
+        "market_date": market_date,
+    }
+
+
+def _history_columns() -> list[str]:
+    cols = [
+        "market_date",
+        "generated_at_utc",
+        "ticker",
+        "company",
+        "sector",
+        "theme",
+        "industry_etf",
+        "market_cap",
+        "last_close",
+        "last_date",
+    ]
+    periods = list(PERIODS.keys()) + ["YTD"]
+    for p in periods:
+        cols.extend([
+            f"ret_{p}",
+            f"industry_etf_ret_{p}",
+            f"industry_excess_{p}",
+            f"industry_z_{p}",
+            f"industry_z_sigma_{p}",
+            f"industry_z_obs_{p}",
+            f"spx_ret_{p}",
+            f"spx_excess_{p}",
+            f"spx_z_{p}",
+            f"spx_z_sigma_{p}",
+            f"spx_z_obs_{p}",
+            f"es_ret_{p}",
+            f"es_excess_{p}",
+            f"es_z_{p}",
+            f"es_z_sigma_{p}",
+            f"es_z_obs_{p}",
+        ])
+    return cols
+
+
+def build_history_rows(snapshot: dict) -> pd.DataFrame:
+    market_date = snapshot.get("latest_market_date")
+    generated = snapshot.get("generated_at_utc")
+    spx = snapshot.get("spx") or {}
+    es = snapshot.get("es") or {}
+    rows = []
+
+    for r in snapshot.get("records", []):
+        row = {
+            "market_date": market_date,
+            "generated_at_utc": generated,
+            "ticker": r.get("ticker"),
+            "company": r.get("company"),
+            "sector": r.get("sector"),
+            "theme": r.get("theme"),
+            "industry_etf": r.get("benchmark"),
+            "market_cap": r.get("market_cap"),
+            "last_close": r.get("last_close"),
+            "last_date": r.get("last_date"),
+        }
+
+        for p in list(PERIODS.keys()) + ["YTD"]:
+            row[f"ret_{p}"] = r.get(f"ret_{p}")
+            row[f"industry_etf_ret_{p}"] = r.get(f"industry_ret_{p}")
+            row[f"industry_excess_{p}"] = r.get(f"excess_{p}")
+            row[f"industry_z_{p}"] = r.get(f"industry_z_{p}")
+            row[f"industry_z_sigma_{p}"] = r.get(f"industry_z_sigma_{p}")
+            row[f"industry_z_obs_{p}"] = r.get(f"industry_z_obs_{p}")
+            row[f"spx_ret_{p}"] = spx.get(f"ret_{p}")
+            row[f"spx_excess_{p}"] = r.get(f"spx_excess_{p}")
+            row[f"spx_z_{p}"] = r.get(f"spx_z_{p}")
+            row[f"spx_z_sigma_{p}"] = r.get(f"spx_z_sigma_{p}")
+            row[f"spx_z_obs_{p}"] = r.get(f"spx_z_obs_{p}")
+            row[f"es_ret_{p}"] = es.get(f"ret_{p}")
+            row[f"es_excess_{p}"] = r.get(f"es_excess_{p}")
+            row[f"es_z_{p}"] = r.get(f"es_z_{p}")
+            row[f"es_z_sigma_{p}"] = r.get(f"es_z_sigma_{p}")
+            row[f"es_z_obs_{p}"] = r.get(f"es_z_obs_{p}")
+
+        rows.append(row)
+
+    return pd.DataFrame(rows, columns=_history_columns())
+
+
+def upsert_signal_history(snapshot: dict) -> dict:
+    """
+    One row per ticker per US market date.
+    Re-running on the same market date replaces that date's 54 rows rather than
+    appending duplicates. Weekends/holidays therefore do not create extra dates.
+    """
+    current = build_history_rows(snapshot)
+    if current.empty:
+        return {"history_rows_written": 0, "history_total_rows": 0}
+
+    market_date = str(snapshot.get("latest_market_date"))
+    if HISTORY_FILE.exists():
+        old = pd.read_csv(HISTORY_FILE, dtype={"ticker": str})
+        if "market_date" in old.columns:
+            old["market_date"] = old["market_date"].astype(str)
+            old = old[old["market_date"] != market_date]
+        combined = pd.concat([old, current], ignore_index=True, sort=False)
+    else:
+        combined = current
+
+    combined = (
+        combined.drop_duplicates(["market_date", "ticker"], keep="last")
+        .sort_values(["market_date", "ticker"])
+    )
+
+    # Keep a stable schema while still preserving any future columns already
+    # present in the history file.
+    preferred = _history_columns()
+    extra = [c for c in combined.columns if c not in preferred]
+    combined = combined.reindex(columns=preferred + extra)
+    combined.to_csv(HISTORY_FILE, index=False, encoding="utf-8")
+
+    return {
+        "history_rows_written": int(len(current)),
+        "history_total_rows": int(len(combined)),
+        "history_market_date": market_date,
+    }
+
+
+def publish_snapshot_if_healthy(
+    snapshot: dict,
+    prices: pd.DataFrame,
+    meta: pd.DataFrame,
+) -> tuple[dict, dict]:
+    health = validate_snapshot(snapshot, prices, meta)
+
+    if health["ok"]:
+        SNAPSHOT_FILE.write_text(
+            json.dumps(snapshot, ensure_ascii=False, allow_nan=False),
+            encoding="utf-8",
+        )
+        history_info = upsert_signal_history(snapshot)
+        health.update(history_info)
+        health["published"] = True
+    else:
+        # Keep the last known-good dashboard and history untouched.
+        health.update({
+            "history_rows_written": 0,
+            "published": False,
+        })
+
+    return health, snapshot
 
 def main():
     old = load_prices()
@@ -707,10 +979,7 @@ def main():
 
     prices = load_prices()
     snapshot = build_snapshot(prices, meta)
-    SNAPSHOT_FILE.write_text(
-        json.dumps(snapshot, ensure_ascii=False, allow_nan=False),
-        encoding="utf-8",
-    )
+    health, _ = publish_snapshot_if_healthy(snapshot, prices, meta)
 
     tracked = set(base_symbols) | {ES_DISPLAY, SPX_DISPLAY}
     counts_final = (
@@ -720,15 +989,22 @@ def main():
         .to_dict()
     )
 
+    published_snapshot = load_published_snapshot()
     status = {
-        "ok": True,
+        "ok": bool(health["ok"]),
+        "published": bool(health.get("published", False)),
         "provider": provider,
         "es_provider": "yfinance:ES=F",
         "spx_provider": "yfinance:^GSPC",
         "generated_at_utc": snapshot["generated_at_utc"],
-        "latest_market_date": snapshot["latest_market_date"],
+        "candidate_market_date": snapshot["latest_market_date"],
+        "published_market_date": published_snapshot.get("latest_market_date"),
         "request_budget_used": budget.used,
         "record_count": len(snapshot["records"]),
+        "health_errors": health.get("errors", []),
+        "health_warnings": health.get("warnings", []),
+        "history_rows_written": int(health.get("history_rows_written", 0)),
+        "history_total_rows": int(health.get("history_total_rows", 0)),
         "missing_universe_tickers": sorted(
             set(universe.ticker)
             - {r["ticker"] for r in snapshot["records"]}
