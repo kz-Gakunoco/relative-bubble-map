@@ -54,7 +54,8 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto San
     <div class="label">Y軸</div>
     <select id="metric" class="control">
       <option value="ret">変動率</option>
-      <option value="excess">比較ETF超過リターン</option>
+      <option value="excess">業種ETF超過リターン</option>
+      <option value="industry_z">業種ETF乖離 Zスコア</option>
       <option value="es_excess">ES超過リターン</option>
       <option value="es_z">ES乖離 Zスコア</option>
       <option value="spx_excess">SPX超過リターン</option>
@@ -91,7 +92,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto San
     <div class="label">表示 / ライン</div>
     <div class="checkrow">
       <label class="check"><input id="labels" type="checkbox" checked>ティッカー</label>
-      <label class="check"><input id="bench" type="checkbox">比較ETF名</label>
+      <label class="check"><input id="bench" type="checkbox">業種ETF表示</label>
       <label class="check" id="wrap-zero"><input id="lineZero" type="checkbox" checked>0線</label>
       <label class="check" id="wrap-weighted"><input id="lineWeighted" type="checkbox" checked>54銘柄加重平均</label>
       <label class="check" id="wrap-es"><input id="lineES" type="checkbox" checked>ES</label>
@@ -138,8 +139,13 @@ const sectorColors={
   '素材':'#d9ac3a','公益':'#6da17d','不動産':'#b679d0'
 };
 const metricLabels={
-  ret:'変動率', excess:'比較ETF超過リターン',
-  es_excess:'ES超過リターン', es_z:'ES乖離 Zスコア'
+  ret:'変動率',
+  excess:'業種ETF超過リターン',
+  industry_z:'業種ETF乖離 Zスコア',
+  es_excess:'ES超過リターン',
+  es_z:'ES乖離 Zスコア',
+  spx_excess:'SPX超過リターン',
+  spx_z:'SPX乖離 Zスコア'
 };
 let SNAP=null;
 
@@ -268,9 +274,9 @@ function chooseLabelPositions(xs,ys,texts,diameters){
 function syncControls(){
   const metric=document.getElementById('metric').value;
   const period=document.getElementById('period');
-  if((metric==='es_z' || metric==='spx_z') && period.value==='YTD') period.value='20D';
+  if((metric==='industry_z' || metric==='es_z' || metric==='spx_z') && period.value==='YTD') period.value='20D';
 
-  const isZ = metric==='es_z' || metric==='spx_z';
+  const isZ = metric==='industry_z' || metric==='es_z' || metric==='spx_z';
   const states={
     'wrap-zero':true,
     'wrap-weighted':metric==='ret',
@@ -289,7 +295,9 @@ function syncControls(){
   const p=period.value;
   const lb=(SNAP&&SNAP.z_lookbacks)?SNAP.z_lookbacks[p]:null;
   document.getElementById('hintbar').textContent=
-    metric==='es_z'
+    metric==='industry_z'
+      ? `${p}の業種ETF乖離Zスコア：各銘柄の「${p}リターン − 割り当て業種ETFの${p}リターン」を、直前${lb||'—'}営業日の同系列分布と比較。`
+      : metric==='es_z'
       ? `${p}のES乖離Zスコア：各銘柄の「${p}リターン − ES ${p}リターン」を、直前${lb||'—'}営業日の同系列分布と比較。`
       : metric==='spx_z'
       ? `${p}のSPX乖離Zスコア：各銘柄の「${p}リターン − SPX ${p}リターン」を、直前${lb||'—'}営業日の同系列分布と比較。`
@@ -310,6 +318,7 @@ function render(){
   const key=(
     metric==='ret'?'ret_':
     metric==='excess'?'excess_':
+    metric==='industry_z'?'industry_z_':
     metric==='es_excess'?'es_excess_':
     metric==='es_z'?'es_z_':
     metric==='spx_excess'?'spx_excess_':'spx_z_'
@@ -325,14 +334,16 @@ function render(){
     arr.forEach(r=>{
       const raw=r[key];
       if(raw==null||!isFinite(raw))return;
-      const plotV=(metric==='es_z'||metric==='spx_z')?raw:raw*100;
+      const plotV=(metric==='industry_z'||metric==='es_z'||metric==='spx_z')?raw:raw*100;
       x.push(xMap.get(r.ticker)??geo.geom[s].center);
       y.push(plotV);
       text.push(showLabels?r.ticker:'');
-      const bench=showBench?`<br>比較ETF: ${r.benchmark}`:'';
-      const isZ = metric==='es_z' || metric==='spx_z';
+      const bench=showBench?`<br>業種ETF: ${r.benchmark}`:'';
+      const isZ = metric==='industry_z' || metric==='es_z' || metric==='spx_z';
       const valText=isZ?fmtZ(raw):pct(raw);
-      const zObs=metric==='es_z'
+      const zObs=metric==='industry_z'
+        ? `<br>業種ETF: ${r.benchmark}<br>Z基準観測数: ${r['industry_z_obs_'+period]||0}`
+        : metric==='es_z'
         ? `<br>Z基準観測数: ${r['es_z_obs_'+period]||0}`
         : metric==='spx_z'
         ? `<br>Z基準観測数: ${r['spx_z_obs_'+period]||0}`
@@ -363,10 +374,10 @@ function render(){
   const diameters=markerSizes.map(v=>sizeMode==='equal'?21:Math.sqrt((2*v)/sizeRef));
   const textpos=chooseLabelPositions(x,y,text,diameters);
 
-  const yr=yRange(y,(metric==='es_z'||metric==='spx_z')?'es_z':metric),shapes=[],annotations=[];
+  const yr=yRange(y,(metric==='industry_z'||metric==='es_z'||metric==='spx_z')?'es_z':metric),shapes=[],annotations=[];
   const showZero=document.getElementById('lineZero').checked;
   if(showZero){
-    shapes.push(lineShape(0,'rgba(203,214,229,.60)',(metric==='es_z'||metric==='spx_z')?1.5:1.2));
+    shapes.push(lineShape(0,'rgba(203,214,229,.60)',(metric==='industry_z'||metric==='es_z'||metric==='spx_z')?1.5:1.2));
   }
 
   if(metric==='ret'){
@@ -396,7 +407,7 @@ function render(){
     }
   }
 
-  if(metric==='es_z' || metric==='spx_z'){
+  if(metric==='industry_z' || metric==='es_z' || metric==='spx_z'){
     if(document.getElementById('lineSigma1').checked){
       shapes.push(lineShape(1,'rgba(174,184,200,.45)',1,'dot'));
       shapes.push(lineShape(-1,'rgba(174,184,200,.45)',1,'dot'));
@@ -432,10 +443,10 @@ function render(){
     },
     yaxis:{
       range:yr,
-      title:(metric==='es_z'||metric==='spx_z')?`${metricLabels[metric]} ${period}`:`${metricLabels[metric]} ${period} (%)`,
+      title:(metric==='industry_z'||metric==='es_z'||metric==='spx_z')?`${metricLabels[metric]} ${period}`:`${metricLabels[metric]} ${period} (%)`,
       titlefont:{size:11,color:'#aeb8c8'},
       gridcolor:'rgba(75,88,106,.42)',zeroline:false,color:'#aeb8c8',
-      tickfont:{size:10},ticksuffix:(metric==='es_z'||metric==='spx_z')?'':'%'
+      tickfont:{size:10},ticksuffix:(metric==='industry_z'||metric==='es_z'||metric==='spx_z')?'':'%'
     },
     shapes,annotations,showlegend:false,
     hoverlabel:{bgcolor:'#2d3544',bordercolor:'#566277',font:{color:'#fff'}},
