@@ -421,6 +421,18 @@ def build_snapshot(prices: pd.DataFrame, meta: pd.DataFrame) -> dict:
                 None if pd.isna(r) or sr is None else r - float(sr)
             )
 
+            # Relative performance versus each stock's assigned industry ETF.
+            if b is not None and not b.empty:
+                _, iz, isigma, iobs = rolling_relative_z(
+                    g, b, n, Z_LOOKBACKS[label]
+                )
+            else:
+                iz, isigma, iobs = np.nan, np.nan, 0
+
+            item[f"industry_z_{label}"] = None if pd.isna(iz) else iz
+            item[f"industry_z_sigma_{label}"] = None if pd.isna(isigma) else isigma
+            item[f"industry_z_obs_{label}"] = int(iobs)
+
             if es is not None and not es.empty:
                 _, ez, esigma, eobs = rolling_relative_z(
                     g, es, n, Z_LOOKBACKS[label]
@@ -461,6 +473,9 @@ def build_snapshot(prices: pd.DataFrame, meta: pd.DataFrame) -> dict:
         )
         # YTD Z-score is intentionally unsupported because the return window
         # changes with the calendar date and has strong seasonality.
+        item["industry_z_YTD"] = None
+        item["industry_z_sigma_YTD"] = None
+        item["industry_z_obs_YTD"] = 0
         item["es_z_YTD"] = None
         item["es_z_sigma_YTD"] = None
         item["es_z_obs_YTD"] = 0
