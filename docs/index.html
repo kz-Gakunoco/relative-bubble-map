@@ -57,6 +57,8 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto San
       <option value="excess">比較ETF超過リターン</option>
       <option value="es_excess">ES超過リターン</option>
       <option value="es_z">ES乖離 Zスコア</option>
+      <option value="spx_excess">SPX超過リターン</option>
+      <option value="spx_z">SPX乖離 Zスコア</option>
     </select>
   </div>
 
@@ -93,6 +95,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto San
       <label class="check" id="wrap-zero"><input id="lineZero" type="checkbox" checked>0線</label>
       <label class="check" id="wrap-weighted"><input id="lineWeighted" type="checkbox" checked>54銘柄加重平均</label>
       <label class="check" id="wrap-es"><input id="lineES" type="checkbox" checked>ES</label>
+      <label class="check" id="wrap-spx"><input id="lineSPX" type="checkbox" checked>SPX</label>
       <label class="check" id="wrap-sigma1"><input id="lineSigma1" type="checkbox" checked>±1σ</label>
       <label class="check" id="wrap-sigma2"><input id="lineSigma2" type="checkbox" checked>±2σ</label>
     </div>
@@ -106,7 +109,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto San
 <main class="main">
   <div id="chart" class="chart"></div>
   <div class="footer">
-    データ取得失敗時は前回の正常データを維持します。ESはYahoo Financeの連続先物シンボル ES=F を使用します。
+    データ取得失敗時は前回の正常データを維持します。ESはYahoo Financeの ES=F、SPXは ^GSPC を使用します。
   </div>
 </main>
 
@@ -265,14 +268,16 @@ function chooseLabelPositions(xs,ys,texts,diameters){
 function syncControls(){
   const metric=document.getElementById('metric').value;
   const period=document.getElementById('period');
-  if(metric==='es_z' && period.value==='YTD') period.value='20D';
+  if((metric==='es_z' || metric==='spx_z') && period.value==='YTD') period.value='20D';
 
+  const isZ = metric==='es_z' || metric==='spx_z';
   const states={
     'wrap-zero':true,
     'wrap-weighted':metric==='ret',
     'wrap-es':metric==='ret',
-    'wrap-sigma1':metric==='es_z',
-    'wrap-sigma2':metric==='es_z'
+    'wrap-spx':metric==='ret',
+    'wrap-sigma1':isZ,
+    'wrap-sigma2':isZ
   };
   Object.entries(states).forEach(([id,on])=>{
     const w=document.getElementById(id);
@@ -285,7 +290,9 @@ function syncControls(){
   const lb=(SNAP&&SNAP.z_lookbacks)?SNAP.z_lookbacks[p]:null;
   document.getElementById('hintbar').textContent=
     metric==='es_z'
-      ? `${p}のES乖離Zスコア：各銘柄の「${p}リターン − ES ${p}リターン」を、直前${lb||'—'}営業日の同系列分布と比較。現在値は基準分布の平均・標準偏差計算から除外しています。`
+      ? `${p}のES乖離Zスコア：各銘柄の「${p}リターン − ES ${p}リターン」を、直前${lb||'—'}営業日の同系列分布と比較。`
+      : metric==='spx_z'
+      ? `${p}のSPX乖離Zスコア：各銘柄の「${p}リターン − SPX ${p}リターン」を、直前${lb||'—'}営業日の同系列分布と比較。`
       : 'バブルをクリックするとTradingViewを開きます。ラインは上部のチェックで個別に表示/非表示できます。';
 }
 
@@ -300,7 +307,13 @@ function render(){
   const showLabels=document.getElementById('labels').checked,
         showBench=document.getElementById('bench').checked;
 
-  const key=(metric==='ret'?'ret_':metric==='excess'?'excess_':metric==='es_excess'?'es_excess_':'es_z_')+period;
+  const key=(
+    metric==='ret'?'ret_':
+    metric==='excess'?'excess_':
+    metric==='es_excess'?'es_excess_':
+    metric==='es_z'?'es_z_':
+    metric==='spx_excess'?'spx_excess_':'spx_z_'
+  )+period;
 
   const bySec={};sectorOrder.forEach(s=>bySec[s]=[]);
   SNAP.records.forEach(r=>{if(bySec[r.sector])bySec[r.sector].push(r)});
@@ -317,8 +330,13 @@ function render(){
       y.push(plotV);
       text.push(showLabels?r.ticker:'');
       const bench=showBench?`<br>比較ETF: ${r.benchmark}`:'';
-      const valText=metric==='es_z'?fmtZ(raw):pct(raw);
-      const zObs=metric==='es_z'?`<br>Z基準観測数: ${r['es_z_obs_'+period]||0}`:'';
+      const isZ = metric==='es_z' || metric==='spx_z';
+      const valText=isZ?fmtZ(raw):pct(raw);
+      const zObs=metric==='es_z'
+        ? `<br>Z基準観測数: ${r['es_z_obs_'+period]||0}`
+        : metric==='spx_z'
+        ? `<br>Z基準観測数: ${r['spx_z_obs_'+period]||0}`
+        : '';
       hover.push(
         `<b>${r.ticker}</b> ${r.company}`+
         `<br>${r.sector} / ${r.theme}${bench}`+
@@ -345,7 +363,7 @@ function render(){
   const diameters=markerSizes.map(v=>sizeMode==='equal'?21:Math.sqrt((2*v)/sizeRef));
   const textpos=chooseLabelPositions(x,y,text,diameters);
 
-  const yr=yRange(y,metric),shapes=[],annotations=[];
+  const yr=yRange(y,(metric==='es_z'||metric==='spx_z')?'es_z':metric),shapes=[],annotations=[];
   const showZero=document.getElementById('lineZero').checked;
   if(showZero){
     shapes.push(lineShape(0,'rgba(203,214,229,.60)',metric==='es_z'?1.5:1.2));
@@ -368,9 +386,17 @@ function render(){
         annotations.push(lineAnnotation(v,`ES ${v.toFixed(2)}%`,'#58b4ff'));
       }
     }
+    if(document.getElementById('lineSPX').checked){
+      const sr=SNAP.spx&&SNAP.spx['ret_'+period];
+      if(sr!=null){
+        const v=sr*100;
+        shapes.push(lineShape(v,'rgba(108,220,160,.95)',1.8,'dot'));
+        annotations.push(lineAnnotation(v,`SPX ${v.toFixed(2)}%`,'#6cdca0'));
+      }
+    }
   }
 
-  if(metric==='es_z'){
+  if(metric==='es_z' || metric==='spx_z'){
     if(document.getElementById('lineSigma1').checked){
       shapes.push(lineShape(1,'rgba(174,184,200,.45)',1,'dot'));
       shapes.push(lineShape(-1,'rgba(174,184,200,.45)',1,'dot'));
@@ -406,7 +432,7 @@ function render(){
     },
     yaxis:{
       range:yr,
-      title:metric==='es_z'?`ES乖離 Zスコア ${period}`:`${metricLabels[metric]} ${period} (%)`,
+      title:(metric==='es_z'||metric==='spx_z')?`${metricLabels[metric]} ${period}`:`${metricLabels[metric]} ${period} (%)`,
       titlefont:{size:11,color:'#aeb8c8'},
       gridcolor:'rgba(75,88,106,.42)',zeroline:false,color:'#aeb8c8',
       tickfont:{size:10},ticksuffix:metric==='es_z'?'':'%'
