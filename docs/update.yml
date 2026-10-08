@@ -1,0 +1,88 @@
+name: Update Bubble Map
+
+on:
+  schedule:
+    # 07:30 JST every day (GitHub cron is UTC)
+    - cron: "30 22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bubble-map-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Update market data, validate, and store daily signals
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: python update.py
+
+      - name: Write run summary
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("data/status.json")
+          if not p.exists():
+              print("status.json was not created")
+              raise SystemExit(0)
+          s = json.loads(p.read_text(encoding="utf-8"))
+          lines = [
+              "## Relative Bubble Map update",
+              f"- Health: {'OK' if s.get('ok') else 'FAILED'}",
+              f"- Published: {s.get('published')}",
+              f"- Candidate market date: {s.get('candidate_market_date')}",
+              f"- Published market date: {s.get('published_market_date')}",
+              f"- Records: {s.get('record_count')}",
+              f"- Daily history rows written: {s.get('history_rows_written')}",
+              f"- History total rows: {s.get('history_total_rows')}",
+          ]
+          if s.get("health_warnings"):
+              lines.append("- Warnings: " + " | ".join(s["health_warnings"]))
+          if s.get("health_errors"):
+              lines.append("- Errors: " + " | ".join(s["health_errors"]))
+          Path("/tmp/summary.md").write_text("\n".join(lines), encoding="utf-8")
+          PY
+          cat /tmp/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit refreshed data and history
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data docs/snapshot.json
+          git diff --cached --quiet || git commit -m "chore: refresh market data and signal history"
+          git push
+
+      - name: Fail run if integrity check failed
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("data/status.json")
+          if not p.exists():
+              raise SystemExit("status.json missing")
+          s = json.loads(p.read_text(encoding="utf-8"))
+          if not s.get("ok"):
+              raise SystemExit("Integrity check failed: " + " | ".join(s.get("health_errors", [])))
+          print("Integrity check OK")
+          PY
