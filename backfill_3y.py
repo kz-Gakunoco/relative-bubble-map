@@ -22,6 +22,8 @@ OVERLAP_BUFFER_DAYS = 15
 
 ES_DISPLAY = "ES"
 ES_PROVIDER = "ES=F"
+SPX_DISPLAY = "SPX"
+SPX_PROVIDER = "^GSPC"
 
 
 def load_existing() -> pd.DataFrame:
@@ -101,7 +103,8 @@ def main():
         provider_lookup[b] = b
 
     provider_lookup[ES_DISPLAY] = ES_PROVIDER
-    display_symbols.append(ES_DISPLAY)
+    provider_lookup[SPX_DISPLAY] = SPX_PROVIDER
+    display_symbols.extend([ES_DISPLAY, SPX_DISPLAY])
     display_symbols = list(dict.fromkeys(display_symbols))
 
     today = datetime.now(timezone.utc).date()
