@@ -123,7 +123,20 @@ def refresh_meta_yf(universe: pd.DataFrame, old: pd.DataFrame) -> pd.DataFrame:
         market_cap = prev.get("market_cap", np.nan)
         try:
             fi = yf.Ticker(provider).fast_info
-            v = fi.get("market_cap") if hasattr(fi, "get") else None
+            v = None
+            # yfinance FastInfo exposes market_cap primarily as an attribute.
+            try:
+                v = fi.market_cap
+            except Exception:
+                pass
+            if v is None:
+                for k in ("market_cap", "marketCap"):
+                    try:
+                        v = fi[k]
+                        if v is not None:
+                            break
+                    except Exception:
+                        pass
             if v:
                 market_cap = float(v)
         except Exception:
@@ -164,6 +177,17 @@ def refresh_meta_fmp(universe: pd.DataFrame, old: pd.DataFrame, api_key: str) ->
 
 def meta_is_stale() -> bool:
     if not META_FILE.exists():
+        return True
+    try:
+        m = pd.read_csv(META_FILE)
+        expected = set(universe.ticker.astype(str))
+        actual = set(m.get("ticker", pd.Series(dtype=str)).astype(str))
+        # Universe changed (e.g. DUK -> CEG) or any market cap is missing -> retry now.
+        if expected != actual:
+            return True
+        if "market_cap" not in m.columns or m["market_cap"].isna().any():
+            return True
+    except Exception:
         return True
     mtime = datetime.fromtimestamp(META_FILE.stat().st_mtime, tz=timezone.utc)
     return datetime.now(timezone.utc) - mtime > timedelta(days=int(settings.get("meta_refresh_days", 7)))
@@ -293,6 +317,28 @@ def main():
             fresh = pd.concat(fresh_parts, ignore_index=True)
             old = pd.concat([old, fresh], ignore_index=True)
             save_prices(old)
+
+        # Verify history after the batch request. Yahoo batch downloads can silently
+        # return short/partial history for one symbol. Retry deficient symbols one by one.
+        counts_after = old.groupby("ticker")["date"].nunique().to_dict() if not old.empty else {}
+        deficient = [t for t in all_symbols.ticker if counts_after.get(t, 0) < 260]
+        if deficient:
+            print("SINGLE-SYMBOL RETRY:", ", ".join(sorted(deficient)))
+            retry_parts = []
+            for t in deficient:
+                p = provider_lookup[t]
+                try:
+                    if provider == "fmp":
+                        x = fmp_prices({t: p}, str(full_start_dt), str(end_dt), api_key)
+                    else:
+                        x = yfinance_prices({t: p}, str(full_start_dt), str(end_dt))
+                    if not x.empty:
+                        retry_parts.append(x)
+                except Exception as single_e:
+                    print(f"SINGLE RETRY WARNING {t}: {single_e}")
+            if retry_parts:
+                old = pd.concat([old] + retry_parts, ignore_index=True)
+                save_prices(old)
     except Exception as e:
         # Preserve prior data; never destroy a working snapshot because an API failed.
         print(f"PRICE UPDATE WARNING: {e}")
@@ -324,6 +370,15 @@ def main():
         "missing_universe_tickers": sorted(
             set(universe.ticker) - {r["ticker"] for r in snapshot["records"]}
         ),
+        "insufficient_history_tickers": {
+            str(t): int(n)
+            for t, n in (
+                prices[prices["ticker"].isin(set(universe.ticker) | set(universe.benchmark))]
+                .groupby("ticker")["date"].nunique()
+                .to_dict()
+            ).items()
+            if int(n) < 260
+        },
     }
     STATUS_FILE.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(status, ensure_ascii=False, indent=2))
