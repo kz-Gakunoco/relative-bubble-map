@@ -6,228 +6,457 @@
 <title>Relative Bubble Map</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
-:root{--bg:#171c24;--panel:#222936;--panel2:#2d3544;--line:#3b4658;--text:#e8edf5;--muted:#9da9ba;--accent:#4aa8ff}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto Sans JP",system-ui,sans-serif}
-.header{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);background:#1f2631}
-.title{font-weight:700;letter-spacing:.02em}.status{font-size:12px;color:var(--muted)}
-.shell{display:grid;grid-template-columns:245px 1fr;min-height:calc(100vh - 52px)}
-.sidebar{padding:16px;border-right:1px solid var(--line);background:#202733}
-.group{margin-bottom:16px}.label{font-size:11px;color:var(--muted);margin:0 0 6px}.control{width:100%;background:#343d4d;color:var(--text);border:1px solid #4a566a;border-radius:4px;padding:10px;font-weight:600}
-.check{display:flex;gap:8px;align-items:center;margin:10px 0;font-size:13px}.hint{font-size:11px;color:var(--muted);line-height:1.55;margin-top:18px}
-.main{position:relative;min-width:0}.chart{width:100%;height:min(72vh,760px);min-height:560px}
-.footer{height:36px;padding:8px 18px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
-.badge{display:inline-block;padding:2px 7px;border:1px solid var(--line);border-radius:999px;margin-left:7px}
-.mode-note{display:block;margin-top:8px;color:#c0c9d6;font-size:10px;line-height:1.45}
-@media(max-width:900px){.shell{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.group{margin:0}.chart{height:70vh}}
+:root{
+  --bg:#171c24;--panel:#202733;--panel2:#2d3544;--line:#3b4658;
+  --text:#e8edf5;--muted:#9da9ba;--accent:#4aa8ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto Sans JP",system-ui,sans-serif}
+.header{
+  height:48px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;border-bottom:1px solid var(--line);background:#1f2631
+}
+.title{font-weight:700;letter-spacing:.02em}.status{font-size:11px;color:var(--muted)}
+.toolbar{
+  display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;padding:10px 14px 9px;
+  border-bottom:1px solid var(--line);background:var(--panel)
+}
+.group{min-width:142px}.group.small{min-width:116px}.group.lines{min-width:0;flex:1}
+.label{font-size:10px;color:var(--muted);margin:0 0 4px}
+.control{
+  width:100%;background:#343d4d;color:var(--text);border:1px solid #4a566a;
+  border-radius:4px;padding:8px 9px;font-weight:600;font-size:12px
+}
+.checkrow{display:flex;gap:11px;align-items:center;flex-wrap:wrap;min-height:34px}
+.check{display:flex;gap:5px;align-items:center;font-size:11px;white-space:nowrap}
+.check.disabled{opacity:.38}
+.hintbar{
+  padding:6px 16px;color:var(--muted);font-size:10px;border-bottom:1px solid #293241;
+  background:#1b222c
+}
+.main{position:relative;min-width:0}
+.chart{width:100%;height:min(72vh,760px);min-height:560px}
+.footer{height:34px;padding:8px 16px;color:var(--muted);font-size:10px;border-top:1px solid var(--line)}
+.badge{display:inline-block;padding:2px 7px;border:1px solid var(--line);border-radius:999px;margin-left:6px}
+@media(max-width:1000px){
+  .group{min-width:130px}.toolbar{gap:7px}.chart{height:68vh}
+}
 </style>
 </head>
 <body>
-<div class="header"><div class="title">Relative Bubble Map</div><div id="status" class="status">読み込み中...</div></div>
-<div class="shell">
-<aside class="sidebar">
-  <div class="group"><div class="label">Y軸</div><select id="metric" class="control"><option value="ret">変動率</option><option value="excess">ベンチマーク超過リターン</option></select></div>
-  <div class="group"><div class="label">期間</div><select id="period" class="control"><option>1D</option><option>5D</option><option selected>20D</option><option>60D</option><option>3M</option><option>6M</option><option>12M</option><option>YTD</option></select></div>
-  <div class="group"><div class="label">バブルサイズ</div><select id="size" class="control"><option value="market_cap">時価総額</option><option value="equal">均一</option></select></div>
-  <div class="group"><div class="label">バブルカラー</div><select id="color" class="control"><option value="sector">セクター</option><option value="performance">パフォーマンス</option></select></div>
-  <div class="group"><label class="check"><input id="labels" type="checkbox" checked> ティッカー表示</label><label class="check"><input id="bench" type="checkbox"> 比較ETFをラベルに表示</label></div>
-  <div class="hint">バブルをクリックするとTradingViewを開きます。<br>セクターは横方向、Y軸は選択した期間の値です。超過リターンは各銘柄に設定された比較ETFとの差です。<span class="mode-note">時価総額表示は「面積」に比例。時価総額差を残しつつ、セクター間隔とキャンバスの高さを圧縮して一覧性を優先しています。端の銘柄が欠けないよう必要最小限の余白を確保しています。</span></div>
-</aside>
-<main class="main"><div id="chart" class="chart"></div><div class="footer">データが更新できなかった場合も前回の正常データを維持します。</div></main>
+<div class="header">
+  <div class="title">Relative Bubble Map</div>
+  <div id="status" class="status">読み込み中...</div>
 </div>
-<script>
-const sectorOrder=['情報技術','コミュニケーション・サービス','一般消費財','生活必需品','金融','ヘルスケア','資本財・産業','エネルギー','素材','公益','不動産'];
-const sectorColors={'情報技術':'#8b6ce6','コミュニケーション・サービス':'#25b3a7','一般消費財':'#e09a2b','生活必需品':'#ca8bf2','金融':'#9dbb28','ヘルスケア':'#e15b87','資本財・産業':'#2aa4b3','エネルギー':'#18a55b','素材':'#d9ac3a','公益':'#6da17d','不動産':'#b679d0'};
-let SNAP=null;
-function pct(v){return v==null?'—':(v*100).toFixed(2)+'%'}
-function money(v){if(v==null||!isFinite(v))return '—'; if(v>=1e12)return '$'+(v/1e12).toFixed(2)+'T'; if(v>=1e9)return '$'+(v/1e9).toFixed(1)+'B'; return '$'+Math.round(v/1e6)+'M'}
 
-// Sector widths expand with the number of registered names, so dense sectors
-// such as Technology get more horizontal room than 3-name sectors.
+<div class="toolbar">
+  <div class="group">
+    <div class="label">Y軸</div>
+    <select id="metric" class="control">
+      <option value="ret">変動率</option>
+      <option value="excess">比較ETF超過リターン</option>
+      <option value="es_excess">ES超過リターン</option>
+      <option value="es_z">ES乖離 Zスコア</option>
+    </select>
+  </div>
+
+  <div class="group small">
+    <div class="label">期間</div>
+    <select id="period" class="control">
+      <option>1D</option><option>5D</option><option selected>20D</option>
+      <option>60D</option><option>3M</option><option>6M</option>
+      <option>12M</option><option>YTD</option>
+    </select>
+  </div>
+
+  <div class="group small">
+    <div class="label">バブルサイズ</div>
+    <select id="size" class="control">
+      <option value="market_cap">時価総額</option>
+      <option value="equal">均一</option>
+    </select>
+  </div>
+
+  <div class="group small">
+    <div class="label">バブルカラー</div>
+    <select id="color" class="control">
+      <option value="sector">セクター</option>
+      <option value="performance">パフォーマンス</option>
+    </select>
+  </div>
+
+  <div class="group lines">
+    <div class="label">表示 / ライン</div>
+    <div class="checkrow">
+      <label class="check"><input id="labels" type="checkbox" checked>ティッカー</label>
+      <label class="check"><input id="bench" type="checkbox">比較ETF名</label>
+      <label class="check" id="wrap-zero"><input id="lineZero" type="checkbox" checked>0線</label>
+      <label class="check" id="wrap-weighted"><input id="lineWeighted" type="checkbox" checked>54銘柄加重平均</label>
+      <label class="check" id="wrap-es"><input id="lineES" type="checkbox" checked>ES</label>
+      <label class="check" id="wrap-sigma1"><input id="lineSigma1" type="checkbox" checked>±1σ</label>
+      <label class="check" id="wrap-sigma2"><input id="lineSigma2" type="checkbox" checked>±2σ</label>
+    </div>
+  </div>
+</div>
+
+<div id="hintbar" class="hintbar">
+  バブルをクリックするとTradingViewを開きます。20DのES乖離Zスコアは、直前252営業日の「20D株式リターン − 20D ESリターン」分布を基準に計算します。
+</div>
+
+<main class="main">
+  <div id="chart" class="chart"></div>
+  <div class="footer">
+    データ取得失敗時は前回の正常データを維持します。ESはYahoo Financeの連続先物シンボル ES=F を使用します。
+  </div>
+</main>
+
+<script>
+const sectorOrder=[
+  '情報技術','コミュニケーション・サービス','一般消費財','生活必需品',
+  '金融','ヘルスケア','資本財・産業','エネルギー','素材','公益','不動産'
+];
+const sectorTickText={
+  '情報技術':'情報技術',
+  'コミュニケーション・サービス':'コミュニケーション<br>サービス',
+  '一般消費財':'一般消費財',
+  '生活必需品':'生活必需品',
+  '金融':'金融',
+  'ヘルスケア':'ヘルスケア',
+  '資本財・産業':'資本財<br>産業',
+  'エネルギー':'エネルギー',
+  '素材':'素材',
+  '公益':'公益',
+  '不動産':'不動産'
+};
+const sectorColors={
+  '情報技術':'#8b6ce6','コミュニケーション・サービス':'#25b3a7',
+  '一般消費財':'#e09a2b','生活必需品':'#ca8bf2','金融':'#9dbb28',
+  'ヘルスケア':'#e15b87','資本財・産業':'#2aa4b3','エネルギー':'#18a55b',
+  '素材':'#d9ac3a','公益':'#6da17d','不動産':'#b679d0'
+};
+const metricLabels={
+  ret:'変動率', excess:'比較ETF超過リターン',
+  es_excess:'ES超過リターン', es_z:'ES乖離 Zスコア'
+};
+let SNAP=null;
+
+function pct(v){return v==null?'—':(v*100).toFixed(2)+'%'}
+function money(v){
+  if(v==null||!isFinite(v))return '—';
+  if(v>=1e12)return '$'+(v/1e12).toFixed(2)+'T';
+  if(v>=1e9)return '$'+(v/1e9).toFixed(1)+'B';
+  return '$'+Math.round(v/1e6)+'M'
+}
+function fmtZ(v){return v==null?'—':v.toFixed(2)+'σ'}
+
 function buildSectorGeometry(bySec){
-  const gap=0.18, geom={}, ticks=[], tickText=[], boundaries=[];
+  const gap=0.18,geom={},ticks=[],tickText=[];
   let cursor=0;
-  sectorOrder.forEach((s,idx)=>{
+  sectorOrder.forEach(s=>{
     const n=Math.max(1,(bySec[s]||[]).length);
     const width=Math.max(1.05,0.72+n*0.24);
-    const left=cursor, right=cursor+width, center=(left+right)/2;
+    const left=cursor,right=cursor+width,center=(left+right)/2;
     geom[s]={left,right,center,width};
-    ticks.push(center); tickText.push(s);
-    if(idx>0) boundaries.push(left-gap/2);
+    ticks.push(center);tickText.push(sectorTickText[s]||s);
     cursor=right+gap;
   });
-  // Extra horizontal padding prevents edge bubbles from being clipped.
-  return {geom,ticks,tickText,boundaries,min:-0.52,max:Math.max(1,cursor-gap+0.52)};
+  return {geom,ticks,tickText,min:-0.52,max:Math.max(1,cursor-gap+0.52)};
 }
 
-// Assign points to a small set of horizontal lanes. We sort by performance
-// first, which reduces direct overlaps among names with similar Y values.
 function laneX(arr,g,key){
   const valid=arr.filter(r=>r[key]!=null).slice().sort((a,b)=>a[key]-b[key]);
   const lanes=Math.max(2,Math.min(6,Math.ceil(Math.sqrt(valid.length*1.8))));
+  const innerLeft=g.left+g.width*0.08, innerWidth=g.width*0.84;
   const lanePos=[];
-  for(let j=0;j<lanes;j++){
-    lanePos.push(g.left+g.width*((j+0.5)/lanes));
-  }
+  for(let j=0;j<lanes;j++) lanePos.push(innerLeft+innerWidth*((j+0.5)/lanes));
   const map=new Map();
   valid.forEach((r,i)=>{
-    // alternate lane direction by row for a slightly more organic packing
-    const block=Math.floor(i/lanes);
-    const lane=i%lanes;
-    const laneIndex=(block%2===0)?lane:(lanes-1-lane);
-    map.set(r.ticker,lanePos[laneIndex]);
+    const block=Math.floor(i/lanes),lane=i%lanes;
+    const li=(block%2===0)?lane:(lanes-1-lane);
+    map.set(r.ticker,lanePos[li]);
   });
   return map;
 }
 
-function yRange(values){
-  if(!values.length)return [-5,5];
-  let lo=Math.min(...values), hi=Math.max(...values);
-  lo=Math.min(lo,0); hi=Math.max(hi,0);
-  let span=Math.max(hi-lo,2.0);
-  const pad=Math.max(0.7,span*0.08);
-  lo-=pad; hi+=pad;
-  // Keep tick labels reasonably clean.
-  return [Math.floor(lo*2)/2,Math.ceil(hi*2)/2];
+function yRange(values,metric){
+  if(!values.length)return metric==='es_z'?[-3,3]:[-5,5];
+  let lo=Math.min(...values),hi=Math.max(...values);
+  if(metric==='es_z'){
+    lo=Math.min(lo,-2);hi=Math.max(hi,2);
+    const span=Math.max(hi-lo,4);
+    const pad=Math.max(.25,span*.07);
+    return [Math.floor((lo-pad)*2)/2,Math.ceil((hi+pad)*2)/2];
+  }
+  lo=Math.min(lo,0);hi=Math.max(hi,0);
+  const span=Math.max(hi-lo,2);
+  const pad=Math.max(.7,span*.08);
+  return [Math.floor((lo-pad)*2)/2,Math.ceil((hi+pad)*2)/2];
+}
+
+function lineShape(y,color,width,dash='solid'){
+  return {
+    type:'line',xref:'paper',yref:'y',x0:0,x1:1,y0:y,y1:y,
+    line:{color,width,dash},layer:'below'
+  };
+}
+function lineAnnotation(y,text,color){
+  return {
+    xref:'paper',yref:'y',x:1.0,y,
+    text,showarrow:false,xanchor:'right',yanchor:'bottom',
+    font:{size:10,color},bgcolor:'rgba(23,28,36,.72)',
+    borderpad:2
+  };
+}
+
+function weightedUniverseReturn(period){
+  const key='ret_'+period;
+  let num=0,den=0,count=0;
+  SNAP.records.forEach(r=>{
+    const ret=r[key],mc=r.market_cap;
+    if(ret==null||mc==null||!isFinite(ret)||!isFinite(mc)||1+ret<=0)return;
+    // Approximate period-start market cap assuming share count is unchanged:
+    // startCap ~= currentCap / (1 + period return)
+    const startCap=mc/(1+ret);
+    num+=startCap*ret;den+=startCap;count++;
+  });
+  return den>0?{value:num/den,count}:null;
+}
+
+function chooseLabelPositions(xs,ys,texts,diameters){
+  const positions=new Array(xs.length).fill('top center');
+  if(!xs.length)return positions;
+  const xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
+  const xr=Math.max(.001,xmax-xmin),yr=Math.max(.001,ymax-ymin);
+  const candidates=[
+    ['top center',0,-1],['bottom center',0,1],
+    ['middle right',-1,0],['middle left',1,0],
+    ['top right',-1,-1],['top left',1,-1],
+    ['bottom right',-1,1],['bottom left',1,1]
+  ];
+  const placed=[];
+  const order=[...xs.keys()].sort((a,b)=>(diameters[b]||0)-(diameters[a]||0));
+
+  order.forEach(i=>{
+    const xn=(xs[i]-xmin)/xr,yn=(ys[i]-ymin)/yr;
+    const w=Math.max(.025,(texts[i]||'').length*.010);
+    const h=.035;
+    let best=candidates[0][0],bestScore=Infinity;
+
+    candidates.forEach(([name,dx,dy])=>{
+      const cx=xn+dx*(w*.65),cy=yn+dy*(h*.8);
+      const box={l:cx-w/2,r:cx+w/2,t:cy-h/2,b:cy+h/2};
+      let score=0;
+      placed.forEach(p=>{
+        const ix=Math.max(0,Math.min(box.r,p.r)-Math.max(box.l,p.l));
+        const iy=Math.max(0,Math.min(box.b,p.b)-Math.max(box.t,p.t));
+        score+=ix*iy*10000;
+      });
+      if(score<bestScore){bestScore=score;best=name}
+    });
+
+    positions[i]=(diameters[i]>=34 && bestScore<.02)?'middle center':best;
+    const chosen=candidates.find(c=>c[0]===positions[i])||candidates[0];
+    const cx=xn+chosen[1]*(w*.65),cy=yn+chosen[2]*(h*.8);
+    placed.push({l:cx-w/2,r:cx+w/2,t:cy-h/2,b:cy+h/2});
+  });
+  return positions;
+}
+
+function syncControls(){
+  const metric=document.getElementById('metric').value;
+  const period=document.getElementById('period');
+  if(metric==='es_z' && period.value==='YTD') period.value='20D';
+
+  const states={
+    'wrap-zero':true,
+    'wrap-weighted':metric==='ret',
+    'wrap-es':metric==='ret',
+    'wrap-sigma1':metric==='es_z',
+    'wrap-sigma2':metric==='es_z'
+  };
+  Object.entries(states).forEach(([id,on])=>{
+    const w=document.getElementById(id);
+    const inp=w.querySelector('input');
+    w.classList.toggle('disabled',!on);
+    inp.disabled=!on;
+  });
+
+  const p=period.value;
+  const lb=(SNAP&&SNAP.z_lookbacks)?SNAP.z_lookbacks[p]:null;
+  document.getElementById('hintbar').textContent=
+    metric==='es_z'
+      ? `${p}のES乖離Zスコア：各銘柄の「${p}リターン − ES ${p}リターン」を、直前${lb||'—'}営業日の同系列分布と比較。現在値は基準分布の平均・標準偏差計算から除外しています。`
+      : 'バブルをクリックするとTradingViewを開きます。ラインは上部のチェックで個別に表示/非表示できます。';
 }
 
 function render(){
- const metric=document.getElementById('metric').value,
-       period=document.getElementById('period').value,
-       sizeMode=document.getElementById('size').value,
-       colorMode=document.getElementById('color').value;
- const showLabels=document.getElementById('labels').checked,
-       showBench=document.getElementById('bench').checked;
- const key=(metric==='ret'?'ret_':'excess_')+period;
+  if(!SNAP)return;
+  syncControls();
 
- const bySec={}; sectorOrder.forEach(s=>bySec[s]=[]);
- SNAP.records.forEach(r=>{if(bySec[r.sector])bySec[r.sector].push(r)});
- const geo=buildSectorGeometry(bySec);
+  const metric=document.getElementById('metric').value,
+        period=document.getElementById('period').value,
+        sizeMode=document.getElementById('size').value,
+        colorMode=document.getElementById('color').value;
+  const showLabels=document.getElementById('labels').checked,
+        showBench=document.getElementById('bench').checked;
 
- const x=[],y=[],text=[],textpos=[],hover=[],marketCaps=[],colors=[],custom=[];
- sectorOrder.forEach(s=>{
-   const arr=bySec[s]||[];
-   const xMap=laneX(arr,geo.geom[s],key);
-   arr.forEach((r,i)=>{
-     const v=r[key];
-     if(v==null)return;
-     x.push(xMap.get(r.ticker) ?? geo.geom[s].center);
-     y.push(v*100);
-     text.push(showLabels?r.ticker:'');
-     const bench=showBench?`<br>比較ETF: ${r.benchmark}`:'';
-     hover.push(
-       `<b>${r.ticker}</b> ${r.company}`+
-       `<br>${r.sector} / ${r.theme}${bench}`+
-       `<br>終値: $${r.last_close.toFixed(2)}`+
-       `<br>${metric==='ret'?'変動率':'超過リターン'} (${period}): ${pct(v)}`+
-       `<br>時価総額: ${money(r.market_cap)}`+
-       `<br>市場日: ${r.last_date}`
-     );
-     marketCaps.push(Math.max(1,(r.market_cap||5e9)/1e9)); // USD bn
-     colors.push(
-       colorMode==='sector'
-        ? sectorColors[s]
-        : (v>=0
-            ? `rgba(61,184,127,${Math.min(.92,.58+Math.abs(v)*2.5)})`
-            : `rgba(223,82,105,${Math.min(.92,.58+Math.abs(v)*2.5)})`)
-     );
-     custom.push(r.provider_ticker||r.ticker);
-   });
- });
+  const key=(metric==='ret'?'ret_':metric==='excess'?'excess_':metric==='es_excess'?'es_excess_':'es_z_')+period;
 
- // Plotly 'area' sizing: max market-cap bubble is capped near 58 px.
- const maxBubblePx=58;
- const maxCap=Math.max(...marketCaps,1);
- const sizeRef=(sizeMode==='market_cap') ? (2*maxCap)/(maxBubblePx*maxBubblePx) : 1;
- const markerSizes=(sizeMode==='equal') ? marketCaps.map(()=>21) : marketCaps;
+  const bySec={};sectorOrder.forEach(s=>bySec[s]=[]);
+  SNAP.records.forEach(r=>{if(bySec[r.sector])bySec[r.sector].push(r)});
+  const geo=buildSectorGeometry(bySec);
 
- // Place labels inside sufficiently large bubbles; smaller names alternate above/below.
- const estimatedDiameter = markerSizes.map(v=>{
-   if(sizeMode==='equal') return 18;
-   return Math.sqrt((2*v)/sizeRef);
- });
- estimatedDiameter.forEach((d,i)=>{
-   if(!showLabels){textpos.push('middle center');return;}
-   if(d>=28) textpos.push('middle center');
-   else textpos.push(i%2===0?'top center':'bottom center');
- });
+  const x=[],y=[],text=[],hover=[],marketCaps=[],colors=[],custom=[];
+  sectorOrder.forEach(s=>{
+    const arr=bySec[s]||[],xMap=laneX(arr,geo.geom[s],key);
+    arr.forEach(r=>{
+      const raw=r[key];
+      if(raw==null||!isFinite(raw))return;
+      const plotV=metric==='es_z'?raw:raw*100;
+      x.push(xMap.get(r.ticker)??geo.geom[s].center);
+      y.push(plotV);
+      text.push(showLabels?r.ticker:'');
+      const bench=showBench?`<br>比較ETF: ${r.benchmark}`:'';
+      const valText=metric==='es_z'?fmtZ(raw):pct(raw);
+      const zObs=metric==='es_z'?`<br>Z基準観測数: ${r['es_z_obs_'+period]||0}`:'';
+      hover.push(
+        `<b>${r.ticker}</b> ${r.company}`+
+        `<br>${r.sector} / ${r.theme}${bench}`+
+        `<br>終値: $${r.last_close.toFixed(2)}`+
+        `<br>${metricLabels[metric]} (${period}): ${valText}${zObs}`+
+        `<br>時価総額: ${money(r.market_cap)}`+
+        `<br>市場日: ${r.last_date}`
+      );
+      marketCaps.push(Math.max(1,(r.market_cap||5e9)/1e9));
+      colors.push(
+        colorMode==='sector'
+          ? sectorColors[s]
+          : (raw>=0
+              ? `rgba(61,184,127,${Math.min(.92,.58+Math.abs(raw)*.18)})`
+              : `rgba(223,82,105,${Math.min(.92,.58+Math.abs(raw)*.18)})`)
+      );
+      custom.push(r.provider_ticker||r.ticker);
+    });
+  });
 
- const yr=yRange(y);
- const shapes=[];
- // No vertical sector divider lines: grouping is communicated by spacing + labels.
- // Stronger zero line (especially useful for excess-return mode)
- shapes.push({
-   type:'line',xref:'paper',yref:'y',x0:0,x1:1,y0:0,y1:0,
-   line:{color:metric==='excess'?'rgba(210,220,233,.75)':'rgba(170,184,202,.52)',width:metric==='excess'?2:1.25}
- });
+  const maxBubblePx=58,maxCap=Math.max(...marketCaps,1);
+  const sizeRef=sizeMode==='market_cap'?(2*maxCap)/(maxBubblePx*maxBubblePx):1;
+  const markerSizes=sizeMode==='equal'?marketCaps.map(()=>21):marketCaps;
+  const diameters=markerSizes.map(v=>sizeMode==='equal'?21:Math.sqrt((2*v)/sizeRef));
+  const textpos=chooseLabelPositions(x,y,text,diameters);
 
- const trace={
-   type:'scatter',
-   mode:showLabels?'markers+text':'markers',
-   x,y,text,textposition:textpos,
-   textfont:{color:'#c3cbd7',size:10},
-   cliponaxis:false,
-   hovertext:hover,hoverinfo:'text',customdata:custom,
-   marker:{
-     size:markerSizes,
-     sizemode:sizeMode==='market_cap'?'area':'diameter',
-     sizeref:sizeRef,
-     sizemin:sizeMode==='market_cap'?13:21,
-     color:colors,
-     line:{width:1,color:'rgba(255,255,255,.34)'},
-     opacity:.78
-   }
- };
+  const yr=yRange(y,metric),shapes=[],annotations=[];
+  const showZero=document.getElementById('lineZero').checked;
+  if(showZero){
+    shapes.push(lineShape(0,'rgba(203,214,229,.60)',metric==='es_z'?1.5:1.2));
+  }
 
- const layout={
-   paper_bgcolor:'#171c24',
-   plot_bgcolor:'#171c24',
-   margin:{l:72,r:24,t:22,b:86},
-   xaxis:{
-     range:[geo.min,geo.max],
-     tickmode:'array',tickvals:geo.ticks,ticktext:geo.tickText,
-     tickangle:-18,
-     tickfont:{size:10,color:'#aeb8c8'},
-     showgrid:false,zeroline:false,color:'#aeb8c8',
-     fixedrange:false
-   },
-   yaxis:{
-     range:yr,
-     title:(metric==='ret'?'変動率 ':'超過リターン ')+period+' (%)',
-     titlefont:{size:11,color:'#aeb8c8'},
-     gridcolor:'rgba(75,88,106,.42)',
-     zeroline:false,
-     color:'#aeb8c8',
-     tickfont:{size:10},
-     ticksuffix:'%'
-   },
-   shapes,
-   showlegend:false,
-   hoverlabel:{bgcolor:'#2d3544',bordercolor:'#566277',font:{color:'#fff'}},
-   dragmode:'pan'
- };
+  if(metric==='ret'){
+    if(document.getElementById('lineWeighted').checked){
+      const wr=weightedUniverseReturn(period);
+      if(wr){
+        const v=wr.value*100;
+        shapes.push(lineShape(v,'rgba(244,188,76,.92)',1.8,'dash'));
+        annotations.push(lineAnnotation(v,`54銘柄加重平均 ${v.toFixed(2)}%`,'#f4bc4c'));
+      }
+    }
+    if(document.getElementById('lineES').checked){
+      const er=SNAP.es&&SNAP.es['ret_'+period];
+      if(er!=null){
+        const v=er*100;
+        shapes.push(lineShape(v,'rgba(88,180,255,.95)',1.8,'dot'));
+        annotations.push(lineAnnotation(v,`ES ${v.toFixed(2)}%`,'#58b4ff'));
+      }
+    }
+  }
 
- Plotly.react('chart',[trace],layout,{
-   responsive:true,displaylogo:false,scrollZoom:true,
-   modeBarButtonsToRemove:['lasso2d','select2d']
- });
+  if(metric==='es_z'){
+    if(document.getElementById('lineSigma1').checked){
+      shapes.push(lineShape(1,'rgba(174,184,200,.45)',1,'dot'));
+      shapes.push(lineShape(-1,'rgba(174,184,200,.45)',1,'dot'));
+      annotations.push(lineAnnotation(1,'+1σ','rgba(190,200,214,.85)'));
+      annotations.push(lineAnnotation(-1,'-1σ','rgba(190,200,214,.85)'));
+    }
+    if(document.getElementById('lineSigma2').checked){
+      shapes.push(lineShape(2,'rgba(244,188,76,.65)',1.4,'dash'));
+      shapes.push(lineShape(-2,'rgba(244,188,76,.65)',1.4,'dash'));
+      annotations.push(lineAnnotation(2,'+2σ','#f4bc4c'));
+      annotations.push(lineAnnotation(-2,'-2σ','#f4bc4c'));
+    }
+  }
 
- const unavailable=SNAP.records.filter(r=>r[key]==null).map(r=>r.ticker);
- const warn=unavailable.length?`<span class="badge">データ不足: ${unavailable.join(', ')}</span>`:'';
- document.getElementById('status').innerHTML=
-   `市場日: <b>${SNAP.latest_market_date||'—'}</b>`+
-   `<span class="badge">登録 ${SNAP.records.length}銘柄</span>`+
-   `<span class="badge">表示 ${y.length}銘柄</span>${warn}`;
+  const trace={
+    type:'scatter',mode:showLabels?'markers+text':'markers',
+    x,y,text,textposition:textpos,textfont:{color:'#c3cbd7',size:10},
+    cliponaxis:false,hovertext:hover,hoverinfo:'text',customdata:custom,
+    marker:{
+      size:markerSizes,sizemode:sizeMode==='market_cap'?'area':'diameter',
+      sizeref:sizeRef,sizemin:sizeMode==='market_cap'?13:21,
+      color:colors,line:{width:1,color:'rgba(255,255,255,.34)'},opacity:.78
+    }
+  };
 
- const el=document.getElementById('chart');
- el.removeAllListeners && el.removeAllListeners('plotly_click');
- el.on('plotly_click',d=>{
-   if(d.points&&d.points[0]){
-     window.open('https://www.tradingview.com/chart/?symbol='+encodeURIComponent(d.points[0].customdata),'_blank');
-   }
- });
+  const layout={
+    paper_bgcolor:'#171c24',plot_bgcolor:'#171c24',
+    margin:{l:72,r:28,t:18,b:78},
+    xaxis:{
+      range:[geo.min,geo.max],tickmode:'array',tickvals:geo.ticks,ticktext:geo.tickText,
+      tickangle:-10,tickfont:{size:10,color:'#aeb8c8'},
+      showgrid:false,zeroline:false,color:'#aeb8c8',fixedrange:false
+    },
+    yaxis:{
+      range:yr,
+      title:metric==='es_z'?`ES乖離 Zスコア ${period}`:`${metricLabels[metric]} ${period} (%)`,
+      titlefont:{size:11,color:'#aeb8c8'},
+      gridcolor:'rgba(75,88,106,.42)',zeroline:false,color:'#aeb8c8',
+      tickfont:{size:10},ticksuffix:metric==='es_z'?'':'%'
+    },
+    shapes,annotations,showlegend:false,
+    hoverlabel:{bgcolor:'#2d3544',bordercolor:'#566277',font:{color:'#fff'}},
+    dragmode:'pan'
+  };
+
+  Plotly.react('chart',[trace],layout,{
+    responsive:true,displaylogo:false,scrollZoom:true,
+    modeBarButtonsToRemove:['lasso2d','select2d']
+  });
+
+  const unavailable=SNAP.records.filter(r=>r[key]==null).map(r=>r.ticker);
+  const warn=unavailable.length?`<span class="badge">データ不足: ${unavailable.join(', ')}</span>`:'';
+  document.getElementById('status').innerHTML=
+    `市場日: <b>${SNAP.latest_market_date||'—'}</b>`+
+    `<span class="badge">登録 ${SNAP.records.length}銘柄</span>`+
+    `<span class="badge">表示 ${y.length}銘柄</span>${warn}`;
+
+  const el=document.getElementById('chart');
+  el.removeAllListeners&&el.removeAllListeners('plotly_click');
+  el.on('plotly_click',d=>{
+    if(d.points&&d.points[0]){
+      window.open(
+        'https://www.tradingview.com/chart/?symbol='+encodeURIComponent(d.points[0].customdata),
+        '_blank'
+      );
+    }
+  });
 }
-async function init(){try{const r=await fetch('snapshot.json?ts='+Date.now());SNAP=await r.json();render()}catch(e){document.getElementById('status').textContent='snapshot.json を読み込めません';console.error(e)}}
-['metric','period','size','color','labels','bench'].forEach(id=>document.getElementById(id).addEventListener('change',render));
+
+async function init(){
+  try{
+    const r=await fetch('snapshot.json?ts='+Date.now());
+    SNAP=await r.json();
+    render();
+  }catch(e){
+    document.getElementById('status').textContent='snapshot.json を読み込めません';
+    console.error(e)
+  }
+}
+
+[
+ 'metric','period','size','color','labels','bench',
+ 'lineZero','lineWeighted','lineES','lineSigma1','lineSigma2'
+].forEach(id=>document.getElementById(id).addEventListener('change',render));
+
 init();
 </script>
-</body></html>
+</body>
+</html>
