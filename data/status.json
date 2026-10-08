@@ -1,12 +1,18 @@
 {
   "ok": true,
+  "published": true,
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-10-08T04:52:30.480650+00:00",
-  "latest_market_date": "2026-10-07",
+  "generated_at_utc": "2026-10-08T05:48:05.649030+00:00",
+  "candidate_market_date": "2026-10-07",
+  "published_market_date": "2026-10-07",
   "request_budget_used": 0,
   "record_count": 54,
+  "health_errors": [],
+  "health_warnings": [],
+  "history_rows_written": 54,
+  "history_total_rows": 54,
   "missing_universe_tickers": [],
   "insufficient_history_tickers": {}
 }
