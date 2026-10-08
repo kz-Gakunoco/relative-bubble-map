@@ -325,7 +325,7 @@ function render(){
     arr.forEach(r=>{
       const raw=r[key];
       if(raw==null||!isFinite(raw))return;
-      const plotV=metric==='es_z'?raw:raw*100;
+      const plotV=(metric==='es_z'||metric==='spx_z')?raw:raw*100;
       x.push(xMap.get(r.ticker)??geo.geom[s].center);
       y.push(plotV);
       text.push(showLabels?r.ticker:'');
@@ -366,7 +366,7 @@ function render(){
   const yr=yRange(y,(metric==='es_z'||metric==='spx_z')?'es_z':metric),shapes=[],annotations=[];
   const showZero=document.getElementById('lineZero').checked;
   if(showZero){
-    shapes.push(lineShape(0,'rgba(203,214,229,.60)',metric==='es_z'?1.5:1.2));
+    shapes.push(lineShape(0,'rgba(203,214,229,.60)',(metric==='es_z'||metric==='spx_z')?1.5:1.2));
   }
 
   if(metric==='ret'){
@@ -435,7 +435,7 @@ function render(){
       title:(metric==='es_z'||metric==='spx_z')?`${metricLabels[metric]} ${period}`:`${metricLabels[metric]} ${period} (%)`,
       titlefont:{size:11,color:'#aeb8c8'},
       gridcolor:'rgba(75,88,106,.42)',zeroline:false,color:'#aeb8c8',
-      tickfont:{size:10},ticksuffix:metric==='es_z'?'':'%'
+      tickfont:{size:10},ticksuffix:(metric==='es_z'||metric==='spx_z')?'':'%'
     },
     shapes,annotations,showlegend:false,
     hoverlabel:{bgcolor:'#2d3544',bordercolor:'#566277',font:{color:'#fff'}},
