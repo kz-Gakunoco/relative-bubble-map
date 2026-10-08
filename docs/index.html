@@ -14,7 +14,7 @@
 .sidebar{padding:16px;border-right:1px solid var(--line);background:#202733}
 .group{margin-bottom:16px}.label{font-size:11px;color:var(--muted);margin:0 0 6px}.control{width:100%;background:#343d4d;color:var(--text);border:1px solid #4a566a;border-radius:4px;padding:10px;font-weight:600}
 .check{display:flex;gap:8px;align-items:center;margin:10px 0;font-size:13px}.hint{font-size:11px;color:var(--muted);line-height:1.55;margin-top:18px}
-.main{position:relative;min-width:0}.chart{width:100%;height:calc(100vh - 88px)}
+.main{position:relative;min-width:0}.chart{width:100%;height:min(72vh,760px);min-height:560px}
 .footer{height:36px;padding:8px 18px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
 .badge{display:inline-block;padding:2px 7px;border:1px solid var(--line);border-radius:999px;margin-left:7px}
 .mode-note{display:block;margin-top:8px;color:#c0c9d6;font-size:10px;line-height:1.45}
@@ -30,7 +30,7 @@
   <div class="group"><div class="label">バブルサイズ</div><select id="size" class="control"><option value="market_cap">時価総額</option><option value="equal">均一</option></select></div>
   <div class="group"><div class="label">バブルカラー</div><select id="color" class="control"><option value="sector">セクター</option><option value="performance">パフォーマンス</option></select></div>
   <div class="group"><label class="check"><input id="labels" type="checkbox" checked> ティッカー表示</label><label class="check"><input id="bench" type="checkbox"> 比較ETFをラベルに表示</label></div>
-  <div class="hint">バブルをクリックするとTradingViewを開きます。<br>セクターは横方向、Y軸は選択した期間の値です。超過リターンは各銘柄に設定された比較ETFとの差です。<span class="mode-note">時価総額表示は「面積」に比例。最小バブル径を大きめに確保し、時価総額の小さい銘柄も視認しやすくしています。端の銘柄が欠けないよう表示範囲にも余白を持たせています。</span></div>
+  <div class="hint">バブルをクリックするとTradingViewを開きます。<br>セクターは横方向、Y軸は選択した期間の値です。超過リターンは各銘柄に設定された比較ETFとの差です。<span class="mode-note">時価総額表示は「面積」に比例。時価総額差を残しつつ、セクター間隔とキャンバスの高さを圧縮して一覧性を優先しています。端の銘柄が欠けないよう必要最小限の余白を確保しています。</span></div>
 </aside>
 <main class="main"><div id="chart" class="chart"></div><div class="footer">データが更新できなかった場合も前回の正常データを維持します。</div></main>
 </div>
@@ -44,11 +44,11 @@ function money(v){if(v==null||!isFinite(v))return '—'; if(v>=1e12)return '$'+(
 // Sector widths expand with the number of registered names, so dense sectors
 // such as Technology get more horizontal room than 3-name sectors.
 function buildSectorGeometry(bySec){
-  const gap=0.42, geom={}, ticks=[], tickText=[], boundaries=[];
+  const gap=0.18, geom={}, ticks=[], tickText=[], boundaries=[];
   let cursor=0;
   sectorOrder.forEach((s,idx)=>{
     const n=Math.max(1,(bySec[s]||[]).length);
-    const width=Math.max(1.35,0.90+n*0.36);
+    const width=Math.max(1.05,0.72+n*0.24);
     const left=cursor, right=cursor+width, center=(left+right)/2;
     geom[s]={left,right,center,width};
     ticks.push(center); tickText.push(s);
@@ -56,7 +56,7 @@ function buildSectorGeometry(bySec){
     cursor=right+gap;
   });
   // Extra horizontal padding prevents edge bubbles from being clipped.
-  return {geom,ticks,tickText,boundaries,min:-1.05,max:Math.max(1,cursor-gap+1.05)};
+  return {geom,ticks,tickText,boundaries,min:-0.52,max:Math.max(1,cursor-gap+0.52)};
 }
 
 // Assign points to a small set of horizontal lanes. We sort by performance
@@ -84,7 +84,7 @@ function yRange(values){
   let lo=Math.min(...values), hi=Math.max(...values);
   lo=Math.min(lo,0); hi=Math.max(hi,0);
   let span=Math.max(hi-lo,2.0);
-  const pad=Math.max(1.0,span*0.14);
+  const pad=Math.max(0.7,span*0.08);
   lo-=pad; hi+=pad;
   // Keep tick labels reasonably clean.
   return [Math.floor(lo*2)/2,Math.ceil(hi*2)/2];
@@ -135,10 +135,10 @@ function render(){
  });
 
  // Plotly 'area' sizing: max market-cap bubble is capped near 58 px.
- const maxBubblePx=54;
+ const maxBubblePx=58;
  const maxCap=Math.max(...marketCaps,1);
  const sizeRef=(sizeMode==='market_cap') ? (2*maxCap)/(maxBubblePx*maxBubblePx) : 1;
- const markerSizes=(sizeMode==='equal') ? marketCaps.map(()=>20) : marketCaps;
+ const markerSizes=(sizeMode==='equal') ? marketCaps.map(()=>21) : marketCaps;
 
  // Place labels inside sufficiently large bubbles; smaller names alternate above/below.
  const estimatedDiameter = markerSizes.map(v=>{
@@ -171,7 +171,7 @@ function render(){
      size:markerSizes,
      sizemode:sizeMode==='market_cap'?'area':'diameter',
      sizeref:sizeRef,
-     sizemin:sizeMode==='market_cap'?12:20,
+     sizemin:sizeMode==='market_cap'?13:21,
      color:colors,
      line:{width:1,color:'rgba(255,255,255,.34)'},
      opacity:.78
@@ -185,7 +185,7 @@ function render(){
    xaxis:{
      range:[geo.min,geo.max],
      tickmode:'array',tickvals:geo.ticks,ticktext:geo.tickText,
-     tickangle:-25,
+     tickangle:-18,
      tickfont:{size:10,color:'#aeb8c8'},
      showgrid:false,zeroline:false,color:'#aeb8c8',
      fixedrange:false
