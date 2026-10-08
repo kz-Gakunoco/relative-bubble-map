@@ -30,7 +30,7 @@
   <div class="group"><div class="label">バブルサイズ</div><select id="size" class="control"><option value="market_cap">時価総額</option><option value="equal">均一</option></select></div>
   <div class="group"><div class="label">バブルカラー</div><select id="color" class="control"><option value="sector">セクター</option><option value="performance">パフォーマンス</option></select></div>
   <div class="group"><label class="check"><input id="labels" type="checkbox" checked> ティッカー表示</label><label class="check"><input id="bench" type="checkbox"> 比較ETFをラベルに表示</label></div>
-  <div class="hint">バブルをクリックするとTradingViewを開きます。<br>セクターは横方向、Y軸は選択した期間の値です。超過リターンは各銘柄に設定された比較ETFとの差です。<span class="mode-note">時価総額表示は「面積」に比例。最大バブル径をさらに抑え、端の銘柄が欠けないよう表示範囲にも余白を持たせています。</span></div>
+  <div class="hint">バブルをクリックするとTradingViewを開きます。<br>セクターは横方向、Y軸は選択した期間の値です。超過リターンは各銘柄に設定された比較ETFとの差です。<span class="mode-note">時価総額表示は「面積」に比例。最大バブル径は中間サイズに調整し、端の銘柄が欠けないよう表示範囲にも余白を持たせています。</span></div>
 </aside>
 <main class="main"><div id="chart" class="chart"></div><div class="footer">データが更新できなかった場合も前回の正常データを維持します。</div></main>
 </div>
@@ -135,10 +135,10 @@ function render(){
  });
 
  // Plotly 'area' sizing: max market-cap bubble is capped near 58 px.
- const maxBubblePx=34;
+ const maxBubblePx=46;
  const maxCap=Math.max(...marketCaps,1);
  const sizeRef=(sizeMode==='market_cap') ? (2*maxCap)/(maxBubblePx*maxBubblePx) : 1;
- const markerSizes=(sizeMode==='equal') ? marketCaps.map(()=>15) : marketCaps;
+ const markerSizes=(sizeMode==='equal') ? marketCaps.map(()=>17) : marketCaps;
 
  // Place labels inside sufficiently large bubbles; smaller names alternate above/below.
  const estimatedDiameter = markerSizes.map(v=>{
@@ -164,14 +164,14 @@ function render(){
    type:'scatter',
    mode:showLabels?'markers+text':'markers',
    x,y,text,textposition:textpos,
-   textfont:{color:'#c3cbd7',size:8},
+   textfont:{color:'#c3cbd7',size:9},
    cliponaxis:false,
    hovertext:hover,hoverinfo:'text',customdata:custom,
    marker:{
      size:markerSizes,
      sizemode:sizeMode==='market_cap'?'area':'diameter',
      sizeref:sizeRef,
-     sizemin:sizeMode==='market_cap'?5:15,
+     sizemin:sizeMode==='market_cap'?6:17,
      color:colors,
      line:{width:1,color:'rgba(255,255,255,.34)'},
      opacity:.78
