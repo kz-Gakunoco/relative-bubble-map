@@ -55,9 +55,12 @@ function render(){
  const trace={type:'scatter',mode:showLabels?'markers+text':'markers',x,y,text,textposition:'bottom center',textfont:{color:'#aeb8c8',size:11},hovertext:hover,hoverinfo:'text',customdata:custom,marker:{size:sizes,sizemode:'diameter',color:colors,line:{width:1,color:'rgba(255,255,255,.35)'},opacity:.92}};
  const layout={paper_bgcolor:'#171c24',plot_bgcolor:'#171c24',margin:{l:70,r:25,t:22,b:70},xaxis:{range:[-.6,sectorOrder.length-.4],tickmode:'array',tickvals:sectorOrder.map((_,i)=>i),ticktext:sectorOrder,gridcolor:'#2b3442',zeroline:false,color:'#aeb8c8',fixedrange:false},yaxis:{title:(metric==='ret'?'変動率 ':'超過リターン ')+period+' (%)',gridcolor:'#2b3442',zeroline:true,zerolinecolor:'#7f8a9b',color:'#aeb8c8',ticksuffix:'%'},showlegend:false,hoverlabel:{bgcolor:'#2d3544',bordercolor:'#566277',font:{color:'#fff'}},dragmode:'pan'};
  Plotly.react('chart',[trace],layout,{responsive:true,displaylogo:false,scrollZoom:true});
+ const unavailable=SNAP.records.filter(r=>r[key]==null).map(r=>r.ticker);
+ const warn=unavailable.length?`<span class="badge">データ不足: ${unavailable.join(', ')}</span>`:'';
+ document.getElementById('status').innerHTML=`市場日: <b>${SNAP.latest_market_date||'—'}</b><span class="badge">登録 ${SNAP.records.length}銘柄</span><span class="badge">表示 ${y.length}銘柄</span>${warn}`;
  const el=document.getElementById('chart'); el.removeAllListeners && el.removeAllListeners('plotly_click'); el.on('plotly_click',d=>{if(d.points&&d.points[0])window.open('https://www.tradingview.com/chart/?symbol='+encodeURIComponent(d.points[0].customdata),'_blank')});
 }
-async function init(){try{const r=await fetch('snapshot.json?ts='+Date.now());SNAP=await r.json();document.getElementById('status').innerHTML=`市場日: <b>${SNAP.latest_market_date||'—'}</b><span class="badge">${SNAP.records.length}銘柄</span>`;render()}catch(e){document.getElementById('status').textContent='snapshot.json を読み込めません';console.error(e)}}
+async function init(){try{const r=await fetch('snapshot.json?ts='+Date.now());SNAP=await r.json();render()}catch(e){document.getElementById('status').textContent='snapshot.json を読み込めません';console.error(e)}}
 ['metric','period','size','color','labels','bench'].forEach(id=>document.getElementById(id).addEventListener('change',render));
 init();
 </script>
