@@ -4,7 +4,7 @@
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-10-14T22:48:22.616126+00:00",
+  "generated_at_utc": "2026-10-14T22:54:00.871571+00:00",
   "candidate_market_date": "2026-10-07",
   "published_market_date": "2026-10-07",
   "request_budget_used": 0,
