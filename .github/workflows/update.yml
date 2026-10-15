@@ -48,11 +48,15 @@ jobs:
 
       - name: Write update status
         if: ${{ always() && (steps.market_update.outcome == 'success' || steps.market_update.outcome == 'failure') }}
+        env:
+          DATASET: ${{ inputs.dataset }}
         run: |
-          if [ -f data/status.json ]; then
+          status=data/status.json
+          if [ "$DATASET" = top300 ]; then status=data/top300/status.json; fi
+          if [ -f "$status" ]; then
             echo '### Market data update' >> "$GITHUB_STEP_SUMMARY"
             echo '```json' >> "$GITHUB_STEP_SUMMARY"
-            cat data/status.json >> "$GITHUB_STEP_SUMMARY"
+            cat "$status" >> "$GITHUB_STEP_SUMMARY"
             echo '```' >> "$GITHUB_STEP_SUMMARY"
           fi
 

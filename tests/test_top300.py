@@ -14,7 +14,11 @@ class UniverseTests(unittest.TestCase):
                 row("GOOGL", "Alphabet Inc. Class A Common Stock", 99),
                 row("AAPL", "Apple Inc. Common Stock", 90),
                 row("TSM", "Taiwan Semiconductor American Depositary Shares", 200, "Taiwan"),
-                row("PREF", "Test Preferred Stock", 300)]
+                row("PREF", "Test Preferred Stock", 300),
+                row("UNIT", "Test Mandatory Convertible Unit", 500),
+                row("LP", "Test Partners L.P.", 400),
+                row("FUND", "Test ETF", 400),
+                row("NAN", "Invalid Cap", "nan")]
         result = choose_universe(rows, 2)
         self.assertEqual(result.ticker.tolist(), ["GOOGL", "AAPL"])
         self.assertEqual(result.market_cap_rank.tolist(), [1, 2])
