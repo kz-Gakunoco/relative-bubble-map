@@ -51,6 +51,21 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto San
 
 <div class="toolbar">
   <div class="group">
+    <div class="label">対象銘柄</div>
+    <select id="universe" class="control">
+      <option value="curated">現在の54銘柄</option>
+      <option value="top300">米国時価総額上位300社</option>
+    </select>
+  </div>
+  <div class="group">
+    <div class="label">銘柄検索</div>
+    <input id="search" class="control" type="search" placeholder="ティッカー・会社名" aria-label="銘柄検索">
+  </div>
+  <div class="group">
+    <div class="label">セクター</div>
+    <select id="sector" class="control" aria-label="セクター絞り込み"><option value="">全セクター</option></select>
+  </div>
+  <div class="group">
     <div class="label">Y軸</div>
     <select id="metric" class="control">
       <option value="ret">変動率</option>
@@ -94,7 +109,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto San
       <label class="check"><input id="labels" type="checkbox" checked>ティッカー</label>
       <label class="check"><input id="bench" type="checkbox">業種ETF表示</label>
       <label class="check" id="wrap-zero"><input id="lineZero" type="checkbox" checked>0線</label>
-      <label class="check" id="wrap-weighted"><input id="lineWeighted" type="checkbox" checked>54銘柄加重平均</label>
+      <label class="check" id="wrap-weighted"><input id="lineWeighted" type="checkbox" checked><span id="weightedLabel">54銘柄加重平均</span></label>
       <label class="check" id="wrap-es"><input id="lineES" type="checkbox" checked>ES</label>
       <label class="check" id="wrap-spx"><input id="lineSPX" type="checkbox" checked>SPX</label>
       <label class="check" id="wrap-sigma1"><input id="lineSigma1" type="checkbox" checked>±1σ</label>
@@ -112,6 +127,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Noto San
   <div class="footer">
     データ取得失敗時は前回の正常データを維持します。ESはYahoo Financeの ES=F、SPXは ^GSPC を使用します。
   </div>
+  <div id="universeInfo" class="hintbar" role="status"></div>
 </main>
 
 <script>
@@ -148,6 +164,22 @@ const metricLabels={
   spx_z:'SPX乖離 Zスコア'
 };
 let SNAP=null;
+let ACTIVE='curated';
+let loadSequence=0;
+const snapshotCache={};
+const DATASETS={curated:'snapshot.json',top300:'snapshot_top300.json'};
+const sectorSelect=document.getElementById('sector');
+sectorOrder.forEach(sector=>{
+  const option=document.createElement('option');
+  option.value=sector;option.textContent=sector;sectorSelect.appendChild(option);
+});
+
+function filteredRecords(){
+  const query=document.getElementById('search').value.trim().toLowerCase();
+  const sector=document.getElementById('sector').value;
+  return SNAP.records.filter(r=>(!sector||r.sector===sector)&&
+    (!query||`${r.ticker} ${r.company}`.toLowerCase().includes(query)));
+}
 
 function pct(v){return v==null?'—':(v*100).toFixed(2)+'%'}
 function money(v){
@@ -325,7 +357,8 @@ function render(){
   )+period;
 
   const bySec={};sectorOrder.forEach(s=>bySec[s]=[]);
-  SNAP.records.forEach(r=>{if(bySec[r.sector])bySec[r.sector].push(r)});
+  const visibleRecords=filteredRecords();
+  visibleRecords.forEach(r=>{if(bySec[r.sector])bySec[r.sector].push(r)});
   const geo=buildSectorGeometry(bySec);
 
   const x=[],y=[],text=[],hover=[],marketCaps=[],colors=[],custom=[];
@@ -368,7 +401,8 @@ function render(){
     });
   });
 
-  const maxBubblePx=58,maxCap=Math.max(...marketCaps,1);
+  const dense=visibleRecords.length>100;
+  const maxBubblePx=dense?40:58,maxCap=Math.max(...marketCaps,1);
   const sizeRef=sizeMode==='market_cap'?(2*maxCap)/(maxBubblePx*maxBubblePx):1;
   const markerSizes=sizeMode==='equal'?marketCaps.map(()=>21):marketCaps;
   const diameters=markerSizes.map(v=>sizeMode==='equal'?21:Math.sqrt((2*v)/sizeRef));
@@ -386,7 +420,7 @@ function render(){
       if(wr){
         const v=wr.value*100;
         shapes.push(lineShape(v,'rgba(244,188,76,.92)',1.8,'dash'));
-        annotations.push(lineAnnotation(v,`54銘柄加重平均 ${v.toFixed(2)}%`,'#f4bc4c'));
+        annotations.push(lineAnnotation(v,`${SNAP.records.length}銘柄加重平均 ${v.toFixed(2)}%`,'#f4bc4c'));
       }
     }
     if(document.getElementById('lineES').checked){
@@ -428,7 +462,7 @@ function render(){
     cliponaxis:false,hovertext:hover,hoverinfo:'text',customdata:custom,
     marker:{
       size:markerSizes,sizemode:sizeMode==='market_cap'?'area':'diameter',
-      sizeref:sizeRef,sizemin:sizeMode==='market_cap'?13:21,
+      sizeref:sizeRef,sizemin:sizeMode==='market_cap'?(dense?4:13):21,
       color:colors,line:{width:1,color:'rgba(255,255,255,.34)'},opacity:.78
     }
   };
@@ -458,12 +492,18 @@ function render(){
     modeBarButtonsToRemove:['lasso2d','select2d']
   });
 
-  const unavailable=SNAP.records.filter(r=>r[key]==null).map(r=>r.ticker);
+  const unavailable=visibleRecords.filter(r=>r[key]==null).map(r=>r.ticker);
   const warn=unavailable.length?`<span class="badge">データ不足: ${unavailable.join(', ')}</span>`:'';
   document.getElementById('status').innerHTML=
     `市場日: <b>${SNAP.latest_market_date||'—'}</b>`+
     `<span class="badge">登録 ${SNAP.records.length}銘柄</span>`+
     `<span class="badge">表示 ${y.length}銘柄</span>${warn}`;
+  document.getElementById('weightedLabel').textContent=`${SNAP.records.length}銘柄加重平均`;
+  const membership=SNAP.universe;
+  document.getElementById('universeInfo').textContent=ACTIVE==='top300'&&membership
+    ? `米国企業の普通株・1社1銘柄（ETF・ADRを除外）｜選定: ${membership.selected_at_utc.slice(0,10)} UTC｜出典: ${membership.source}｜比較ETF: 既存設定を優先し、それ以外はセクターETF（半導体はSOXX）。加重平均線は対象全${SNAP.records.length}銘柄。`
+    : `現在の54銘柄。検索とセクター絞り込みを利用できます。加重平均線は対象全${SNAP.records.length}銘柄。`;
+  if(!y.length)document.getElementById('universeInfo').textContent='条件に一致する銘柄がありません。検索欄やセクターを変更してください。';
 
   const el=document.getElementById('chart');
   el.removeAllListeners&&el.removeAllListeners('plotly_click');
@@ -478,22 +518,45 @@ function render(){
 }
 
 async function init(){
+  const sequence=++loadSequence;
+  const requested=document.getElementById('universe').value;
+  document.getElementById('status').textContent='データを読み込み中…';
   try{
-    const r=await fetch('snapshot.json?ts='+Date.now());
-    SNAP=await r.json();
+    let snapshot=snapshotCache[requested];
+    if(!snapshot){
+      const r=await fetch(DATASETS[requested]+'?ts='+Date.now(),{cache:'no-store'});
+      if(!r.ok)throw new Error(`HTTP ${r.status}`);
+      snapshot=await r.json();
+      const expected=requested==='top300'?300:54;
+      if(!Array.isArray(snapshot.records)||snapshot.records.length!==expected||!snapshot.latest_market_date)
+        throw new Error('Invalid snapshot');
+      snapshotCache[requested]=snapshot;
+    }
+    if(sequence!==loadSequence)return;
+    SNAP=snapshot;ACTIVE=requested;
+    document.getElementById('search').value='';
+    document.getElementById('sector').value='';
+    document.getElementById('labels').checked=requested==='curated';
     render();
   }catch(e){
-    document.getElementById('status').textContent='snapshot.json を読み込めません';
+    if(sequence!==loadSequence)return;
+    document.getElementById('universe').value=ACTIVE;
+    if(SNAP)render();
+    document.getElementById('status').textContent='選択した銘柄データを取得できません。時間をおいて再度お試しください。';
     console.error(e)
   }
 }
 
 [
  'metric','period','size','color','labels','bench',
- 'lineZero','lineWeighted','lineES','lineSigma1','lineSigma2'
+ 'lineZero','lineWeighted','lineES','lineSPX','lineSigma1','lineSigma2','sector'
 ].forEach(id=>document.getElementById(id).addEventListener('change',render));
+document.getElementById('universe').addEventListener('change',init);
+document.getElementById('search').addEventListener('input',render);
 
 init();
 </script>
 </body>
 </html>
+
+

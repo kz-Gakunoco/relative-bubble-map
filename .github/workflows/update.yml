@@ -5,6 +5,14 @@ on:
     # 07:30 JST every day (GitHub cron is UTC)
     - cron: "30 22 * * *"
   workflow_dispatch:
+    inputs:
+      dataset:
+        description: Dataset to update
+        type: choice
+        options:
+          - curated
+          - top300
+        default: curated
 
 permissions:
   contents: write
@@ -34,15 +42,21 @@ jobs:
         id: market_update
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: python update.py
+          DATASET: ${{ inputs.dataset }}
+        run: |
+          if [ "$DATASET" = top300 ]; then python update_top300.py; else python update.py; fi
 
       - name: Write update status
         if: ${{ always() && (steps.market_update.outcome == 'success' || steps.market_update.outcome == 'failure') }}
+        env:
+          DATASET: ${{ inputs.dataset }}
         run: |
-          if [ -f data/status.json ]; then
+          status=data/status.json
+          if [ "$DATASET" = top300 ]; then status=data/top300/status.json; fi
+          if [ -f "$status" ]; then
             echo '### Market data update' >> "$GITHUB_STEP_SUMMARY"
             echo '```json' >> "$GITHUB_STEP_SUMMARY"
-            cat data/status.json >> "$GITHUB_STEP_SUMMARY"
+            cat "$status" >> "$GITHUB_STEP_SUMMARY"
             echo '```' >> "$GITHUB_STEP_SUMMARY"
           fi
 
@@ -52,7 +66,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data docs/snapshot.json
+          for f in config/universe_top300.csv config/top300_membership.json docs/snapshot_top300.json; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
           git diff --cached --quiet || git commit -m "chore: refresh market data"
           git push
+
+
 
 
