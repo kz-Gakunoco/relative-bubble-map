@@ -113,6 +113,26 @@ def fetch_membership():
     return selected, metadata
 
 
+def relax_recent_listing_errors(health, prices):
+    """Keep recent IPOs without suppressing missing returns in older stocks."""
+    counts = prices.dropna(subset=["adj_close"]).groupby("ticker")["date"].nunique()
+    revised = []
+    for error in health["errors"]:
+        if error.startswith("missing_ret_20D="):
+            missing = error.split("=", 1)[1].split(",")
+            young = [t for t in missing if 0 < counts.get(t, 0) <= 20]
+            older = [t for t in missing if t not in young]
+            if young:
+                health["warnings"].append("recent_listing_ret_20D_unavailable=" + ",".join(young))
+            if older:
+                revised.append("missing_ret_20D=" + ",".join(older))
+        else:
+            revised.append(error)
+    health["errors"] = revised
+    health["ok"] = not revised
+    return health
+
+
 def main():
     core.DATA = ROOT / "data/top300"
     core.DATA.mkdir(parents=True, exist_ok=True)
@@ -166,22 +186,7 @@ def main():
             health = validate(snapshot, prices, meta)
             # Recent IPOs legitimately lack long-window returns. Keep all 300
             # companies and report gaps, without masking failures in older names.
-            counts = prices.dropna(subset=["adj_close"]).groupby("ticker")["date"].nunique()
-            revised = []
-            for error in health["errors"]:
-                if error.startswith("missing_ret_20D="):
-                    missing = error.split("=", 1)[1].split(",")
-                    young = [t for t in missing if 0 < counts.get(t, 0) <= 20]
-                    older = [t for t in missing if t not in young]
-                    if young:
-                        health["warnings"].append("recent_listing_ret_20D_unavailable=" + ",".join(young))
-                    if older:
-                        revised.append("missing_ret_20D=" + ",".join(older))
-                else:
-                    revised.append(error)
-            health["errors"] = revised
-            health["ok"] = not revised
-            return health
+            return relax_recent_listing_errors(health, prices)
 
         core.validate_snapshot = allow_recent_listings
         core.main()

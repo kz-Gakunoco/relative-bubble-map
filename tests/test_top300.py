@@ -1,6 +1,7 @@
 import unittest
+import pandas as pd
 
-from update_top300 import choose_universe
+from update_top300 import choose_universe, relax_recent_listing_errors
 
 
 def row(symbol, name, cap, country="United States", sector="Technology", industry="Computer Software"):
@@ -31,6 +32,22 @@ class UniverseTests(unittest.TestCase):
     def test_unknown_sector_cannot_silently_skip_company(self):
         with self.assertRaisesRegex(RuntimeError, "Unmapped sector"):
             choose_universe([row("ZZZ", "Zeta Inc.", 90, sector="Unknown")], 1)
+
+    def test_recent_listing_does_not_hide_older_price_failure(self):
+        prices = pd.DataFrame({"ticker": ["IPO"] * 10 + ["OLD"] * 30,
+            "date": list(pd.date_range("2026-09-01", periods=10)) + list(pd.date_range("2026-09-01", periods=30)),
+            "adj_close": [10.] * 40})
+        health = {"ok": False, "errors": ["missing_ret_20D=IPO,OLD", "other_integrity_failure"], "warnings": []}
+        result = relax_recent_listing_errors(health, prices)
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["errors"], ["missing_ret_20D=OLD", "other_integrity_failure"])
+        self.assertIn("IPO", result["warnings"][0])
+
+    def test_recent_listing_is_reported_as_unavailable(self):
+        prices = pd.DataFrame({"ticker": ["IPO"], "date": [pd.Timestamp("2026-10-14")], "adj_close": [10.]})
+        result = relax_recent_listing_errors({"ok": False, "errors": ["missing_ret_20D=IPO"], "warnings": []}, prices)
+        self.assertTrue(result["ok"])
+        self.assertTrue(result["warnings"])
 
 
 if __name__ == "__main__":
