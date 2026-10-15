@@ -204,17 +204,48 @@ function buildSectorGeometry(bySec){
   return {geom,ticks,tickText,min:-0.52,max:Math.max(1,cursor-gap+0.52)};
 }
 
-function laneX(arr,g,key){
-  const valid=arr.filter(r=>r[key]!=null).slice().sort((a,b)=>a[key]-b[key]);
-  const lanes=Math.max(2,Math.min(6,Math.ceil(Math.sqrt(valid.length*1.8))));
-  const innerLeft=g.left+g.width*0.08, innerWidth=g.width*0.84;
-  const lanePos=[];
-  for(let j=0;j<lanes;j++) lanePos.push(innerLeft+innerWidth*((j+0.5)/lanes));
-  const map=new Map();
-  valid.forEach((r,i)=>{
-    const block=Math.floor(i/lanes),lane=i%lanes;
-    const li=(block%2===0)?lane:(lanes-1-lane);
-    map.set(r.ticker,lanePos[li]);
+function swarmX(arr,g,key,scale){
+  // Work in screen pixels: preserve every Y value and move only X.
+  // Large bubbles take the centre first; smaller neighbours find the nearest
+  // free tangent position. There are no lanes or repeating row patterns.
+  const valid=arr.filter(r=>r[key]!=null&&isFinite(r[key])).slice().sort((a,b)=>
+    scale.diameter(b)-scale.diameter(a)||a[key]-b[key]||a.ticker.localeCompare(b.ticker));
+  const placed=[],map=new Map();
+  valid.forEach(r=>{
+    const radius=scale.diameter(r)/2;
+    const half=Math.max(0,g.width*scale.x*.44-radius);
+    const py=r[key]*scale.value*scale.y;
+    const nearby=placed.filter(p=>Math.abs(p.y-py)<radius+p.radius+2);
+    const candidates=[0,-half,half];
+    nearby.forEach(p=>{
+      const distance=radius+p.radius+2;
+      const dx=Math.sqrt(Math.max(0,distance*distance-(p.y-py)**2));
+      candidates.push(p.x-dx,p.x+dx);
+    });
+    const side=[...r.ticker].reduce((v,c)=>v+c.charCodeAt(0),0)%2?1:-1;
+    let best=0,bestOverlap=Infinity,bestDistance=Infinity;
+    candidates.filter(v=>v>=-half-1e-6&&v<=half+1e-6).forEach(px=>{
+      const overlap=nearby.reduce((sum,p)=>sum+Math.max(0,
+        radius+p.radius+2-Math.hypot(px-p.x,py-p.y))**2,0);
+      const distance=Math.abs(px)+(px*side<0?1e-7:0);
+      if(overlap<bestOverlap-1e-6||(Math.abs(overlap-bestOverlap)<=1e-6&&distance<bestDistance)){
+        best=px;bestOverlap=overlap;bestDistance=distance;
+      }
+    });
+    // When a sector is too crowded for a collision-free solution, minimise
+    // overlap across its width rather than piling points into fixed lanes.
+    if(bestOverlap>1e-6){
+      for(let px=-half;px<=half;px+=Math.max(1,half/60)){
+        const overlap=nearby.reduce((sum,p)=>sum+Math.max(0,
+          radius+p.radius+2-Math.hypot(px-p.x,py-p.y))**2,0);
+        const distance=Math.abs(px)+(px*side<0?1e-7:0);
+        if(overlap<bestOverlap-1e-6||(Math.abs(overlap-bestOverlap)<=1e-6&&distance<bestDistance)){
+          best=px;bestOverlap=overlap;bestDistance=distance;
+        }
+      }
+    }
+    placed.push({x:best,y:py,radius});
+    map.set(r.ticker,g.center+best/scale.x);
   });
   return map;
 }
@@ -360,10 +391,26 @@ function render(){
   const visibleRecords=filteredRecords();
   visibleRecords.forEach(r=>{if(bySec[r.sector])bySec[r.sector].push(r)});
   const geo=buildSectorGeometry(bySec);
+  const isZMetric=metric==='industry_z'||metric==='es_z'||metric==='spx_z';
+  const valueScale=isZMetric?1:100;
+  const validRecords=visibleRecords.filter(r=>r[key]!=null&&isFinite(r[key]));
+  const yr=yRange(validRecords.map(r=>r[key]*valueScale),isZMetric?'es_z':metric);
+  const dense=visibleRecords.length>100;
+  const maxBubblePx=dense?40:58;
+  const capOf=r=>Math.max(1,(r.market_cap||5e9)/1e9);
+  const maxCap=Math.max(...validRecords.map(capOf),1);
+  const sizeRef=sizeMode==='market_cap'?(2*maxCap)/(maxBubblePx*maxBubblePx):1;
+  const diameter=r=>sizeMode==='equal'?21:Math.max(dense?4:13,Math.sqrt(2*capOf(r)/sizeRef));
+  const chart=document.getElementById('chart');
+  const scale={
+    x:Math.max(1,(chart.clientWidth||1200)-100)/(geo.max-geo.min),
+    y:Math.max(1,(chart.clientHeight||560)-96)/(yr[1]-yr[0]),
+    value:valueScale,diameter
+  };
 
   const x=[],y=[],text=[],hover=[],marketCaps=[],colors=[],custom=[];
   sectorOrder.forEach(s=>{
-    const arr=bySec[s]||[],xMap=laneX(arr,geo.geom[s],key);
+    const arr=bySec[s]||[],xMap=swarmX(arr,geo.geom[s],key,scale);
     arr.forEach(r=>{
       const raw=r[key];
       if(raw==null||!isFinite(raw))return;
@@ -401,14 +448,11 @@ function render(){
     });
   });
 
-  const dense=visibleRecords.length>100;
-  const maxBubblePx=dense?40:58,maxCap=Math.max(...marketCaps,1);
-  const sizeRef=sizeMode==='market_cap'?(2*maxCap)/(maxBubblePx*maxBubblePx):1;
   const markerSizes=sizeMode==='equal'?marketCaps.map(()=>21):marketCaps;
   const diameters=markerSizes.map(v=>sizeMode==='equal'?21:Math.sqrt((2*v)/sizeRef));
   const textpos=chooseLabelPositions(x,y,text,diameters);
 
-  const yr=yRange(y,(metric==='industry_z'||metric==='es_z'||metric==='spx_z')?'es_z':metric),shapes=[],annotations=[];
+  const shapes=[],annotations=[];
   const showZero=document.getElementById('lineZero').checked;
   if(showZero){
     shapes.push(lineShape(0,'rgba(203,214,229,.60)',(metric==='industry_z'||metric==='es_z'||metric==='spx_z')?1.5:1.2));
@@ -553,10 +597,16 @@ async function init(){
 ].forEach(id=>document.getElementById(id).addEventListener('change',render));
 document.getElementById('universe').addEventListener('change',init);
 document.getElementById('search').addEventListener('input',render);
+let resizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(resizeTimer);resizeTimer=setTimeout(render,120);
+});
 
 init();
 </script>
 </body>
 </html>
+
+
 
 
