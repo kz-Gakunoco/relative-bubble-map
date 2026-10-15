@@ -19,7 +19,7 @@ const fixture = n=>({latest_market_date:'2026-10-14', records:Array.from({length
 let failed=false, pending=[];
 const context=vm.createContext({document:{getElementById:id=>{
   assert(elements.has(id),`Unknown element ${id}`);return elements.get(id);
-},createElement:()=>({})}, console:{error(){}}, window:{open(){}},
+},createElement:()=>({})}, console:{error(){}}, window:{open(){},addEventListener(){}},
   Plotly:{react:(id,traces)=>context.plotted=traces[0]},
   fetch:async url=>{
     if(pending.length)return pending.shift()(url);
@@ -29,6 +29,27 @@ const context=vm.createContext({document:{getElementById:id=>{
 const flush=()=>new Promise(setImmediate);
 (async()=>{
   vm.runInContext(script,context);await flush();
+  const swarm=vm.runInContext('swarmX',context);
+  const geom={left:0,right:10,center:5,width:10};
+  const scale={x:50,y:10,value:1,diameter:r=>r.diameter||20};
+  // Isolated observations stay centred, independent of ordinal position.
+  const isolated=Array.from({length:12},(_,i)=>({ticker:`I${i}`,v:i*10}));
+  assert([...swarm(isolated,geom,'v',scale).values()].every(x=>x===5));
+  // Equal and nearby values spread horizontally without moving Y or overlapping.
+  const crowded=Array.from({length:9},(_,i)=>({ticker:`C${i}`,v:i*.05,diameter:i===0?40:20}));
+  const originalY=crowded.map(r=>r.v);
+  const positions=swarm(crowded,geom,'v',scale);
+  assert.equal(positions.get('C0'),5);
+  for(let i=0;i<crowded.length;i++)for(let j=0;j<i;j++){
+    const a=crowded[i],b=crowded[j];
+    const separation=Math.hypot((positions.get(a.ticker)-positions.get(b.ticker))*50,(a.v-b.v)*10);
+    assert(separation>=(a.diameter+b.diameter)/2+2-1e-5);
+  }
+  assert.deepEqual(crowded.map(r=>r.v),originalY);
+  assert.deepEqual([...positions], [...swarm(crowded.slice().reverse(),geom,'v',scale)]);
+  assert([...positions.values()].every(x=>x>=0&&x<=10));
+  const tight=swarm(crowded,{left:0,right:1,center:.5,width:1},'v',scale);
+  assert([...tight.values()].every(x=>Number.isFinite(x)&&x>=0&&x<=1));
   assert.equal(context.plotted.x.length,54);
   elements.get('search').value='company 12';vm.runInContext('render()',context);
   assert.equal(context.plotted.x.length,1);
@@ -56,6 +77,6 @@ const flush=()=>new Promise(setImmediate);
   elements.get('universe').value='curated';await vm.runInContext('init()',context);
   release({ok:true,json:async()=>fixture(300)});await slow;
   assert.equal(context.plotted.x.length,54);
-  console.log('UI checks passed: 54/300 switch, search, sector, empty state, failure recovery, request race');
+  console.log('UI checks passed: centred swarm, collision spacing, stable placement, bounds, 54/300 switch, search, sector, empty state, failure recovery, request race');
 })().catch(err=>{console.error(err);process.exitCode=1;});
 
