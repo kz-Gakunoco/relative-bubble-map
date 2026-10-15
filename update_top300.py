@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 import time
 from datetime import datetime, timezone
@@ -45,13 +46,13 @@ def choose_universe(rows, limit=300):
         symbol = str(r.get("symbol", "")).strip().replace("/", ".")
         if not re.fullmatch(r"[A-Z]{1,5}(?:\.[A-Z])?", symbol):
             continue
-        if re.search(r"\b(?:preferred|depositary|depository|warrants?|rights|units|ETF|ETN|exchange.traded|closed.end|notes|debentures|bonds)\b", name, re.I):
+        if re.search(r"\b(?:preferred|depositary|depository|warrants?|rights|units?|ETF|ETN|exchange.traded|closed.end|notes|debentures|bonds|convertible|ZONES|limited partnership)\b|\bL\.?P\.?\b", name, re.I):
             continue
         try:
             cap = float(str(r.get("marketCap", "")).replace(",", "").replace("$", ""))
         except ValueError:
             continue
-        if cap <= 0:
+        if not math.isfinite(cap) or cap <= 0:
             continue
         candidates.append(dict(r, ticker=symbol, market_cap=cap, issuer=issuer_key(name)))
     candidates.sort(key=lambda r: (-r["market_cap"], r["ticker"]))
@@ -94,13 +95,16 @@ def choose_universe(rows, limit=300):
 
 def fetch_membership():
     response = requests.get("https://api.nasdaq.com/api/screener/stocks",
-        params={"tableonly": "true", "limit": 10000, "download": "true"},
+        params={"tableonly": "true", "limit": 25000, "download": "true"},
         headers={"User-Agent": "Mozilla/5.0", "Accept": "application/json, text/plain, */*",
                  "Origin": "https://www.nasdaq.com", "Referer": "https://www.nasdaq.com/"}, timeout=60)
     response.raise_for_status()
     payload = response.json()
     data = payload.get("data") or {}
     rows = data.get("rows") or (data.get("table") or {}).get("rows") or []
+    total = int(str(data.get("totalrecords") or len(rows)).replace(",", ""))
+    if total > len(rows):
+        raise RuntimeError(f"Incomplete screener response: {len(rows)}/{total}")
     selected = choose_universe(rows)
     metadata = {"source": "Nasdaq Stock Screener", "source_url": "https://www.nasdaq.com/market-activity/stocks/screener",
                 "selected_at_utc": datetime.now(timezone.utc).isoformat(), "company_count": len(selected),
@@ -156,6 +160,30 @@ def main():
             return snapshot
 
         core.build_snapshot = with_membership
+        validate = core.validate_snapshot
+
+        def allow_recent_listings(snapshot, prices, meta):
+            health = validate(snapshot, prices, meta)
+            # Recent IPOs legitimately lack long-window returns. Keep all 300
+            # companies and report gaps, without masking failures in older names.
+            counts = prices.dropna(subset=["adj_close"]).groupby("ticker")["date"].nunique()
+            revised = []
+            for error in health["errors"]:
+                if error.startswith("missing_ret_20D="):
+                    missing = error.split("=", 1)[1].split(",")
+                    young = [t for t in missing if 0 < counts.get(t, 0) <= 20]
+                    older = [t for t in missing if t not in young]
+                    if young:
+                        health["warnings"].append("recent_listing_ret_20D_unavailable=" + ",".join(young))
+                    if older:
+                        revised.append("missing_ret_20D=" + ",".join(older))
+                else:
+                    revised.append(error)
+            health["errors"] = revised
+            health["ok"] = not revised
+            return health
+
+        core.validate_snapshot = allow_recent_listings
         core.main()
         selected.to_csv(UNIVERSE_FILE, index=False, encoding="utf-8")
         MEMBERSHIP_FILE.write_text(json.dumps(membership, ensure_ascii=False, indent=2), encoding="utf-8")
