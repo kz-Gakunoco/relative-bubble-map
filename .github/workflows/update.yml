@@ -9,9 +9,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: bubble-map-update
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -22,15 +27,32 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Test data parsing and failure handling
+        run: python -m unittest discover -s tests -v
+
       - name: Update market data
+        id: market_update
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
         run: python update.py
 
+      - name: Write update status
+        if: ${{ always() && (steps.market_update.outcome == 'success' || steps.market_update.outcome == 'failure') }}
+        run: |
+          if [ -f data/status.json ]; then
+            echo '### Market data update' >> "$GITHUB_STEP_SUMMARY"
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat data/status.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Commit refreshed data
+        if: ${{ always() && (steps.market_update.outcome == 'success' || steps.market_update.outcome == 'failure') }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data docs/snapshot.json
           git diff --cached --quiet || git commit -m "chore: refresh market data"
           git push
+
+
