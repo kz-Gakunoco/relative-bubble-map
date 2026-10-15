@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import time
+import traceback
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -119,17 +120,19 @@ def yfinance_prices(symbols: Dict[str, str], start: str, end: str) -> pd.DataFra
     out = []
     reverse = {v: k for k, v in symbols.items()}
 
-    if len(provider_list) == 1:
+    if len(provider_list) == 1 and not isinstance(raw.columns, pd.MultiIndex):
         raw = pd.concat({provider_list[0]: raw}, axis=1)
 
     if raw.empty:
-        return pd.DataFrame()
+        raise RuntimeError("Yahoo returned an empty price response")
 
     level0 = set(raw.columns.get_level_values(0))
     for p_ticker in provider_list:
         if p_ticker not in level0:
             continue
-        x = raw[p_ticker].copy().reset_index()
+        x = raw[p_ticker].copy()
+        x.index.name = "date"
+        x = x.reset_index()
         if x.empty:
             continue
         x.columns = [str(c).lower().replace(" ", "_") for c in x.columns]
@@ -137,11 +140,17 @@ def yfinance_prices(symbols: Dict[str, str], start: str, end: str) -> pd.DataFra
         if "adj_close" not in x.columns:
             x["adj_close"] = x.get("close")
         x["date"] = pd.to_datetime(x["date"]).dt.tz_localize(None)
+        x = x.dropna(subset=["close", "adj_close"])
         out.append(
             x[["date", "ticker", "open", "high", "low", "close", "adj_close", "volume"]]
         )
 
-    return pd.concat(out, ignore_index=True) if out else pd.DataFrame()
+    result = pd.concat(out, ignore_index=True) if out else pd.DataFrame()
+    present = set(result["ticker"]) if not result.empty else set()
+    missing = sorted(set(symbols) - present)
+    if missing:
+        raise RuntimeError("Yahoo returned no valid prices for: " + ",".join(missing))
+    return result
 
 
 def fmp_prices(
@@ -767,12 +776,39 @@ def upsert_signal_history(snapshot: dict) -> dict:
     }
 
 
+def freshness_errors(snapshot: dict, now=None) -> list[str]:
+    """Allow a conservative holiday grace period, but reject stalled feeds."""
+    now = now or datetime.now(timezone.utc)
+    # Before 22:00 UTC allow the current US trading day to finish settling.
+    cutoff = now.date() - timedelta(days=int(now.hour < 22))
+    errors = []
+    sources = [("market", snapshot.get("latest_market_date"))]
+    sources += [(name, (snapshot.get(name) or {}).get("last_date"))
+                for name in ("spx", "es")]
+    sources += [(r.get("ticker"), r.get("last_date"))
+                for r in snapshot.get("records", [])]
+    for name, value in sources:
+        if not value:
+            errors.append(f"missing_price_date={name}")
+            continue
+        day = datetime.strptime(value, "%Y-%m-%d").date()
+        # Two weekdays of grace cover weekends and ordinary exchange holidays.
+        overdue = int(np.busday_count(day, cutoff))
+        if overdue > 2:
+            errors.append(f"stale_price_date={name}:{value} overdue_weekdays={overdue}")
+    return errors
+
+
 def publish_snapshot_if_healthy(
     snapshot: dict,
     prices: pd.DataFrame,
     meta: pd.DataFrame,
+    acquisition_errors=None,
 ) -> tuple[dict, dict]:
     health = validate_snapshot(snapshot, prices, meta)
+    health["errors"].extend(acquisition_errors or [])
+    health["errors"].extend(freshness_errors(snapshot))
+    health["ok"] = not health["errors"]
 
     if health["ok"]:
         SNAPSHOT_FILE.write_text(
@@ -793,6 +829,7 @@ def publish_snapshot_if_healthy(
 
 def main():
     old = load_prices()
+    acquisition_errors = []
 
     base_symbols = list(
         dict.fromkeys(list(universe.ticker) + list(universe.benchmark))
@@ -962,6 +999,8 @@ def main():
     except Exception as e:
         # Preserve prior data; never destroy a working snapshot because an API failed.
         print(f"PRICE UPDATE WARNING: {e}")
+        traceback.print_exc()
+        acquisition_errors.append(f"price_update_failed={type(e).__name__}: {e}")
 
     old_meta = pd.read_csv(META_FILE) if META_FILE.exists() else pd.DataFrame()
     if meta_is_stale():
@@ -979,7 +1018,7 @@ def main():
 
     prices = load_prices()
     snapshot = build_snapshot(prices, meta)
-    health, _ = publish_snapshot_if_healthy(snapshot, prices, meta)
+    health, _ = publish_snapshot_if_healthy(snapshot, prices, meta, acquisition_errors)
 
     tracked = set(base_symbols) | {ES_DISPLAY, SPX_DISPLAY}
     counts_final = (
@@ -1020,7 +1059,11 @@ def main():
         encoding="utf-8",
     )
     print(json.dumps(status, ensure_ascii=False, indent=2))
+    if not status["ok"]:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
     main()
+
+
