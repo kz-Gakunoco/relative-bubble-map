@@ -1,7 +1,7 @@
 {
   "source": "Nasdaq Stock Screener",
   "source_url": "https://www.nasdaq.com/market-activity/stocks/screener",
-  "selected_at_utc": "2026-10-15T23:07:41.020285+00:00",
+  "selected_at_utc": "2026-10-16T23:10:22.864585+00:00",
   "company_count": 300,
   "scope": "US-domiciled common equities; ETFs/ADRs excluded; one representative share class",
   "benchmark_policy": "Curated assignments where available; otherwise sector ETF, semiconductors SOXX"

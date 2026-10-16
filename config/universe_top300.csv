@@ -1,301 +1,301 @@
 ticker,company,sector,theme,benchmark,provider_ticker,market_cap_rank,selection_market_cap
-NVDA,NVIDIA Corporation Common Stock,情報技術,Semiconductors,SOXX,NVDA,1,5333330000000.0
-AAPL,Apple Inc. Common Stock,情報技術,Computer Manufacturing,XLK,AAPL,2,5005219972800.0
-GOOGL,Alphabet Inc. Class A Common Stock,コミュニケーション・サービス,Computer Software: Programming Data Processing,XLC,GOOGL,3,4251637200000.0
-MSFT,Microsoft Corporation Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,MSFT,4,3962939373092.0
-AMZN,Amazon.com Inc. Common Stock,一般消費財,Catalog/Specialty Distribution,XLY,AMZN,5,2740586552374.0
-SPCX,Space Exploration Technologies Corp. Class A Common Stock,情報技術,Computer Software: Programming Data Processing,XLK,SPCX,6,2065240538460.0
-META,Meta Platforms Inc. Class A Common Stock,コミュニケーション・サービス,Computer Software: Programming Data Processing,XLC,META,7,1878887741187.0
-AVGO,Broadcom Inc. Common Stock,情報技術,Semiconductors,SOXX,AVGO,8,1652869340756.0
-TSLA,Tesla Inc. Common Stock,一般消費財,Auto Manufacturing,XLY,TSLA,9,1450115821181.0
-BRK.B,Berkshire Hathaway Inc.,金融,,XLF,BRK-B,10,1161380061999.0
-LLY,Eli Lilly and Company Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,LLY,11,1137855938748.0
-MU,Micron Technology Inc. Common Stock,情報技術,Semiconductors,SOXX,MU,12,1034267900786.0
-AMD,Advanced Micro Devices Inc. Common Stock,情報技術,Semiconductors,SOXX,AMD,13,931849403474.0
-WMT,Walmart Inc. Common Stock,生活必需品,Department/Specialty Retail Stores,XLP,WMT,14,921583963355.0
-JPM,JP Morgan Chase & Co. Common Stock,金融,Major Banks,XLF,JPM,15,891236667460.0
-XOM,ExxonMobil Holdings Corporation Common Stock,エネルギー,Integrated oil Companies,XLE,XOM,16,727849536040.0
-V,Visa Inc.,金融,Business Services,XLF,V,17,699389597722.0
-JNJ,Johnson & Johnson Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,JNJ,18,611897352764.0
-MA,Mastercard Incorporated Common Stock,一般消費財,Business Services,XLY,MA,19,528444236206.0
-INTC,Intel Corporation Common Stock,情報技術,Semiconductors,SOXX,INTC,20,518571020419.0
-ABBV,AbbVie Inc. Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,ABBV,21,500942407952.0
-PLTR,Palantir Technologies Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,PLTR,22,482740687876.0
-CSCO,Cisco Systems Inc. Common Stock (DE),情報技術,Computer Communications Equipment,XLK,CSCO,23,448035572248.0
-CVX,Chevron Corporation Common Stock,エネルギー,Integrated oil Companies,XLE,CVX,24,438700253679.0
-COST,Costco Wholesale Corporation Common Stock,生活必需品,Department/Specialty Retail Stores,XLP,COST,25,435153020718.0
-ORCL,Oracle Corporation Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,ORCL,26,395762475002.0
-KO,Coca-Cola Company (The) Common Stock,生活必需品,Beverages (Production/Distribution),XLP,KO,27,394887969523.0
-PG,Procter & Gamble Company (The) Common Stock,生活必需品,Package Goods/Cosmetics,XLP,PG,28,363843506882.0
-MRK,Merck & Company Inc. Common Stock (new),ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,MRK,29,363587084292.0
-BAC,Bank of America Corporation Common Stock,金融,Major Banks,XLF,BAC,30,359357338477.0
-LRCX,Lam Research Corporation Common Stock,情報技術,Industrial Machinery/Components,XLK,LRCX,31,359058677945.0
-UNH,UnitedHealth Group Incorporated Common Stock (DE),ヘルスケア,Medical Specialities,XLV,UNH,32,355106473370.0
-AMAT,Applied Materials Inc. Common Stock,情報技術,Semiconductors,SOXX,AMAT,33,354444425967.0
-CAT,Caterpillar Inc. Common Stock,資本財・産業,Construction/Ag Equipment/Trucks,XLI,CAT,34,344287298363.0
-DELL,Dell Technologies Inc. Class C Common Stock ,情報技術,Computer Manufacturing,XLK,DELL,35,322948370108.0
-PM,Philip Morris International Inc Common Stock,ヘルスケア, Medicinal Chemicals and Botanical Products ,XLV,PM,36,320419750790.0
-GE,GE Aerospace Common Stock,資本財・産業,Consumer Electronics/Appliances,XLI,GE,37,318552442741.0
-PANW,Palo Alto Networks Inc. Common Stock,情報技術,Computer peripheral equipment,XLK,PANW,38,306782720000.0
-HD,Home Depot Inc. (The) Common Stock,一般消費財,RETAIL: Building Materials,XLY,HD,39,294827261379.0
-NFLX,Netflix Inc. Common Stock,コミュニケーション・サービス,Consumer Electronics/Video Chains,XLC,NFLX,40,293849222935.0
-MS,Morgan Stanley Common Stock,金融,Investment Bankers/Brokers/Service,XLF,MS,41,285073487661.0
-TXN,Texas Instruments Incorporated Common Stock,情報技術,Semiconductors,SOXX,TXN,42,256302963076.0
-GS,Goldman Sachs Group Inc. (The) Common Stock,金融,Investment Bankers/Brokers/Service,XLF,GS,43,255858139638.0
-CRWD,CrowdStrike Holdings Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,CRWD,44,255256716762.0
-RTX,RTX Corporation Common Stock,資本財・産業,Aerospace,XLI,RTX,45,251316461112.0
-GEV,GE Vernova Inc. Common Stock,資本財・産業,Consumer Electronics/Appliances,XLI,GEV,46,250827639914.0
-TMO,Thermo Fisher Scientific Inc Common Stock,ヘルスケア,Industrial Machinery/Components,XLV,TMO,47,248913872935.0
-ANET,Arista Networks Inc. Common Stock,コミュニケーション・サービス,Computer Communications Equipment,XLC,ANET,48,246468520712.0
-WFC,Wells Fargo & Company Common Stock,金融,Major Banks,XLF,WFC,49,244641546282.0
-KLAC,KLA Corporation Common Stock,情報技術,Electronic Components,XLK,KLAC,50,233348210835.0
-AMGN,Amgen Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,AMGN,51,230368703651.0
-LIN,Linde plc Ordinary Shares,素材,Major Chemicals,XLB,LIN,52,227124926310.0
-MRVL,Marvell Technology Inc. Common Stock,情報技術,Semiconductors,SOXX,MRVL,53,215086032000.0
-IBM,International Business Machines Corporation Common Stock,情報技術,Computer Manufacturing,XLK,IBM,54,214693584793.0
-AXP,American Express Company Common Stock,金融,Finance: Consumer Services,XLF,AXP,55,207286353239.0
-C,Citigroup Inc. Common Stock,金融,Major Banks,XLF,C,56,205100195457.0
-SNDK,Sandisk Corporation Common Stock,情報技術,Electronic Components,XLK,SNDK,57,203944149258.0
-APH,Amphenol Corporation Common Stock,情報技術,Electrical Products,XLK,APH,58,203910804119.0
-ADI,Analog Devices Inc. Common Stock,情報技術,Semiconductors,SOXX,ADI,59,195556084710.0
-CRM,Salesforce Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,CRM,60,194186850000.0
-GILD,Gilead Sciences Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,GILD,61,190382714499.0
-DIS,Walt Disney Company (The) Common Stock,コミュニケーション・サービス,Services-Misc. Amusement & Recreation,XLC,DIS,62,188191605449.0
-VZ,Verizon Communications Inc. Common Stock,コミュニケーション・サービス,Telecommunications Equipment,XLC,VZ,63,184555114473.0
-QCOM,QUALCOMM Incorporated Common Stock,情報技術,Radio And Television Broadcasting And Communications Equipment,XLK,QCOM,64,181291379443.0
-ABT,Abbott Laboratories Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,ABT,65,178177567989.0
-PEP,PepsiCo Inc. Common Stock,生活必需品,Beverages (Production/Distribution),XLP,PEP,66,176161540963.0
-DE,Deere & Company Common Stock,資本財・産業,Industrial Machinery/Components,XLI,DE,67,175358975457.0
-COP,ConocoPhillips Common Stock,エネルギー,Integrated oil Companies,XLE,COP,68,170998376761.0
-UNP,Union Pacific Corporation Common Stock,資本財・産業,Railroads,XLI,UNP,69,170161044892.0
-TMUS,T-Mobile US Inc. Common Stock,コミュニケーション・サービス,Telecommunications Equipment,XLC,TMUS,70,169256853815.0
-MCD,McDonald's Corporation Common Stock,一般消費財,Restaurants,XLY,MCD,71,168638053253.0
-SCCO,Southern Copper Corporation Common Stock,素材,Metal Mining,XLB,SCCO,72,167433686760.0
-SCHW,Charles Schwab Corporation (The) Common Stock,金融,Investment Bankers/Brokers/Service,XLF,SCHW,73,167399697115.0
-WELL,Welltower Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,WELL,74,167335355274.0
-PFE,Pfizer Inc. Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,PFE,75,166487465535.0
-BLK,BlackRock Inc. Common Stock,金融,Investment Bankers/Brokers/Service,XLF,BLK,76,166297061622.0
-NEE,NextEra Energy Inc. Common Stock,公益,Electric Utilities: Central,XLU,NEE,77,163478112239.0
-DHR,Danaher Corporation Common Stock,資本財・産業,Industrial Machinery/Components,XLI,DHR,78,157953936473.0
-T,AT&T Inc.,コミュニケーション・サービス,Telecommunications Equipment,XLC,T,79,157947489233.0
-TJX,TJX Companies Inc. (The) Common Stock,一般消費財,Clothing/Shoe/Accessory Stores,XLY,TJX,80,157109295133.0
-ISRG,Intuitive Surgical Inc. Common Stock,ヘルスケア,Industrial Specialties,XLV,ISRG,81,148461562689.0
-BA,Boeing Company (The) Common Stock,資本財・産業,Aerospace,XLI,BA,82,145949727893.0
-NOW,ServiceNow Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,NOW,83,144739320000.0
-UBER,Uber Technologies Inc. Common Stock,一般消費財,Business Services,XLY,UBER,84,141528990784.0
-MPC,Marathon Petroleum Corporation Common Stock,エネルギー,Integrated oil Companies,XLE,MPC,85,136177544074.0
-WDC,Western Digital Corporation Common Stock,情報技術,Electronic Components,XLK,WDC,86,136016101518.0
-FTNT,Fortinet Inc. Common Stock,情報技術,Computer peripheral equipment,XLK,FTNT,87,135039997835.0
-VLO,Valero Energy Corporation Common Stock,エネルギー,Integrated oil Companies,XLE,VLO,88,132383288019.0
-MNST,Monster Beverage Corporation,生活必需品,Beverages (Production/Distribution),XLP,MNST,89,129944033469.0
-VRTX,Vertex Pharmaceuticals Incorporated Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,VRTX,90,126350270614.0
-PGR,Progressive Corporation (The) Common Stock,金融,Property-Casualty Insurers,XLF,PGR,91,124099618024.0
-PLD,Prologis Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,PLD,92,123685994960.0
-MO,Altria Group Inc.,ヘルスケア, Medicinal Chemicals and Botanical Products ,XLV,MO,93,122108373308.0
-GLW,Corning Incorporated Common Stock,資本財・産業,Telecommunications Equipment,XLI,GLW,94,121361001955.0
-BMY,Bristol-Myers Squibb Company Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,BMY,95,121092124808.0
-BKNG,Booking Holdings Inc. Common Stock,一般消費財,Transportation Services,XLY,BKNG,96,120731818740.0
-PH,Parker-Hannifin Corporation Common Stock,資本財・産業,Metal Fabrications,XLI,PH,97,120603824713.0
-MDT,Medtronic plc. Ordinary Shares,ヘルスケア,Biotechnology: Electromedical & Electrotherapeutic Apparatus,XLV,MDT,98,120533163375.0
-LMT,Lockheed Martin Corporation Common Stock,資本財・産業,Military/Government/Technical,XLI,LMT,99,120525854939.0
-SPGI,S&P Global Inc. Common Stock,金融,Finance: Consumer Services,XLF,SPGI,100,120446436000.0
-COF,Capital One Financial Corporation Common Stock,金融,Major Banks,XLF,COF,101,119230777877.0
-PSX,Phillips 66 Common Stock,エネルギー,Integrated oil Companies,XLE,PSX,102,118624928118.0
-SNOW,Snowflake Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,SNOW,103,118216224000.0
-NEM,Newmont Corporation,素材,Precious Metals,XLB,NEM,104,117549909753.0
-CVS,CVS Health Corporation Common Stock,生活必需品,Retail-Drug Stores and Proprietary Stores,XLP,CVS,105,115606131654.0
-NET,Cloudflare Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,NET,106,115487333966.0
-MCK,McKesson Corporation Common Stock,ヘルスケア,Other Pharmaceuticals,XLV,MCK,107,113858650795.0
-ADP,Automatic Data Processing Inc. Common Stock,情報技術,EDP Services,XLK,ADP,108,111077233935.0
-SYK,Stryker Corporation Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,SYK,109,108021841215.0
-SBUX,Starbucks Corporation Common Stock,一般消費財,Restaurants,XLY,SBUX,110,106305000000.0
-LOW,Lowe's Companies Inc. Common Stock,一般消費財,RETAIL: Building Materials,XLY,LOW,111,105652082318.0
-SO,Southern Company (The) Common Stock,公益,Electric Utilities: Central,XLU,SO,112,102819441901.0
-CME,CME Group Inc. Class A Common Stock,金融,Investment Bankers/Brokers/Service,XLF,CME,113,102692241720.0
-HCA,HCA Healthcare Inc. Common Stock,ヘルスケア,Hospital/Nursing Management,XLV,HCA,114,101850965660.0
-ABNB,Airbnb Inc. Class A Common Stock,一般消費財,Diversified Commercial Services,XLY,ABNB,115,100033136035.0
-FCX,Freeport-McMoRan Inc. Common Stock,素材,Metal Mining,XLB,FCX,116,99975539951.0
-CEG,Constellation Energy Corporation Common Stock ,公益,Electric Utilities: Central,XLU,CEG,117,99043084726.0
-EQIX,Equinix Inc. Common Stock REIT,不動産,Real Estate Investment Trusts,XLRE,EQIX,118,98267132087.0
-PWR,Quanta Services Inc. Common Stock,資本財・産業,Engineering & Construction,XLI,PWR,119,97315738923.0
-MAR,Marriott International Class A Common Stock,一般消費財,Hotels/Resorts,XLY,MAR,120,96958121204.0
-DDOG,Datadog Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,DDOG,121,96709676214.0
-ADBE,Adobe Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,ADBE,122,93672656000.0
-BNY,The Bank of New York Mellon Corporation Common Stock,金融,Major Banks,XLF,BNY,123,93389310105.0
-DUK,Duke Energy Corporation (Holding Company) Common Stock,公益,Power Generation,XLU,DUK,124,93283570371.0
-ELV,Elevance Health Inc. Common Stock,ヘルスケア,Medical Specialities,XLV,ELV,125,92839574356.0
-SNPS,Synopsys Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,SNPS,126,91972175515.0
-HOOD,Robinhood Markets Inc. Class A Common Stock,金融,Investment Bankers/Brokers/Service,XLF,HOOD,127,90879236155.0
-CDNS,Cadence Design Systems Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,CDNS,128,90730977780.0
-GD,General Dynamics Corporation Common Stock,資本財・産業,Marine Transportation,XLI,GD,129,90544670879.0
-MRNA,Moderna Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,MRNA,130,90347081681.0
-EMR,Emerson Electric Company Common Stock,情報技術,Consumer Electronics/Appliances,XLK,EMR,131,89850424000.0
-CSX,CSX Corporation Common Stock,資本財・産業,Railroads,XLI,CSX,132,89437488993.0
-WMB,Williams Companies Inc. (The) Common Stock,公益,Natural Gas Distribution,XLU,WMB,133,89046591962.0
-APP,Applovin Corporation Class A Common Stock,情報技術,Computer Software: Programming Data Processing,XLK,APP,134,87742145690.0
-USB,U.S. Bancorp Common Stock,金融,Major Banks,XLF,USB,135,87655974352.0
-ICE,Intercontinental Exchange Inc. Common Stock,金融,Investment Bankers/Brokers/Service,XLF,ICE,136,87077898879.0
-HWM,Howmet Aerospace Inc. Common Stock,資本財・産業,Metal Fabrications,XLI,HWM,137,86755256338.0
-WM,Waste Management Inc. Common Stock,公益,Environmental Services,XLU,WM,138,86238550948.0
-PNC,PNC Financial Services Group Inc. (The) Common Stock,金融,Major Banks,XLF,PNC,139,86092043339.0
-VRT,Vertiv Holdings LLC Class A Common Stock,情報技術,Industrial Machinery/Components,XLK,VRT,140,85786914590.0
-MRSH,Marsh Common Stock,金融,Specialty Insurers,XLF,MRSH,141,85134490211.0
-MMM,3M Company Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,MMM,142,84815708700.0
-HPE,Hewlett Packard Enterprise Company Common Stock,情報技術,Retail: Computer Software & Peripheral Equipment,XLK,HPE,143,83776302203.0
-AMT,American Tower Corporation (REIT) Common Stock,不動産,Real Estate Investment Trusts,XLRE,AMT,144,83593232611.0
-INTU,Intuit Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,INTU,145,82960743840.0
-CTAS,Cintas Corporation Common Stock,資本財・産業,Garments and Clothing,XLI,CTAS,146,82841776653.0
-UPS,United Parcel Service Inc. Common Stock,資本財・産業,Trucking Freight/Courier Services,XLI,UPS,147,81487859924.0
-LITE,Lumentum Holdings Inc. Common Stock,コミュニケーション・サービス,Telecommunications Equipment,XLC,LITE,148,81192131318.0
-EOG,EOG Resources Inc. Common Stock,エネルギー,Oil & Gas Production,XLE,EOG,149,80877153647.0
-ECL,Ecolab Inc. Common Stock,一般消費財,Package Goods/Cosmetics,XLY,ECL,150,80653342369.0
-MCO,Moody's Corporation Common Stock,金融,Finance: Consumer Services,XLF,MCO,151,80151764000.0
-REGN,Regeneron Pharmaceuticals Inc. Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,REGN,152,80136044460.0
-MDLZ,Mondelez International Inc. Class A Common Stock,生活必需品,Packaged Foods,XLP,MDLZ,153,79858595126.0
-DASH,DoorDash Inc. Class A Common Stock,一般消費財,Business Services,XLY,DASH,154,79731153387.0
-BX,Blackstone Inc. Common Stock,金融,Investment Managers,XLF,BX,155,79723893358.0
-TRV,The Travelers Companies Inc. Common Stock,金融,Property-Casualty Insurers,XLF,TRV,156,78803814812.0
-SHW,Sherwin-Williams Company (The) Common Stock,素材,RETAIL: Building Materials,XLB,SHW,157,78784730326.0
-KKR,KKR & Co. Inc. Common Stock,金融,Investment Managers,XLF,KKR,158,76837607446.0
-ITW,Illinois Tool Works Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,ITW,159,76745056000.0
-CI,The Cigna Group Common Stock,ヘルスケア,Medical Specialities,XLV,CI,160,76518759936.0
-MSI,Motorola Solutions Inc. Common Stock,情報技術,Radio And Television Broadcasting And Communications Equipment,XLK,MSI,161,74758508853.0
-CMCSA,Comcast Corporation Class A Common Stock,コミュニケーション・サービス,Cable & Other Pay Television Services,XLC,CMCSA,162,74698799862.0
-KMI,Kinder Morgan Inc. Common Stock,公益,Natural Gas Distribution,XLU,KMI,163,74263849668.0
-CL,Colgate-Palmolive Company Common Stock,一般消費財,Package Goods/Cosmetics,XLY,CL,164,73961695075.0
-HLT,Hilton Worldwide Holdings Inc. Common Stock ,一般消費財,Hotels/Resorts,XLY,HLT,165,73821290480.0
-ROST,Ross Stores Inc. Common Stock,一般消費財,Clothing/Shoe/Accessory Stores,XLY,ROST,166,73656303573.0
-RCL,Royal Caribbean Cruises Ltd. Common Stock,一般消費財,Marine Transportation,XLY,RCL,167,73364781162.0
-GM,General Motors Company Common Stock,資本財・産業,Auto Manufacturing,XLI,GM,168,72872350480.0
-NSC,Norfolk Southern Corporation Common Stock,資本財・産業,Railroads,XLI,NSC,169,72712468591.0
-CMI,Cummins Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,CMI,170,72406013583.0
-TGT,Target Corporation Common Stock,一般消費財,Department/Specialty Retail Stores,XLY,TGT,171,70556826068.0
-BE,Bloom Energy Corporation Class A Common Stock,エネルギー,Industrial Machinery/Components,XLE,BE,172,70492174992.0
-NOC,Northrop Grumman Corporation Common Stock,資本財・産業,Industrial Machinery/Components,XLI,NOC,173,70419221358.0
-ORLY,O'Reilly Automotive Inc. Common Stock,一般消費財,Auto & Home Supply Stores,XLY,ORLY,174,70128811058.0
-FDX,FedEx Corporation Common Stock,一般消費財,Air Freight/Delivery Services,XLY,FDX,175,68937364307.0
-RSG,Republic Services Inc. Common Stock,公益,Environmental Services,XLU,RSG,176,68726440782.0
-AEP,American Electric Power Company Inc. Common Stock,公益,Electric Utilities: Central,XLU,AEP,177,68664838008.0
-APO,Apollo Global Management Inc. (New) Common Stock,金融,Investment Managers,XLF,APO,178,66961688799.0
-HON,Honeywell International Inc. Common Stock,資本財・産業,Aerospace,XLI,HON,179,65799915476.0
-APD,Air Products and Chemicals Inc. Common Stock,素材,Major Chemicals,XLB,APD,180,65142198091.0
-URI,United Rentals Inc. Common Stock,一般消費財,Diversified Commercial Services,XLY,URI,181,64409150042.0
-SPG,Simon Property Group Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,SPG,182,64289686031.0
-COR,Cencora Inc. Common Stock,ヘルスケア,Other Pharmaceuticals,XLV,COR,183,64150368058.0
-CVNA,Carvana Co. Class A Common Stock,一般消費財,Retail-Auto Dealers and Gas Stations,XLY,CVNA,184,63782880109.0
-DLR,Digital Realty Trust Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,DLR,185,63679525528.0
-MET,MetLife Inc. Common Stock,金融,Life Insurance,XLF,MET,186,63369759160.0
-GWW,W.W. Grainger Inc. Common Stock,資本財・産業,Office Equipment/Supplies/Services,XLI,GWW,187,62673455444.0
-TRGP,Targa Resources Inc. Common Stock,公益,Natural Gas Distribution,XLU,TRGP,188,62380128319.0
-BSX,Boston Scientific Corporation Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,BSX,189,62316869618.0
-OXY,Occidental Petroleum Corporation Common Stock,エネルギー,Oil & Gas Production,XLE,OXY,190,61387730953.0
-TDG,Transdigm Group Incorporated Common Stock,資本財・産業,Military/Government/Technical,XLI,TDG,191,61344229149.0
-MPWR,Monolithic Power Systems Inc. Common Stock,情報技術,Semiconductors,SOXX,MPWR,192,61090154730.0
-KEYS,Keysight Technologies Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,KEYS,193,60882925707.0
-AJG,Arthur J. Gallagher & Co. Common Stock,金融,Specialty Insurers,XLF,AJG,194,60753352000.0
-MSTR,Strategy Inc Common Stock Class A,情報技術,Computer Software: Prepackaged Software,XLK,MSTR,195,60444115542.0
-ALL,Allstate Corporation (The) Common Stock,金融,Property-Casualty Insurers,XLF,ALL,196,59717462052.0
-FAST,Fastenal Company Common Stock,一般消費財,RETAIL: Building Materials,XLY,FAST,197,59669873796.0
-AFL,AFLAC Incorporated Common Stock,金融,Accident &Health Insurance,XLF,AFL,198,59263791257.0
-AON,Aon plc Class A Ordinary Shares (Ireland),金融,Specialty Insurers,XLF,AON,199,58408738252.0
-NUE,Nucor Corporation Common Stock,資本財・産業,Steel/Iron Ore,XLI,NUE,200,58332005056.0
-OKE,ONEOK Inc. Common Stock,公益,Oil & Gas Production,XLU,OKE,201,57975098274.0
-LNG,Cheniere Energy Inc. Common Stock,公益,Oil/Gas Transmission,XLU,LNG,202,57765538651.0
-CAH,Cardinal Health Inc. Common Stock,ヘルスケア,Other Pharmaceuticals,XLV,CAH,203,57366512130.0
-PCAR,PACCAR Inc. Common Stock,資本財・産業,Auto Manufacturing,XLI,PCAR,204,57142179298.0
-NTRA,Natera Inc. Common Stock,ヘルスケア,Medical Specialities,XLV,NTRA,205,56900911108.0
-AME,AMETEK Inc.,資本財・産業,Industrial Machinery/Components,XLI,AME,206,56588552857.0
-TER,Teradyne Inc. Common Stock,資本財・産業,Electrical Products,XLI,TER,207,56195119180.0
-TFC,Truist Financial Corporation Common Stock,金融,Major Banks,XLF,TFC,208,55669505387.0
-FANG,Diamondback Energy Inc. Common Stock,エネルギー,Oil & Gas Production,XLE,FANG,209,55307609961.0
-D,Dominion Energy Inc. Common Stock,公益,Electric Utilities: Central,XLU,D,210,55234229597.0
-BKR,Baker Hughes Company Class A Common Stock,一般消費財,Oil and Gas Field Machinery,XLY,BKR,211,54964363311.0
-DVN,Devon Energy Corporation Common Stock,エネルギー,Oil & Gas Production,XLE,DVN,212,54912000000.0
-FIX,Comfort Systems USA Inc. Common Stock,資本財・産業,Engineering & Construction,XLI,FIX,213,54258393133.0
-PSA,Public Storage Common Stock,不動産,Real Estate Investment Trusts,XLRE,PSA,214,53955468704.0
-SRE,DBA Sempra Common Stock,公益,Natural Gas Distribution,XLU,SRE,215,53613289533.0
-NKE,Nike Inc. Common Stock,一般消費財,Shoe Manufacturing,XLY,NKE,216,52431401664.0
-O,Realty Income Corporation Common Stock,不動産,Real Estate Investment Trusts,XLRE,O,217,52202848881.0
-ALAB,Astera Labs Inc. Common Stock,情報技術,Semiconductors,SOXX,ALAB,218,52094107029.0
-EBAY,eBay Inc. Common Stock,一般消費財,Business Services,XLY,EBAY,219,52011600000.0
-COHR,Coherent Corp. Common Stock,情報技術,Electronic Components,XLK,COHR,220,51856834408.0
-BDX,Becton Dickinson and Company Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,BDX,221,51451142652.0
-NDAQ,Nasdaq Inc. Common Stock,金融,Investment Bankers/Brokers/Service,XLF,NDAQ,222,51403559129.0
-HUM,Humana Inc. Common Stock,ヘルスケア,Medical Specialities,XLV,HUM,223,51322323639.0
-CIEN,Ciena Corporation Common Stock,公益,Telecommunications Equipment,XLU,CIEN,224,50994345590.0
-VST,Vistra Corp. Common Stock,公益,Electric Utilities: Central,XLU,VST,225,50946066249.0
-DAL,Delta Air Lines Inc. Common Stock,一般消費財,Air Freight/Delivery Services,XLY,DAL,226,50428983927.0
-EW,Edwards Lifesciences Corporation Common Stock,ヘルスケア,Industrial Specialties,XLV,EW,227,49829780000.0
-HONA,Honeywell Aerospace Inc. Common Stock ,資本財・産業,Aerospace,XLI,HONA,228,49676000589.0
-VYLR,Vylor Inc. Common Stock,生活必需品,Farming/Seeds/Milling,XLP,VYLR,229,49654011021.0
-A,Agilent Technologies Inc. Common Stock,資本財・産業,Biotechnology: Laboratory Analytical Instruments,XLI,A,230,49055620596.0
-ETR,Entergy Corporation Common Stock,公益,Electric Utilities: Central,XLU,ETR,231,48762991541.0
-WAB,Westinghouse Air Brake Technologies Corporation Common Stock,資本財・産業,Railroads,XLI,WAB,232,48391269703.0
-ADSK,Autodesk Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,ADSK,233,48308260000.0
-VEEV,Veeva Systems Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,VEEV,234,48143596548.0
-PYPL,PayPal Holdings Inc. Common Stock,資本財・産業,Diversified Commercial Services,XLI,PYPL,235,47991355031.0
-VMRK,Vivmark Residential Common Shares of Beneficial Interest,不動産,Real Estate Investment Trusts,XLRE,VMRK,236,47880000000.0
-AZO,AutoZone Inc. Common Stock,一般消費財,Auto & Home Supply Stores,XLY,AZO,237,47533230125.0
-MDLN,Medline Inc. Class A Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,MDLN,238,47237440188.0
-F,Ford Motor Company Common Stock,資本財・産業,Auto Manufacturing,XLI,F,239,47196760272.0
-P,Everpure Inc. Class A common stock,情報技術,Electronic Components,XLK,P,240,47148323744.0
-ROK,Rockwell Automation Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,ROK,241,47115617179.0
-XEL,Xcel Energy Inc. Common Stock,公益,Power Generation,XLU,XEL,242,47072441300.0
-STT,State Street Corporation Common Stock,金融,Major Banks,XLF,STT,243,45844977561.0
-TRI,Thomson Reuters Corporation Common Shares,一般消費財,Publishing,XLY,TRI,244,45659280000.0
-COIN,Coinbase Global Inc. Class A Common Stock,金融,Finance: Consumer Services,XLF,COIN,245,45614765617.0
-XYZ,Block Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,XYZ,246,45570300750.0
-WDAY,Workday Inc. Class A Common Stock,情報技術,EDP Services,XLK,WDAY,247,45493570000.0
-KDP,Keurig Dr Pepper Inc. Common Stock,生活必需品,Beverages (Production/Distribution),XLP,KDP,248,45070558379.0
-FITB,Fifth Third Bancorp Common Stock,金融,Major Banks,XLF,FITB,249,45018146877.0
-CARR,Carrier Global Corporation Common Stock ,資本財・産業,Industrial Machinery/Components,XLI,CARR,250,44711391092.0
-AMP,Ameriprise Financial Inc. Common Stock,金融,Investment Managers,XLF,AMP,251,44572772189.0
-LHX,L3Harris Technologies Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,LHX,252,44225971300.0
-EXC,Exelon Corporation Common Stock,公益,Power Generation,XLU,EXC,253,43974018994.0
-NTAP,NetApp Inc. Common Stock,情報技術,Electronic Components,XLK,NTAP,254,43644302911.0
-VTR,Ventas Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,VTR,255,43246507527.0
-IQV,IQVIA Holdings Inc. Common Stock,ヘルスケア,Biotechnology: Commercial Physical & Biological Resarch,XLV,IQV,256,43126846000.0
-WAT,Waters Corporation Common Stock,資本財・産業,Biotechnology: Laboratory Analytical Instruments,XLI,WAT,257,42896107744.0
-HEI,Heico Corporation Common Stock,資本財・産業,Aerospace,XLI,HEI,258,41728765985.0
-IDXX,IDEXX Laboratories Inc. Common Stock,ヘルスケア,Biotechnology: In Vitro & In Vivo Diagnostic Substances,XLV,IDXX,259,41675998175.0
-TWLO,Twilio Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,TWLO,260,41637313646.0
-RVMD,Revolution Medicines Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,RVMD,261,41478383611.0
-ILMN,Illumina Inc. Common Stock,ヘルスケア,Medical Specialities,XLV,ILMN,262,41035760000.0
-MSCI,MSCI Inc. Common Stock,一般消費財,Business Services,XLY,MSCI,263,40749804000.0
-ED,Consolidated Edison Inc. Common Stock,公益,Power Generation,XLU,ED,264,40533218177.0
-AIG,American International Group Inc. New Common Stock,金融,Property-Casualty Insurers,XLF,AIG,265,40487618076.0
-ADM,Archer-Daniels-Midland Company Common Stock,生活必需品,Packaged Foods,XLP,ADM,266,40311099522.0
-YUM,Yum! Brands Inc.,一般消費財,Restaurants,XLY,YUM,267,40031860159.0
-SYY,Sysco Corporation Common Stock,一般消費財,Food Distributors,XLY,SYY,268,39831362631.0
-LYV,Live Nation Entertainment Inc. Common Stock,コミュニケーション・サービス,Services-Misc. Amusement & Recreation,XLC,LYV,269,39784420922.0
-PRU,Prudential Financial Inc. Common Stock,金融,Life Insurance,XLF,PRU,270,39154050000.0
-MCHP,Microchip Technology Incorporated Common Stock,情報技術,Semiconductors,SOXX,MCHP,271,38689369234.0
-CMG,Chipotle Mexican Grill Inc. Common Stock,一般消費財,Restaurants,XLY,CMG,272,38620557360.0
-PAYX,Paychex Inc. Common Stock,資本財・産業,Diversified Commercial Services,XLI,PAYX,273,38577603859.0
-ODFL,Old Dominion Freight Line Inc. Common Stock,資本財・産業,Trucking Freight/Courier Services,XLI,ODFL,274,38230340398.0
-IBKR,Interactive Brokers Group Inc. Class A Common Stock,金融,Investment Bankers/Brokers/Service,XLF,IBKR,275,38121997308.0
-TTWO,Take-Two Interactive Software Inc. Common Stock,コミュニケーション・サービス,Computer Software: Prepackaged Software,XLC,TTWO,276,37626074545.0
-DHI,D.R. Horton Inc. Common Stock,一般消費財,Homebuilding,XLY,DHI,277,37379277322.0
-CBRE,CBRE Group Inc Common Stock Class A,不動産,Real Estate,XLRE,CBRE,278,37317568653.0
-KR,Kroger Company (The) Common Stock,生活必需品,Food Chains,XLP,KR,279,37260241083.0
-ARES,Ares Management Corporation Class A Common Stock,金融,Investment Managers,XLF,ARES,280,37152885490.0
-RKLB,Rocket Lab Corporation Common Stock,資本財・産業,Military/Government/Technical,XLI,RKLB,281,37150821354.0
-OKTA,Okta Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,OKTA,282,37047176957.0
-ROP,Roper Technologies Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,ROP,283,36859366731.0
-VIK,Viking Holdings Ltd Ordinary Shares,一般消費財,Marine Transportation,XLY,VIK,284,36821926821.0
-EL,Estee Lauder Companies Inc. (The) Common Stock,一般消費財,Package Goods/Cosmetics,XLY,EL,285,36808370712.0
-UI,Ubiquiti Inc. Common Stock,情報技術,Radio And Television Broadcasting And Communications Equipment,XLK,UI,286,36650539979.0
-CRWV,CoreWeave Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,CRWV,287,36280077680.0
-ZS,Zscaler Inc. Common Stock,情報技術,EDP Services,XLK,ZS,288,36000846771.0
-HIG,The Hartford Insurance Group Inc. Common Stock,金融,Property-Casualty Insurers,XLF,HIG,289,35744269384.0
-SKYD,Skydance Corporation Class B Common Stock,資本財・産業,Broadcasting,XLI,SKYD,290,35597777294.0
-PCG,Pacific Gas & Electric Co. Common Stock,公益,Power Generation,XLU,PCG,291,35243453022.0
-PEG,Public Service Enterprise Group Incorporated Common Stock,公益,Power Generation,XLU,PEG,292,35168517317.0
-CCL,Carnival Corporation Ltd. Common Shares,一般消費財,Marine Transportation,XLY,CCL,293,34919525050.0
-STLD,Steel Dynamics Inc.,資本財・産業,Steel/Iron Ore,XLI,STLD,294,34817259137.0
-WEC,WEC Energy Group Inc. Common Stock,公益,Power Generation,XLU,WEC,295,34784421635.0
-CNC,Centene Corporation Common Stock,ヘルスケア,Medical Specialities,XLV,CNC,296,34658689200.0
-KVUE,Kenvue Inc. Common Stock,一般消費財,Package Goods/Cosmetics,XLY,KVUE,297,34593130141.0
-BIIB,Biogen Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,BIIB,298,34401563354.0
-RBLX,Roblox Corporation Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,RBLX,299,33961432235.0
-RPRX,Royalty Pharma plc Class A Ordinary Shares ,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,RPRX,300,33919321024.0
+NVDA,NVIDIA Corporation Common Stock,情報技術,Semiconductors,SOXX,NVDA,1,5235243000000.0
+AAPL,Apple Inc. Common Stock,情報技術,Computer Manufacturing,XLK,AAPL,2,4991209560000.0
+GOOGL,Alphabet Inc. Class A Common Stock,コミュニケーション・サービス,Computer Software: Programming Data Processing,XLC,GOOGL,3,4270960600000.0
+MSFT,Microsoft Corporation Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,MSFT,4,4005636259665.0
+AMZN,Amazon.com Inc. Common Stock,一般消費財,Catalog/Specialty Distribution,XLY,AMZN,5,2747921245603.0
+SPCX,Space Exploration Technologies Corp. Class A Common Stock,情報技術,Computer Software: Programming Data Processing,XLK,SPCX,6,2017192749908.0
+META,Meta Platforms Inc. Class A Common Stock,コミュニケーション・サービス,Computer Software: Programming Data Processing,XLC,META,7,1876798786082.0
+AVGO,Broadcom Inc. Common Stock,情報技術,Semiconductors,SOXX,AVGO,8,1643703971415.0
+TSLA,Tesla Inc. Common Stock,一般消費財,Auto Manufacturing,XLY,TSLA,9,1431473957481.0
+LLY,Eli Lilly and Company Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,LLY,10,1178211916125.0
+BRK.B,Berkshire Hathaway Inc.,金融,,XLF,BRK-B,11,1161234416055.0
+MU,Micron Technology Inc. Common Stock,情報技術,Semiconductors,SOXX,MU,12,1053626551943.0
+WMT,Walmart Inc. Common Stock,生活必需品,Department/Specialty Retail Stores,XLP,WMT,13,935150669427.0
+AMD,Advanced Micro Devices Inc. Common Stock,情報技術,Semiconductors,SOXX,AMD,14,917826442864.0
+JPM,JP Morgan Chase & Co. Common Stock,金融,Major Banks,XLF,JPM,15,891901214008.0
+XOM,ExxonMobil Holdings Corporation Common Stock,エネルギー,Integrated oil Companies,XLE,XOM,16,718268781173.0
+V,Visa Inc.,金融,Business Services,XLF,V,17,714255401194.0
+JNJ,Johnson & Johnson Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,JNJ,18,610379116648.0
+MA,Mastercard Incorporated Common Stock,一般消費財,Business Services,XLY,MA,19,539902446221.0
+INTC,Intel Corporation Common Stock,情報技術,Semiconductors,SOXX,INTC,20,504037079264.0
+ABBV,AbbVie Inc. Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,ABBV,21,500801038569.0
+PLTR,Palantir Technologies Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,PLTR,22,481611722740.0
+COST,Costco Wholesale Corporation Common Stock,生活必需品,Department/Specialty Retail Stores,XLP,COST,23,433384934615.0
+CVX,Chevron Corporation Common Stock,エネルギー,Integrated oil Companies,XLE,CVX,24,433326155814.0
+CSCO,Cisco Systems Inc. Common Stock (DE),情報技術,Computer Communications Equipment,XLK,CSCO,25,433093167999.0
+ORCL,Oracle Corporation Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,ORCL,26,407645959506.0
+KO,Coca-Cola Company (The) Common Stock,生活必需品,Beverages (Production/Distribution),XLP,KO,27,395834530356.0
+PG,Procter & Gamble Company (The) Common Stock,生活必需品,Package Goods/Cosmetics,XLP,PG,28,365121945065.0
+UNH,UnitedHealth Group Incorporated Common Stock (DE),ヘルスケア,Medical Specialities,XLV,UNH,29,365024896429.0
+BAC,Bank of America Corporation Common Stock,金融,Major Banks,XLF,BAC,30,361525090471.0
+MRK,Merck & Company Inc. Common Stock (new),ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,MRK,31,358208650121.0
+LRCX,Lam Research Corporation Common Stock,情報技術,Industrial Machinery/Components,XLK,LRCX,32,347220203481.0
+AMAT,Applied Materials Inc. Common Stock,情報技術,Semiconductors,SOXX,AMAT,33,341254836464.0
+CAT,Caterpillar Inc. Common Stock,資本財・産業,Construction/Ag Equipment/Trucks,XLI,CAT,34,338155235344.0
+GE,GE Aerospace Common Stock,資本財・産業,Consumer Electronics/Appliances,XLI,GE,35,323719504056.0
+PM,Philip Morris International Inc Common Stock,ヘルスケア, Medicinal Chemicals and Botanical Products ,XLV,PM,36,311566826456.0
+HD,Home Depot Inc. (The) Common Stock,一般消費財,RETAIL: Building Materials,XLY,HD,37,307527850318.0
+PANW,Palo Alto Networks Inc. Common Stock,情報技術,Computer peripheral equipment,XLK,PANW,38,302880860000.0
+NFLX,Netflix Inc. Common Stock,コミュニケーション・サービス,Consumer Electronics/Video Chains,XLC,NFLX,39,302343659874.0
+DELL,Dell Technologies Inc. Class C Common Stock ,情報技術,Computer Manufacturing,XLK,DELL,40,300987397723.0
+MS,Morgan Stanley Common Stock,金融,Investment Bankers/Brokers/Service,XLF,MS,41,286000121773.0
+GS,Goldman Sachs Group Inc. (The) Common Stock,金融,Investment Bankers/Brokers/Service,XLF,GS,42,259515252522.0
+TMO,Thermo Fisher Scientific Inc Common Stock,ヘルスケア,Industrial Machinery/Components,XLV,TMO,43,257525287226.0
+TXN,Texas Instruments Incorporated Common Stock,情報技術,Semiconductors,SOXX,TXN,44,254905694116.0
+RTX,RTX Corporation Common Stock,資本財・産業,Aerospace,XLI,RTX,45,251963385021.0
+CRWD,CrowdStrike Holdings Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,CRWD,46,250423744308.0
+WFC,Wells Fargo & Company Common Stock,金融,Major Banks,XLF,WFC,47,250235945054.0
+GEV,GE Vernova Inc. Common Stock,資本財・産業,Consumer Electronics/Appliances,XLI,GEV,48,246742082782.0
+AMGN,Amgen Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,AMGN,49,234650509130.0
+ANET,Arista Networks Inc. Common Stock,コミュニケーション・サービス,Computer Communications Equipment,XLC,ANET,50,234058070176.0
+KLAC,KLA Corporation Common Stock,情報技術,Electronic Components,XLK,KLAC,51,227671432594.0
+LIN,Linde plc Ordinary Shares,素材,Major Chemicals,XLB,LIN,52,227364635995.0
+IBM,International Business Machines Corporation Common Stock,情報技術,Computer Manufacturing,XLK,IBM,53,220572503387.0
+AXP,American Express Company Common Stock,金融,Finance: Consumer Services,XLF,AXP,54,211959497284.0
+MRVL,Marvell Technology Inc. Common Stock,情報技術,Semiconductors,SOXX,MRVL,55,211543356000.0
+C,Citigroup Inc. Common Stock,金融,Major Banks,XLF,C,56,206676986033.0
+CRM,Salesforce Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,CRM,57,203067020000.0
+SNDK,Sandisk Corporation Common Stock,情報技術,Electronic Components,XLK,SNDK,58,202707410684.0
+APH,Amphenol Corporation Common Stock,情報技術,Electrical Products,XLK,APH,59,200951643822.0
+ADI,Analog Devices Inc. Common Stock,情報技術,Semiconductors,SOXX,ADI,60,195740219587.0
+GILD,Gilead Sciences Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,GILD,61,195131742742.0
+DIS,Walt Disney Company (The) Common Stock,コミュニケーション・サービス,Services-Misc. Amusement & Recreation,XLC,DIS,62,191109706313.0
+QCOM,QUALCOMM Incorporated Common Stock,情報技術,Radio And Television Broadcasting And Communications Equipment,XLK,QCOM,63,187361731506.0
+VZ,Verizon Communications Inc. Common Stock,コミュニケーション・サービス,Telecommunications Equipment,XLC,VZ,64,184472018969.0
+ABT,Abbott Laboratories Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,ABT,65,181136523425.0
+DE,Deere & Company Common Stock,資本財・産業,Industrial Machinery/Components,XLI,DE,66,175437166826.0
+PEP,PepsiCo Inc. Common Stock,生活必需品,Beverages (Production/Distribution),XLP,PEP,67,174948701391.0
+BLK,BlackRock Inc. Common Stock,金融,Investment Bankers/Brokers/Service,XLF,BLK,68,173574368102.0
+MCD,McDonald's Corporation Common Stock,一般消費財,Restaurants,XLY,MCD,69,171603071268.0
+UNP,Union Pacific Corporation Common Stock,資本財・産業,Railroads,XLI,UNP,70,171515537028.0
+COP,ConocoPhillips Common Stock,エネルギー,Integrated oil Companies,XLE,COP,71,170265560899.0
+WELL,Welltower Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,WELL,72,169108387853.0
+TMUS,T-Mobile US Inc. Common Stock,コミュニケーション・サービス,Telecommunications Equipment,XLC,TMUS,73,168441623389.0
+SCCO,Southern Copper Corporation Common Stock,素材,Metal Mining,XLB,SCCO,74,168276361783.0
+PFE,Pfizer Inc. Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,PFE,75,167798390460.0
+NEE,NextEra Energy Inc. Common Stock,公益,Electric Utilities: Central,XLU,NEE,76,164708839383.0
+SCHW,Charles Schwab Corporation (The) Common Stock,金融,Investment Bankers/Brokers/Service,XLF,SCHW,77,162834250830.0
+DHR,Danaher Corporation Common Stock,資本財・産業,Industrial Machinery/Components,XLI,DHR,78,162741271501.0
+T,AT&T Inc.,コミュニケーション・サービス,Telecommunications Equipment,XLC,T,79,161031062775.0
+TJX,TJX Companies Inc. (The) Common Stock,一般消費財,Clothing/Shoe/Accessory Stores,XLY,TJX,80,159034249739.0
+NOW,ServiceNow Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,NOW,81,153621380000.0
+ISRG,Intuitive Surgical Inc. Common Stock,ヘルスケア,Industrial Specialties,XLV,ISRG,82,151153541339.0
+BA,Boeing Company (The) Common Stock,資本財・産業,Aerospace,XLI,BA,83,149166533875.0
+UBER,Uber Technologies Inc. Common Stock,一般消費財,Business Services,XLY,UBER,84,145573259824.0
+MPC,Marathon Petroleum Corporation Common Stock,エネルギー,Integrated oil Companies,XLE,MPC,85,133930945970.0
+FTNT,Fortinet Inc. Common Stock,情報技術,Computer peripheral equipment,XLK,FTNT,86,133469850617.0
+MNST,Monster Beverage Corporation,生活必需品,Beverages (Production/Distribution),XLP,MNST,87,133235243724.0
+WDC,Western Digital Corporation Common Stock,情報技術,Electronic Components,XLK,WDC,88,133158306471.0
+VRTX,Vertex Pharmaceuticals Incorporated Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,VRTX,89,128948245085.0
+VLO,Valero Energy Corporation Common Stock,エネルギー,Integrated oil Companies,XLE,VLO,90,127857068332.0
+SPGI,S&P Global Inc. Common Stock,金融,Finance: Consumer Services,XLF,SPGI,91,125233988000.0
+BKNG,Booking Holdings Inc. Common Stock,一般消費財,Transportation Services,XLY,BKNG,92,124578886900.0
+PGR,Progressive Corporation (The) Common Stock,金融,Property-Casualty Insurers,XLF,PGR,93,124268215838.0
+BMY,Bristol-Myers Squibb Company Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,BMY,94,123727226714.0
+MO,Altria Group Inc.,ヘルスケア, Medicinal Chemicals and Botanical Products ,XLV,MO,95,123293891496.0
+LMT,Lockheed Martin Corporation Common Stock,資本財・産業,Military/Government/Technical,XLI,LMT,96,122928386678.0
+MDT,Medtronic plc. Ordinary Shares,ヘルスケア,Biotechnology: Electromedical & Electrotherapeutic Apparatus,XLV,MDT,97,122093711601.0
+NEM,Newmont Corporation,素材,Precious Metals,XLB,NEM,98,122007028059.0
+COF,Capital One Financial Corporation Common Stock,金融,Major Banks,XLF,COF,99,121997594487.0
+PH,Parker-Hannifin Corporation Common Stock,資本財・産業,Metal Fabrications,XLI,PH,100,121288615126.0
+PLD,Prologis Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,PLD,101,120348767440.0
+GLW,Corning Incorporated Common Stock,資本財・産業,Telecommunications Equipment,XLI,GLW,102,119241986660.0
+CVS,CVS Health Corporation Common Stock,生活必需品,Retail-Drug Stores and Proprietary Stores,XLP,CVS,103,118407076762.0
+SNOW,Snowflake Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,SNOW,104,118212696000.0
+MCK,McKesson Corporation Common Stock,ヘルスケア,Other Pharmaceuticals,XLV,MCK,105,116431800106.0
+PSX,Phillips 66 Common Stock,エネルギー,Integrated oil Companies,XLE,PSX,106,115396848907.0
+ADP,Automatic Data Processing Inc. Common Stock,情報技術,EDP Services,XLK,ADP,107,113189254686.0
+NET,Cloudflare Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,NET,108,112635135449.0
+SYK,Stryker Corporation Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,SYK,109,112475124279.0
+SBUX,Starbucks Corporation Common Stock,一般消費財,Restaurants,XLY,SBUX,110,110443200000.0
+LOW,Lowe's Companies Inc. Common Stock,一般消費財,RETAIL: Building Materials,XLY,LOW,111,109809492599.0
+ABNB,Airbnb Inc. Class A Common Stock,一般消費財,Diversified Commercial Services,XLY,ABNB,112,104356368659.0
+CME,CME Group Inc. Class A Common Stock,金融,Investment Bankers/Brokers/Service,XLF,CME,113,104083813468.0
+SO,Southern Company (The) Common Stock,公益,Electric Utilities: Central,XLU,SO,114,102589369308.0
+HCA,HCA Healthcare Inc. Common Stock,ヘルスケア,Hospital/Nursing Management,XLV,HCA,115,101430952750.0
+FCX,Freeport-McMoRan Inc. Common Stock,素材,Metal Mining,XLB,FCX,116,100607387661.0
+MAR,Marriott International Class A Common Stock,一般消費財,Hotels/Resorts,XLY,MAR,117,100580164944.0
+EQIX,Equinix Inc. Common Stock REIT,不動産,Real Estate Investment Trusts,XLRE,EQIX,118,98302653894.0
+ADBE,Adobe Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,ADBE,119,97949964000.0
+CEG,Constellation Energy Corporation Common Stock ,公益,Electric Utilities: Central,XLU,CEG,120,97434529225.0
+BNY,The Bank of New York Mellon Corporation Common Stock,金融,Major Banks,XLF,BNY,121,96408653537.0
+DDOG,Datadog Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,DDOG,122,95603725140.0
+PWR,Quanta Services Inc. Common Stock,資本財・産業,Engineering & Construction,XLI,PWR,123,94616657372.0
+MRNA,Moderna Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,MRNA,124,94419287749.0
+HOOD,Robinhood Markets Inc. Class A Common Stock,金融,Investment Bankers/Brokers/Service,XLF,HOOD,125,93495565569.0
+APP,Applovin Corporation Class A Common Stock,情報技術,Computer Software: Programming Data Processing,XLK,APP,126,93464677790.0
+ELV,Elevance Health Inc. Common Stock,ヘルスケア,Medical Specialities,XLV,ELV,127,92913309915.0
+DUK,Duke Energy Corporation (Holding Company) Common Stock,公益,Power Generation,XLU,DUK,128,92690996704.0
+GD,General Dynamics Corporation Common Stock,資本財・産業,Marine Transportation,XLI,GD,129,91185891431.0
+EMR,Emerson Electric Company Common Stock,情報技術,Consumer Electronics/Appliances,XLK,EMR,130,90447270000.0
+CSX,CSX Corporation Common Stock,資本財・産業,Railroads,XLI,CSX,131,90197003709.0
+SNPS,Synopsys Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,SNPS,132,89707030359.0
+WM,Waste Management Inc. Common Stock,公益,Environmental Services,XLU,WM,133,89612147101.0
+USB,U.S. Bancorp Common Stock,金融,Major Banks,XLF,USB,134,89416572486.0
+CDNS,Cadence Design Systems Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,CDNS,135,89331981340.0
+MRSH,Marsh Common Stock,金融,Specialty Insurers,XLF,MRSH,136,89018989933.0
+ICE,Intercontinental Exchange Inc. Common Stock,金融,Investment Bankers/Brokers/Service,XLF,ICE,137,88930500686.0
+INTU,Intuit Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,INTU,138,88233310120.0
+HWM,Howmet Aerospace Inc. Common Stock,資本財・産業,Metal Fabrications,XLI,HWM,139,87616667360.0
+PNC,PNC Financial Services Group Inc. (The) Common Stock,金融,Major Banks,XLF,PNC,140,85748951785.0
+MMM,3M Company Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,MMM,141,85264387203.0
+WMB,Williams Companies Inc. (The) Common Stock,公益,Natural Gas Distribution,XLU,WMB,142,84667652412.0
+CTAS,Cintas Corporation Common Stock,資本財・産業,Garments and Clothing,XLI,CTAS,143,84600819315.0
+AMT,American Tower Corporation (REIT) Common Stock,不動産,Real Estate Investment Trusts,XLRE,AMT,144,84506514305.0
+MCO,Moody's Corporation Common Stock,金融,Finance: Consumer Services,XLF,MCO,145,83775108000.0
+DASH,DoorDash Inc. Class A Common Stock,一般消費財,Business Services,XLY,DASH,146,83648166738.0
+UPS,United Parcel Service Inc. Common Stock,資本財・産業,Trucking Freight/Courier Services,XLI,UPS,147,83231962167.0
+VRT,Vertiv Holdings LLC Class A Common Stock,情報技術,Industrial Machinery/Components,XLK,VRT,148,82676210152.0
+REGN,Regeneron Pharmaceuticals Inc. Common Stock,ヘルスケア,Biotechnology: Pharmaceutical Preparations,XLV,REGN,149,81987175144.0
+BX,Blackstone Inc. Common Stock,金融,Investment Managers,XLF,BX,150,81968262449.0
+SHW,Sherwin-Williams Company (The) Common Stock,素材,RETAIL: Building Materials,XLB,SHW,151,81790076235.0
+ECL,Ecolab Inc. Common Stock,一般消費財,Package Goods/Cosmetics,XLY,ECL,152,81522361038.0
+MDLZ,Mondelez International Inc. Class A Common Stock,生活必需品,Packaged Foods,XLP,MDLZ,153,80445696833.0
+TRV,The Travelers Companies Inc. Common Stock,金融,Property-Casualty Insurers,XLF,TRV,154,80069865196.0
+EOG,EOG Resources Inc. Common Stock,エネルギー,Oil & Gas Production,XLE,EOG,155,80053642841.0
+CI,The Cigna Group Common Stock,ヘルスケア,Medical Specialities,XLV,CI,156,78957699622.0
+LITE,Lumentum Holdings Inc. Common Stock,コミュニケーション・サービス,Telecommunications Equipment,XLC,LITE,157,78765416606.0
+KKR,KKR & Co. Inc. Common Stock,金融,Investment Managers,XLF,KKR,158,78659807716.0
+HPE,Hewlett Packard Enterprise Company Common Stock,情報技術,Retail: Computer Software & Peripheral Equipment,XLK,HPE,159,77829259993.0
+CMCSA,Comcast Corporation Class A Common Stock,コミュニケーション・サービス,Cable & Other Pay Television Services,XLC,CMCSA,160,77253818194.0
+ITW,Illinois Tool Works Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,ITW,161,77234912000.0
+HLT,Hilton Worldwide Holdings Inc. Common Stock ,一般消費財,Hotels/Resorts,XLY,HLT,162,77192762832.0
+MSI,Motorola Solutions Inc. Common Stock,情報技術,Radio And Television Broadcasting And Communications Equipment,XLK,MSI,163,75529709905.0
+ROST,Ross Stores Inc. Common Stock,一般消費財,Clothing/Shoe/Accessory Stores,XLY,ROST,164,75017173821.0
+RCL,Royal Caribbean Cruises Ltd. Common Stock,一般消費財,Marine Transportation,XLY,RCL,165,74889258041.0
+CL,Colgate-Palmolive Company Common Stock,一般消費財,Package Goods/Cosmetics,XLY,CL,166,73874006063.0
+GM,General Motors Company Common Stock,資本財・産業,Auto Manufacturing,XLI,GM,167,73407595920.0
+CMI,Cummins Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,CMI,168,73338002160.0
+KMI,Kinder Morgan Inc. Common Stock,公益,Natural Gas Distribution,XLU,KMI,169,73083644561.0
+NSC,Norfolk Southern Corporation Common Stock,資本財・産業,Railroads,XLI,NSC,170,72959537802.0
+ORLY,O'Reilly Automotive Inc. Common Stock,一般消費財,Auto & Home Supply Stores,XLY,ORLY,171,71593030092.0
+TGT,Target Corporation Common Stock,一般消費財,Department/Specialty Retail Stores,XLY,TGT,172,71156497760.0
+NOC,Northrop Grumman Corporation Common Stock,資本財・産業,Industrial Machinery/Components,XLI,NOC,173,70978949680.0
+RSG,Republic Services Inc. Common Stock,公益,Environmental Services,XLU,RSG,174,70321810398.0
+FDX,FedEx Corporation Common Stock,一般消費財,Air Freight/Delivery Services,XLY,FDX,175,69945580360.0
+BE,Bloom Energy Corporation Class A Common Stock,エネルギー,Industrial Machinery/Components,XLE,BE,176,69596811860.0
+AEP,American Electric Power Company Inc. Common Stock,公益,Electric Utilities: Central,XLU,AEP,177,67663146880.0
+HON,Honeywell International Inc. Common Stock,資本財・産業,Aerospace,XLI,HON,178,66715872105.0
+CVNA,Carvana Co. Class A Common Stock,一般消費財,Retail-Auto Dealers and Gas Stations,XLY,CVNA,179,66710113737.0
+APO,Apollo Global Management Inc. (New) Common Stock,金融,Investment Managers,XLF,APO,180,66064063197.0
+APD,Air Products and Chemicals Inc. Common Stock,素材,Major Chemicals,XLB,APD,181,66048528198.0
+SPG,Simon Property Group Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,SPG,182,65807142636.0
+URI,United Rentals Inc. Common Stock,一般消費財,Diversified Commercial Services,XLY,URI,183,65203986627.0
+COR,Cencora Inc. Common Stock,ヘルスケア,Other Pharmaceuticals,XLV,COR,184,65150302403.0
+DLR,Digital Realty Trust Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,DLR,185,64560211627.0
+AJG,Arthur J. Gallagher & Co. Common Stock,金融,Specialty Insurers,XLF,AJG,186,64100630000.0
+BSX,Boston Scientific Corporation Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,BSX,187,63968991278.0
+MSTR,Strategy Inc Common Stock Class A,情報技術,Computer Software: Prepackaged Software,XLK,MSTR,188,63841037701.0
+MET,MetLife Inc. Common Stock,金融,Life Insurance,XLF,MET,189,63719271470.0
+GWW,W.W. Grainger Inc. Common Stock,資本財・産業,Office Equipment/Supplies/Services,XLI,GWW,190,62699360962.0
+TDG,Transdigm Group Incorporated Common Stock,資本財・産業,Military/Government/Technical,XLI,TDG,191,62696845716.0
+MPWR,Monolithic Power Systems Inc. Common Stock,情報技術,Semiconductors,SOXX,MPWR,192,61389435600.0
+AON,Aon plc Class A Ordinary Shares (Ireland),金融,Specialty Insurers,XLF,AON,193,60837574471.0
+OXY,Occidental Petroleum Corporation Common Stock,エネルギー,Oil & Gas Production,XLE,OXY,194,60647999299.0
+TRGP,Targa Resources Inc. Common Stock,公益,Natural Gas Distribution,XLU,TRGP,195,60587484984.0
+ALL,Allstate Corporation (The) Common Stock,金融,Property-Casualty Insurers,XLF,ALL,196,60584764820.0
+AFL,AFLAC Incorporated Common Stock,金融,Accident &Health Insurance,XLF,AFL,197,59183576329.0
+CAH,Cardinal Health Inc. Common Stock,ヘルスケア,Other Pharmaceuticals,XLV,CAH,198,58748921420.0
+NTRA,Natera Inc. Common Stock,ヘルスケア,Medical Specialities,XLV,NTRA,199,58348118574.0
+PCAR,PACCAR Inc. Common Stock,資本財・産業,Auto Manufacturing,XLI,PCAR,200,58326500442.0
+KEYS,Keysight Technologies Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,KEYS,201,58237322370.0
+FAST,Fastenal Company Common Stock,一般消費財,RETAIL: Building Materials,XLY,FAST,202,57810927728.0
+NUE,Nucor Corporation Common Stock,資本財・産業,Steel/Iron Ore,XLI,NUE,203,57782965920.0
+LNG,Cheniere Energy Inc. Common Stock,公益,Oil/Gas Transmission,XLU,LNG,204,57654010206.0
+OKE,ONEOK Inc. Common Stock,公益,Oil & Gas Production,XLU,OKE,205,57143010314.0
+AME,AMETEK Inc.,資本財・産業,Industrial Machinery/Components,XLI,AME,206,56976004359.0
+TFC,Truist Financial Corporation Common Stock,金融,Major Banks,XLF,TFC,207,56891131575.0
+D,Dominion Energy Inc. Common Stock,公益,Electric Utilities: Central,XLU,D,208,55287001154.0
+PSA,Public Storage Common Stock,不動産,Real Estate Investment Trusts,XLRE,PSA,209,55183088282.0
+NKE,Nike Inc. Common Stock,一般消費財,Shoe Manufacturing,XLY,NKE,210,55164369909.0
+FANG,Diamondback Energy Inc. Common Stock,エネルギー,Oil & Gas Production,XLE,FANG,211,54772763447.0
+EBAY,eBay Inc. Common Stock,一般消費財,Business Services,XLY,EBAY,212,54694950000.0
+DVN,Devon Energy Corporation Common Stock,エネルギー,Oil & Gas Production,XLE,DVN,213,54164000000.0
+BKR,Baker Hughes Company Class A Common Stock,一般消費財,Oil and Gas Field Machinery,XLY,BKR,214,54001469462.0
+TER,Teradyne Inc. Common Stock,資本財・産業,Electrical Products,XLI,TER,215,53657708808.0
+SRE,DBA Sempra Common Stock,公益,Natural Gas Distribution,XLU,SRE,216,53574055512.0
+BDX,Becton Dickinson and Company Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,BDX,217,52777666368.0
+O,Realty Income Corporation Common Stock,不動産,Real Estate Investment Trusts,XLRE,O,218,52562411733.0
+ALAB,Astera Labs Inc. Common Stock,情報技術,Semiconductors,SOXX,ALAB,219,52389031706.0
+NDAQ,Nasdaq Inc. Common Stock,金融,Investment Bankers/Brokers/Service,XLF,NDAQ,220,52264384282.0
+FIX,Comfort Systems USA Inc. Common Stock,資本財・産業,Engineering & Construction,XLI,FIX,221,52132303718.0
+HUM,Humana Inc. Common Stock,ヘルスケア,Medical Specialities,XLV,HUM,222,51898709118.0
+VST,Vistra Corp. Common Stock,公益,Electric Utilities: Central,XLU,VST,223,51744878013.0
+HONA,Honeywell Aerospace Inc. Common Stock ,資本財・産業,Aerospace,XLI,HONA,224,51698158975.0
+DAL,Delta Air Lines Inc. Common Stock,一般消費財,Air Freight/Delivery Services,XLY,DAL,225,51369798630.0
+ADSK,Autodesk Inc. Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,ADSK,226,51238440000.0
+EW,Edwards Lifesciences Corporation Common Stock,ヘルスケア,Industrial Specialties,XLV,EW,227,50780840000.0
+VEEV,Veeva Systems Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,VEEV,228,50682327316.0
+CIEN,Ciena Corporation Common Stock,公益,Telecommunications Equipment,XLU,CIEN,229,50557575333.0
+AZO,AutoZone Inc. Common Stock,一般消費財,Auto & Home Supply Stores,XLY,AZO,230,49949382665.0
+A,Agilent Technologies Inc. Common Stock,資本財・産業,Biotechnology: Laboratory Analytical Instruments,XLI,A,231,49492610320.0
+COHR,Coherent Corp. Common Stock,情報技術,Electronic Components,XLK,COHR,232,49351825545.0
+VYLR,Vylor Inc. Common Stock,生活必需品,Farming/Seeds/Milling,XLP,VYLR,233,48939996886.0
+PYPL,PayPal Holdings Inc. Common Stock,資本財・産業,Diversified Commercial Services,XLI,PYPL,234,48898143558.0
+WAB,Westinghouse Air Brake Technologies Corporation Common Stock,資本財・産業,Railroads,XLI,WAB,235,48605786484.0
+ETR,Entergy Corporation Common Stock,公益,Electric Utilities: Central,XLU,ETR,236,48511010532.0
+COIN,Coinbase Global Inc. Class A Common Stock,金融,Finance: Consumer Services,XLF,COIN,237,48495864817.0
+F,Ford Motor Company Common Stock,資本財・産業,Auto Manufacturing,XLI,F,238,48215113605.0
+VMRK,Vivmark Residential Common Shares of Beneficial Interest,不動産,Real Estate Investment Trusts,XLRE,VMRK,239,48179250000.0
+MDLN,Medline Inc. Class A Common Stock,ヘルスケア,Medical/Dental Instruments,XLV,MDLN,240,48078852982.0
+XYZ,Block Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,XYZ,241,47961464850.0
+WDAY,Workday Inc. Class A Common Stock,情報技術,EDP Services,XLK,WDAY,242,47387830000.0
+ROK,Rockwell Automation Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,ROK,243,46960946385.0
+XEL,Xcel Energy Inc. Common Stock,公益,Power Generation,XLU,XEL,244,46922529067.0
+TRI,Thomson Reuters Corporation Common Shares,一般消費財,Publishing,XLY,TRI,245,46737948000.0
+KDP,Keurig Dr Pepper Inc. Common Stock,生活必需品,Beverages (Production/Distribution),XLP,KDP,246,46513033979.0
+STT,State Street Corporation Common Stock,金融,Major Banks,XLF,STT,247,46040015814.0
+FITB,Fifth Third Bancorp Common Stock,金融,Major Banks,XLF,FITB,248,45662040597.0
+CARR,Carrier Global Corporation Common Stock ,資本財・産業,Industrial Machinery/Components,XLI,CARR,249,45304905133.0
+AMP,Ameriprise Financial Inc. Common Stock,金融,Investment Managers,XLF,AMP,250,45180476477.0
+LHX,L3Harris Technologies Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,LHX,251,44784615148.0
+IQV,IQVIA Holdings Inc. Common Stock,ヘルスケア,Biotechnology: Commercial Physical & Biological Resarch,XLV,IQV,252,44613184000.0
+P,Everpure Inc. Class A common stock,情報技術,Electronic Components,XLK,P,253,44452515283.0
+EXC,Exelon Corporation Common Stock,公益,Power Generation,XLU,EXC,254,43850148518.0
+WAT,Waters Corporation Common Stock,資本財・産業,Biotechnology: Laboratory Analytical Instruments,XLI,WAT,255,43636898501.0
+VTR,Ventas Inc. Common Stock,不動産,Real Estate Investment Trusts,XLRE,VTR,256,43528628025.0
+HEI,Heico Corporation Common Stock,資本財・産業,Aerospace,XLI,HEI,257,43134725479.0
+IDXX,IDEXX Laboratories Inc. Common Stock,ヘルスケア,Biotechnology: In Vitro & In Vivo Diagnostic Substances,XLV,IDXX,258,43107451053.0
+NTAP,NetApp Inc. Common Stock,情報技術,Electronic Components,XLK,NTAP,259,42171160374.0
+TWLO,Twilio Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,TWLO,260,41987465148.0
+MSCI,MSCI Inc. Common Stock,一般消費財,Business Services,XLY,MSCI,261,41809043000.0
+AIG,American International Group Inc. New Common Stock,金融,Property-Casualty Insurers,XLF,AIG,262,41371307531.0
+YUM,Yum! Brands Inc.,一般消費財,Restaurants,XLY,YUM,263,41161670651.0
+LYV,Live Nation Entertainment Inc. Common Stock,コミュニケーション・サービス,Services-Misc. Amusement & Recreation,XLC,LYV,264,40649197189.0
+ED,Consolidated Edison Inc. Common Stock,公益,Power Generation,XLU,ED,265,40629373621.0
+RVMD,Revolution Medicines Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,RVMD,266,40565310471.0
+ILMN,Illumina Inc. Common Stock,ヘルスケア,Medical Specialities,XLV,ILMN,267,40457430000.0
+SYY,Sysco Corporation Common Stock,一般消費財,Food Distributors,XLY,SYY,268,40411836978.0
+MCHP,Microchip Technology Incorporated Common Stock,情報技術,Semiconductors,SOXX,MCHP,269,40323825394.0
+PRU,Prudential Financial Inc. Common Stock,金融,Life Insurance,XLF,PRU,270,40140750000.0
+ADM,Archer-Daniels-Midland Company Common Stock,生活必需品,Packaged Foods,XLP,ADM,271,39968908218.0
+PAYX,Paychex Inc. Common Stock,資本財・産業,Diversified Commercial Services,XLI,PAYX,272,39435516799.0
+CBRE,CBRE Group Inc Common Stock Class A,不動産,Real Estate,XLRE,CBRE,273,39234557126.0
+ODFL,Old Dominion Freight Line Inc. Common Stock,資本財・産業,Trucking Freight/Courier Services,XLI,ODFL,274,39165518763.0
+TTWO,Take-Two Interactive Software Inc. Common Stock,コミュニケーション・サービス,Computer Software: Prepackaged Software,XLC,TTWO,275,39149965155.0
+DHI,D.R. Horton Inc. Common Stock,一般消費財,Homebuilding,XLY,DHI,276,39032311810.0
+IBKR,Interactive Brokers Group Inc. Class A Common Stock,金融,Investment Bankers/Brokers/Service,XLF,IBKR,277,38978315051.0
+EL,Estee Lauder Companies Inc. (The) Common Stock,一般消費財,Package Goods/Cosmetics,XLY,EL,278,38837378252.0
+CMG,Chipotle Mexican Grill Inc. Common Stock,一般消費財,Restaurants,XLY,CMG,279,38696482440.0
+CRWV,CoreWeave Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,CRWV,280,38436585793.0
+ROP,Roper Technologies Inc. Common Stock,資本財・産業,Industrial Machinery/Components,XLI,ROP,281,37824639261.0
+ARES,Ares Management Corporation Class A Common Stock,金融,Investment Managers,XLF,ARES,282,37661512423.0
+VIK,Viking Holdings Ltd Ordinary Shares,一般消費財,Marine Transportation,XLY,VIK,283,37437111555.0
+UI,Ubiquiti Inc. Common Stock,情報技術,Radio And Television Broadcasting And Communications Equipment,XLK,UI,284,37405934174.0
+KR,Kroger Company (The) Common Stock,生活必需品,Food Chains,XLP,KR,285,37035817377.0
+SKYD,Skydance Corporation Class B Common Stock,資本財・産業,Broadcasting,XLI,SKYD,286,36606212912.0
+RBLX,Roblox Corporation Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,RBLX,287,36526041863.0
+OKTA,Okta Inc. Class A Common Stock,情報技術,Computer Software: Prepackaged Software,XLK,OKTA,288,36453659907.0
+HIG,The Hartford Insurance Group Inc. Common Stock,金融,Property-Casualty Insurers,XLF,HIG,289,35974510586.0
+ZS,Zscaler Inc. Common Stock,情報技術,EDP Services,XLK,ZS,290,35942147080.0
+KVUE,Kenvue Inc. Common Stock,一般消費財,Package Goods/Cosmetics,XLY,KVUE,291,35860840629.0
+CCL,Carnival Corporation Ltd. Common Shares,一般消費財,Marine Transportation,XLY,CCL,292,35578384013.0
+PEG,Public Service Enterprise Group Incorporated Common Stock,公益,Power Generation,XLU,PEG,293,34994070306.0
+MLM,Martin Marietta Materials Inc. Common Stock,資本財・産業,Mining & Quarrying of Nonmetallic Minerals (No Fuels),XLI,MLM,294,34887317197.0
+CNC,Centene Corporation Common Stock,ヘルスケア,Medical Specialities,XLV,CNC,295,34831587450.0
+BIIB,Biogen Inc. Common Stock,ヘルスケア,Biotechnology: Biological Products (No Diagnostic Substances),XLV,BIIB,296,34773903429.0
+PCG,Pacific Gas & Electric Co. Common Stock,公益,Power Generation,XLU,PCG,297,34734232028.0
+RKLB,Rocket Lab Corporation Common Stock,資本財・産業,Military/Government/Technical,XLI,RKLB,298,34683725580.0
+KMB,Kimberly-Clark Corporation Common Stock,一般消費財,Containers/Packaging,XLY,KMB,299,34611500485.0
+WEC,WEC Energy Group Inc. Common Stock,公益,Power Generation,XLU,WEC,300,34553068573.0
