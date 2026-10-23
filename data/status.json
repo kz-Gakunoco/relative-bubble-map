@@ -4,13 +4,13 @@
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-10-22T22:56:51.293035+00:00",
+  "generated_at_utc": "2026-10-23T22:55:57.381974+00:00",
   "candidate_market_date": "2026-10-21",
   "published_market_date": "2026-10-21",
   "request_budget_used": 0,
   "record_count": 54,
   "health_errors": [
-    "price_update_failed=RuntimeError: Yahoo returned no valid prices for: SLB"
+    "price_update_failed=RuntimeError: Yahoo returned no valid prices for: XLU"
   ],
   "health_warnings": [],
   "history_rows_written": 0,
