@@ -4,19 +4,20 @@
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-11-10T04:24:00.593798+00:00",
-  "candidate_market_date": "2026-11-09",
-  "published_market_date": "2026-11-09",
+  "generated_at_utc": "2026-11-11T02:19:18.150735+00:00",
+  "candidate_market_date": "2026-11-10",
+  "published_market_date": "2026-11-10",
   "request_budget_used": 0,
   "record_count": 300,
   "health_errors": [],
   "health_warnings": [
     "industry_z_20D_missing=HONA,SPCX,VYLR",
     "spx_z_20D_missing=HONA,SPCX,VYLR",
-    "es_z_20D_missing=HONA,SPCX,VYLR"
+    "es_z_20D_missing=HONA,SPCX,VYLR",
+    "stale_ticker_dates=ABBV:2026-11-09,ABNB:2026-11-09,ALAB:2026-11-09,ANET:2026-11-09,APP:2026-11-09,ARES:2026-11-09,BE:2026-11-09,CARR:2026-11-09,CEG:2026-11-09,COIN:2026-11-09,CRWD:2026-11-09,CVNA:2026-11-09,DASH:2026-11-09,DDOG:2026-11-09,DELL:2026-11-09,FANG:2026-11-09,FOXA:2026-11-09,GEHC:2026-11-09,GEV:2026-11-09,HLT:2026-11-09,HONA:2026-11-09,HOOD:2026-11-09,HPE:2026-11-09,IQV:2026-11-09,KEYS:2026-11-09,LITE:2026-11-09,MDLN:2026-11-09,META:2026-11-09,MRNA:2026-11-09,NET:2026-11-09,NOW:2026-11-09,NTRA:2026-11-09,P:2026-11-09,PANW:2026-11-09,PLTR:2026-11-09,PSX:2026-11-09,PYPL:2026-11-09,RBLX:2026-11-09,RKLB:2026-11-09,RKT:2026-11-09,RPRX:2026-11-09,RVMD:2026-11-09,SNDK:2026-11-09,SNOW:2026-11-09,SPCX:2026-11-09,UBER:2026-11-09,VEEV:2026-11-09,VIK:2026-11-09,VRT:2026-11-09,VST:2026-11-09,VYLR:2026-11-09,WDAY:2026-11-09,XYZ:2026-11-09"
   ],
   "history_rows_written": 300,
-  "history_total_rows": 5700,
+  "history_total_rows": 6000,
   "missing_universe_tickers": [],
   "insufficient_history_tickers": {
     "HONA": 103,
