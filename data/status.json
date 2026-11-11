@@ -4,15 +4,17 @@
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-11-10T04:14:37.140474+00:00",
-  "candidate_market_date": "2026-11-09",
-  "published_market_date": "2026-11-09",
+  "generated_at_utc": "2026-11-11T02:03:42.028205+00:00",
+  "candidate_market_date": "2026-11-10",
+  "published_market_date": "2026-11-10",
   "request_budget_used": 0,
   "record_count": 54,
   "health_errors": [],
-  "health_warnings": [],
+  "health_warnings": [
+    "stale_ticker_dates=ABBV:2026-11-09,CEG:2026-11-09,GEV:2026-11-09,META:2026-11-09"
+  ],
   "history_rows_written": 54,
-  "history_total_rows": 1026,
+  "history_total_rows": 1080,
   "missing_universe_tickers": [],
   "insufficient_history_tickers": {}
 }
