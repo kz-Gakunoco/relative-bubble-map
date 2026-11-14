@@ -1,18 +1,20 @@
 {
-  "ok": true,
-  "published": true,
+  "ok": false,
+  "published": false,
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-11-13T02:46:00.372403+00:00",
+  "generated_at_utc": "2026-11-14T02:35:23.562792+00:00",
   "candidate_market_date": "2026-11-12",
   "published_market_date": "2026-11-12",
   "request_budget_used": 0,
   "record_count": 54,
-  "health_errors": [],
+  "health_errors": [
+    "price_update_failed=RuntimeError: Yahoo returned no valid prices for: GE"
+  ],
   "health_warnings": [],
-  "history_rows_written": 54,
-  "history_total_rows": 1188,
+  "history_rows_written": 0,
+  "history_total_rows": 0,
   "missing_universe_tickers": [],
   "insufficient_history_tickers": {}
 }
