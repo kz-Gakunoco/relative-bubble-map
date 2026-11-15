@@ -4,13 +4,13 @@
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-11-14T02:35:23.562792+00:00",
+  "generated_at_utc": "2026-11-15T02:02:09.336037+00:00",
   "candidate_market_date": "2026-11-12",
   "published_market_date": "2026-11-12",
   "request_budget_used": 0,
   "record_count": 54,
   "health_errors": [
-    "price_update_failed=RuntimeError: Yahoo returned no valid prices for: GE"
+    "price_update_failed=RuntimeError: Yahoo returned no valid prices for: XLRE"
   ],
   "health_warnings": [],
   "history_rows_written": 0,
