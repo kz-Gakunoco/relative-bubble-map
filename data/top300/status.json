@@ -4,9 +4,9 @@
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-11-17T04:50:08.826645+00:00",
-  "candidate_market_date": "2026-11-16",
-  "published_market_date": "2026-11-16",
+  "generated_at_utc": "2026-11-18T03:56:06.070799+00:00",
+  "candidate_market_date": "2026-11-17",
+  "published_market_date": "2026-11-17",
   "request_budget_used": 0,
   "record_count": 300,
   "health_errors": [],
@@ -16,13 +16,13 @@
     "es_z_20D_missing=HONA,SPCX,VYLR"
   ],
   "history_rows_written": 300,
-  "history_total_rows": 7200,
+  "history_total_rows": 7500,
   "missing_universe_tickers": [],
   "insufficient_history_tickers": {
-    "HONA": 108,
-    "MDLN": 230,
-    "SNDK": 442,
-    "SPCX": 109,
-    "VYLR": 33
+    "HONA": 109,
+    "MDLN": 231,
+    "SNDK": 443,
+    "SPCX": 110,
+    "VYLR": 34
   }
 }
