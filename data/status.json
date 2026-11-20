@@ -1,20 +1,20 @@
 {
-  "ok": false,
-  "published": false,
+  "ok": true,
+  "published": true,
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-11-19T03:45:02.130069+00:00",
-  "candidate_market_date": "2026-11-17",
-  "published_market_date": "2026-11-17",
+  "generated_at_utc": "2026-11-20T03:38:38.703484+00:00",
+  "candidate_market_date": "2026-11-19",
+  "published_market_date": "2026-11-19",
   "request_budget_used": 0,
   "record_count": 54,
-  "health_errors": [
-    "price_update_failed=RuntimeError: Yahoo returned no valid prices for: ETN,META"
+  "health_errors": [],
+  "health_warnings": [
+    "stale_ticker_dates=ABBV:2026-11-18,CEG:2026-11-18,GEV:2026-11-18,META:2026-11-18"
   ],
-  "health_warnings": [],
-  "history_rows_written": 0,
-  "history_total_rows": 0,
+  "history_rows_written": 54,
+  "history_total_rows": 1404,
   "missing_universe_tickers": [],
   "insufficient_history_tickers": {}
 }
