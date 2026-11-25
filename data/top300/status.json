@@ -1,15 +1,17 @@
 {
-  "ok": true,
-  "published": true,
+  "ok": false,
+  "published": false,
   "provider": "yfinance",
   "es_provider": "yfinance:ES=F",
   "spx_provider": "yfinance:^GSPC",
-  "generated_at_utc": "2026-11-24T06:32:01.420919+00:00",
-  "candidate_market_date": "2026-11-23",
+  "generated_at_utc": "2026-11-25T05:05:25.450768+00:00",
+  "candidate_market_date": "2026-11-24",
   "published_market_date": "2026-11-23",
   "request_budget_used": 0,
   "record_count": 300,
-  "health_errors": [],
+  "health_errors": [
+    "stale_price_date=SNDK:2026-11-19 overdue_weekdays=3"
+  ],
   "health_warnings": [
     "industry_z_20D_missing=ANT,HONA,SPCX,VYLR",
     "spx_z_20D_missing=ANT,HONA,SPCX,VYLR",
@@ -17,15 +19,15 @@
     "stale_ticker_dates=SNDK:2026-11-19",
     "recent_listing_ret_20D_unavailable=ANT"
   ],
-  "history_rows_written": 300,
-  "history_total_rows": 8700,
+  "history_rows_written": 0,
+  "history_total_rows": 0,
   "missing_universe_tickers": [],
   "insufficient_history_tickers": {
-    "ANT": 3,
-    "HONA": 113,
-    "MDLN": 235,
+    "ANT": 4,
+    "HONA": 114,
+    "MDLN": 236,
     "SNDK": 445,
-    "SPCX": 114,
-    "VYLR": 38
+    "SPCX": 115,
+    "VYLR": 39
   }
 }
